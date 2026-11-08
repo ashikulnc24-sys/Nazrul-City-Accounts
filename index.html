@@ -68,7 +68,66 @@
             body.acc-printing #acc-print-root tr { page-break-inside: avoid; }
             body.acc-printing #acc-print-root .overflow-x-auto { overflow: visible !important; }
         }
-    </style>
+    /* ===== Dashboard (dark overview) ===== */
+.dk{background:#09090b;border-radius:28px;padding:18px;color:#e5e7eb;border:1px solid #1f1f23;font-family:inherit}
+.dk *{box-sizing:border-box}
+.dk-muted{color:#8b8b93}
+.dk-card{background:linear-gradient(180deg,#151517,#0e0e10);border:1px solid rgba(255,255,255,.07);border-radius:24px;padding:20px;position:relative;min-width:0;box-shadow:0 1px 0 rgba(255,255,255,.04) inset}
+.dk-grid-top{display:grid;grid-template-columns:1fr;gap:16px}
+.dk-grid-bot{display:grid;grid-template-columns:1fr;gap:16px;margin-top:16px}
+@media(min-width:1100px){.dk-grid-top{grid-template-columns:minmax(0,2fr) minmax(0,1fr)}}
+@media(min-width:900px){.dk-grid-bot{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.dk-stat{display:flex;flex-direction:column;gap:2px;background:#131315;border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:8px 14px;font-size:10px;min-width:110px}
+.dk-stat b{font-size:15px;color:#fff;font-weight:600}
+.dk-pill{display:inline-flex;background:#17171a;border:1px solid rgba(255,255,255,.08);border-radius:999px;padding:3px}
+.dk-pill button{font-size:11px;padding:6px 13px;border-radius:999px;color:#a1a1aa;transition:.15s}
+.dk-pill button.on{background:#fff;color:#111;font-weight:600}
+.dk-badge{display:inline-flex;align-items:center;font-size:10px;font-weight:700;padding:3px 8px;border-radius:8px}
+.dk-b-up{background:#16a34a;color:#fff}.dk-b-dn{background:#e11d48;color:#fff}.dk-b-n{background:#3f3f46;color:#e4e4e7}
+.dk-input{background:#17171a;border:1px solid rgba(255,255,255,.1);color:#e5e7eb;border-radius:10px;padding:6px 10px;color-scheme:dark;font-size:12px}
+.dk-chart{display:flex;gap:10px;height:250px}
+.dk-yaxis{display:flex;flex-direction:column;justify-content:space-between;font-size:10px;color:#71717a;width:38px;text-align:right;padding-bottom:24px}
+.dk-cols{flex:1;display:flex;gap:8px;min-width:0}
+.dk-col{flex:1;display:flex;flex-direction:column;align-items:center;cursor:pointer;min-width:0}
+.dk-barwrap{flex:1;width:100%;display:flex;align-items:flex-end;position:relative}
+.dk-bar{width:100%;min-height:2px;border-radius:14px;position:relative;background:repeating-linear-gradient(135deg,#1c1c20 0 3px,#151518 3px 6px);border:1px solid #26262b;transition:height .35s ease}
+.dk-bar::before{content:"";position:absolute;top:8px;left:50%;transform:translateX(-50%);width:42%;max-width:20px;height:3px;border-radius:3px;background:#d4d4d8;opacity:.85}
+.dk-col:hover .dk-bar{border-color:#3b3b42}
+.dk-bar.on{background:linear-gradient(180deg,#8cb8ff,#4c8dff);border-color:#78a9ff}
+.dk-bar.on::before{background:#fff}
+.dk-bar.zero::before{display:none}.dk-bar.zero{border-color:#1f1f23;background:#141417}
+.dk-tip{position:absolute;top:-24px;left:50%;transform:translateX(-50%);background:#1b1b1f;border:1px solid #333;color:#fff;font-size:10px;font-weight:600;padding:3px 7px;border-radius:8px;white-space:nowrap;z-index:2}
+.dk-xl{font-size:10px;color:#71717a;height:24px;line-height:24px;white-space:nowrap}
+.dk-nav{width:30px;height:30px;border-radius:50%;background:#1a1a1d;border:1px solid rgba(255,255,255,.08);color:#d4d4d8;display:inline-flex;align-items:center;justify-content:center;font-size:11px}
+.dk-nav:hover{background:#26262b}
+.dk-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.dk-dow{font-size:10px;color:#71717a;text-align:center;padding-bottom:2px}
+.dk-day{aspect-ratio:1/1;border-radius:11px;background:#18181b;border:1px solid rgba(255,255,255,.06);color:#d4d4d8;font-size:12px;position:relative;display:flex;align-items:center;justify-content:center;min-height:32px}
+.dk-day.out{background:repeating-linear-gradient(135deg,#1b1b1f 0 2px,#111113 2px 5px);border-color:#1f1f23}
+button.dk-day:hover{background:#222226}
+.dk-day.today{background:#3b6fe0;border-color:#5b8cff;color:#fff;font-weight:700}
+.dk-day.sel:not(.today){outline:1.5px solid #5b8cff}
+.dk-dot{position:absolute;bottom:4px;width:4px;height:4px;border-radius:50%;background:#fbbf24}
+.dk-daypill{display:flex;align-items:center;gap:12px;background:#17171a;border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:12px 14px}
+.dk-ico{width:38px;height:38px;border-radius:50%;background:#222226;display:inline-flex;align-items:center;justify-content:center;color:#d4d4d8;flex-shrink:0}
+.dk-tile{background:#17171a;border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:12px 14px}
+.dk-chip{display:inline-flex;font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px}
+.dk-c-g{background:#14532d;color:#4ade80}.dk-c-o{background:#7c3a0b;color:#fdba74}.dk-c-r{background:#4c0519;color:#fda4af}.dk-c-n{background:#27272a;color:#d4d4d8}
+.dk-btn{display:inline-flex;align-items:center;gap:6px;background:#fff;color:#111;font-size:11px;font-weight:700;padding:8px 14px;border-radius:12px}
+.dk-btn2{background:#1f1f23;color:#e5e7eb;border:1px solid rgba(255,255,255,.1)}
+.dk-note{background:#141417;border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:10px 12px;font-size:11px;color:#8b8b93}
+.dk-score{display:flex;align-items:center;gap:10px;background:#17171a;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:9px 12px}
+.dk-ticks{flex:1;display:flex;gap:2px;height:16px;align-items:stretch;min-width:0}
+.dk-ticks i{flex:1;border-radius:2px}
+.dk-row{display:flex;align-items:center;gap:8px;width:100%;padding:11px 2px;border-bottom:1px solid #202024}
+.dk-row:hover{background:#151518}
+.dk-table{width:100%;font-size:12px;text-align:left;border-collapse:collapse}
+.dk-table th{color:#71717a;font-weight:600;padding:10px 12px;font-size:11px;border-bottom:1px solid #26262b;white-space:nowrap}
+.dk-table td{color:#e5e7eb!important;padding:11px 12px;border-bottom:1px solid #1f1f23}
+.dk-table tbody tr:hover{background:#151518!important}
+.dk-table td span.bg-amber-100{background:#3a2a05!important;color:#fbbf24!important}
+.dk-table td button{color:#60a5fa!important}
+</style>
 </head>
 <body class="bg-slate-100 text-slate-800 font-sans antialiased">
     <!-- SUPABASE LOGIN -->
@@ -346,6 +405,24 @@
                             <a href="#" onclick="switchTab('acc-dues')" id="nav-acc-dues" class="block px-3 py-2 rounded-md text-xs text-slate-400 hover:text-white hover:bg-slate-800">Dues &amp; Receivables</a>
                             <a href="#" onclick="switchTab('acc-banks')" id="nav-acc-banks" class="block px-3 py-2 rounded-md text-xs text-slate-400 hover:text-white hover:bg-slate-800">Cash &amp; Bank Accounts</a>
                             <a href="#" onclick="switchTab('acc-heads')" id="nav-acc-heads" class="block px-3 py-2 rounded-md text-xs text-slate-400 hover:text-white hover:bg-slate-800">Account Heads</a>
+                            <a href="#" onclick="switchTab('acc-meal')" id="nav-acc-meal" class="block px-3 py-2 rounded-md text-xs text-slate-400 hover:text-white hover:bg-slate-800">Meal Account</a>
+                        </div>
+                    </div>
+
+                    <!-- LEAVE MANAGEMENT ACCORDION -->
+                    <div>
+                        <button onclick="toggleLeaveMenu()" class="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 transition">
+                            <div class="flex items-center gap-3">
+                                <i class="fa-solid fa-calendar-check w-5 text-center text-emerald-400"></i>
+                                <span>Leave Management</span>
+                            </div>
+                            <i id="leave-arrow" class="fa-solid fa-chevron-down text-xs transition-transform duration-200"></i>
+                        </button>
+                        <div id="leave-submenu" class="pl-9 pr-2 py-1 space-y-1 hidden">
+                            <a href="#" onclick="switchTab('leave-apply')" id="nav-leave-apply" class="block px-3 py-2 rounded-md text-xs text-slate-400 hover:text-white hover:bg-slate-800">Apply Leave</a>
+                            <a href="#" onclick="switchTab('leave-requests')" id="nav-leave-requests" class="block px-3 py-2 rounded-md text-xs text-slate-400 hover:text-white hover:bg-slate-800">Leave Requests</a>
+                            <a href="#" onclick="switchTab('leave-balance')" id="nav-leave-balance" class="block px-3 py-2 rounded-md text-xs text-slate-400 hover:text-white hover:bg-slate-800">Leave Balance</a>
+                            <a href="#" onclick="switchTab('leave-settings')" id="nav-leave-settings" class="block px-3 py-2 rounded-md text-xs text-slate-400 hover:text-white hover:bg-slate-800">Leave Settings</a>
                         </div>
                     </div>
 
@@ -421,72 +498,22 @@
 
                 <!-- 1. DASHBOARD TAB -->
                 <section id="tab-dashboard" class="space-y-6">
-                    <div class="bg-gradient-to-r from-slate-900 via-slate-800 to-emerald-950 rounded-2xl p-6 text-white shadow-md relative overflow-hidden">
-                        <div class="relative z-10">
-                            <span class="bg-emerald-500/20 text-emerald-300 text-[10px] font-semibold uppercase px-2.5 py-1 rounded-full border border-emerald-500/30">Executive Overview</span>
-                            <h2 class="text-2xl font-bold mt-2"><span data-nc-name>Nazrul City</span> Real Estate Dashboard</h2>
-                            <p class="text-slate-300 text-xs mt-1 max-w-xl">Welcome to Nazrul City's central ERP and Accounts Management Portal. Track sales, plots, EMI collections, and attachments in real time.</p>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <p class="text-xs text-slate-500 font-medium">Total Plots</p>
-                                    <h3 class="text-2xl font-bold text-slate-800 mt-1" id="dash-total-plots">224</h3>
-                                </div>
-                                <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
-                                    <i class="fa-solid fa-layer-group"></i>
-                                </div>
+                    <div class="dk">
+                        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                            <div><h2 class="text-2xl font-semibold text-white">Overview</h2><p class="text-xs dk-muted mt-0.5"><span data-nc-name>Nazrul City</span> · Real Estate &amp; Accounts</p></div>
+                            <div class="flex flex-wrap gap-2">
+                                <div class="dk-stat"><span class="dk-muted">Total Plots</span><b id="dash-total-plots">0</b></div>
+                                <div class="dk-stat"><span class="dk-muted">Booked / Sold</span><b id="dash-booked-plots">0</b></div>
+                                <div class="dk-stat"><span class="dk-muted" id="dash-income-label">Income</span><b>৳ <span id="dash-total-income">0</span></b></div>
+                                <div class="dk-stat"><span class="dk-muted">EMI Due (12 AM)</span><b>৳ <span id="dash-emi-12h-val">0</span></b></div>
                             </div>
                         </div>
-
-                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <p class="text-xs text-slate-500 font-medium">Booked / Complete</p>
-                                    <h3 class="text-2xl font-bold text-amber-600 mt-1" id="dash-booked-plots">0</h3>
-                                </div>
-                                <div class="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center">
-                                    <i class="fa-solid fa-handshake"></i>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <p class="text-xs text-slate-500 font-medium">Total Income (Oct)</p>
-                                    <h3 class="text-2xl font-bold text-emerald-600 mt-1">৳ <span id="dash-total-income">0</span></h3>
-                                </div>
-                                <div class="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                                    <i class="fa-solid fa-money-bill-wave"></i>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <p class="text-xs text-slate-500 font-medium">EMI Due (from 12:00 AM)</p>
-                                    <h3 class="text-2xl font-bold text-purple-600 mt-1">৳ <span id="dash-emi-12h-val">0</span></h3>
-                                </div>
-                                <div class="w-10 h-10 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center">
-                                    <i class="fa-solid fa-clock-rotate-left"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-                        <div class="p-4 border-b border-slate-100 flex items-center justify-between">
-                            <h3 class="text-sm font-bold text-slate-800">Recent Plot Sales & Bookings</h3>
-                            <button onclick="switchTab('sales-list')" class="text-xs text-emerald-600 font-semibold hover:underline">View All Sales &rarr;</button>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left text-xs">
-                                <thead class="bg-slate-50 text-slate-500 font-semibold border-b border-slate-200">
+                        <div class="dk-grid-top"><div class="dk-card" id="dk-revenue"></div><div class="dk-card" id="dk-calendar"></div></div>
+                        <div class="dk-grid-bot"><div class="dk-card" id="dk-summary"></div><div class="dk-card" id="dk-spending"></div><div class="dk-card" id="dk-dues"></div></div>
+                        <div class="dk-card" style="margin-top:16px">
+                            <div class="flex items-center justify-between mb-3"><h3 class="text-base font-semibold text-white">Recent Plot Sales &amp; Bookings</h3>
+                                <button type="button" onclick="switchTab('sales-list')" class="text-[11px] text-white hover:underline">View all <i class="fa-solid fa-arrow-up-right-from-square text-[9px] ml-1"></i></button></div>
+                            <div class="overflow-x-auto"><table class="dk-table"><thead>
                                     <tr>
                                         <th class="p-3">Invoice No</th>
                                         <th class="p-3">Buyer Name</th>
@@ -497,11 +524,8 @@
                                         <th class="p-3">Sales Person(s)</th>
                                         <th class="p-3">Status</th>
                                         <th class="p-3 text-center">Action</th>
-                                        <th class="p-3">Role</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="recent-bookings-tbody" class="divide-y divide-slate-100"></tbody>
-                            </table>
+                                        </tr>
+                                </thead><tbody id="recent-bookings-tbody"></tbody></table></div>
                         </div>
                     </div>
                 </section>
@@ -1018,7 +1042,12 @@
 
                 <section id="tab-config" class="space-y-6 hidden"><h2 class="text-xl font-bold">System Configuration</h2><div id="cfg-root"></div></section>
 
-            </main>
+            <section id="tab-acc-meal" class="space-y-6 hidden"></section>
+                <section id="tab-leave-apply" class="space-y-6 hidden"></section>
+                <section id="tab-leave-requests" class="space-y-6 hidden"></section>
+                <section id="tab-leave-balance" class="space-y-6 hidden"></section>
+                <section id="tab-leave-settings" class="space-y-6 hidden"></section>
+                </main>
         </div>
     </div>
 
@@ -5254,6 +5283,11 @@
             ['Dues & Receivables','acc_dues',['view','create','edit','collect_payment','export']],
             ['Cash & Bank Accounts','acc_banks',['view','create','edit','delete','transfer','export']],
             ['Account Heads','acc_heads',['view','create','edit','delete']],
+            ['Meal Account','acc_meal',['view','create','edit','delete','print','export']],
+            ['Apply Leave','leave_apply',['view','create','edit']],
+            ['Leave Requests','leave_requests',['view','approve','reject','print','export']],
+            ['Leave Balance','leave_balance',['view','export']],
+            ['Leave Settings','leave_settings',['view','create','edit','delete']],
             ['Users','users',['view','create','edit','delete','activate','deactivate']],
             ['Roles','roles',['view','create','edit','delete']],
             ['Permissions','permissions',['view','assign','revoke']],
@@ -6665,6 +6699,874 @@
     </script>
 
     <script>
+/* =====================================================================
+   DASHBOARD  (Overview)  - dark "glass card" design
+   All numbers are calculated from the live data already in the app:
+   Accounts transactions (accAllTx), Sales/EMI records and Plot list.
+   ===================================================================== */
+(function () {
+    'use strict';
+    const $ = id => document.getElementById(id);
+    const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const iso = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    const parse = s => { const a = String(s).slice(0, 10).split('-').map(Number); return new Date(a[0], a[1] - 1, a[2]); };
+    const addDays = (s, n) => { const d = parse(s); d.setDate(d.getDate() + n); return iso(d); };
+    const todayISO = () => iso(new Date());
+    const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const MONL = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const DOW = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const tk = n => '৳ ' + Math.round(Number(n) || 0).toLocaleString('en-US');
+    function cmp(n) {
+        n = Math.abs(n);
+        if (n >= 1e7) return (n / 1e7).toFixed(2).replace(/\.?0+$/, '') + ' Cr';
+        if (n >= 1e5) return (n / 1e5).toFixed(2).replace(/\.?0+$/, '') + ' L';
+        if (n >= 1e3) return (n / 1e3).toFixed(1).replace(/\.0$/, '') + 'k';
+        return String(Math.round(n));
+    }
+    function niceMax(v) {
+        const e = Math.pow(10, Math.floor(Math.log10(v))), f = v / e;
+        const steps = [1, 1.2, 1.6, 2, 2.4, 3, 4, 5, 6, 8, 10];
+        return (steps.find(s => f <= s + 1e-9) || 10) * e;
+    }
+    const st = { mode: 'yearly', from: '', to: '', calY: null, calM: null, sel: null, spend: '30', bar: -1 };
+
+    function data() {
+        let tx = []; try { tx = accAllTx(); } catch (e) { }
+        const inc = {}, exp = [];
+        tx.forEach(t => { const a = Number(t.amount) || 0; if (t.type === 'income') inc[t.date] = (inc[t.date] || 0) + a; else exp.push(t); });
+        return { inc: inc, exp: exp };
+    }
+    function sumRange(inc, f, t) { let s = 0; for (const k in inc) if (k >= f && k <= t) s += inc[k]; return s; }
+
+    function periods() {
+        const today = todayISO(), t = parse(today);
+        if (st.mode === 'weekly') {
+            const f = addDays(today, -6), b = [];
+            for (let i = 0; i < 7; i++) { const d = addDays(f, i); b.push({ f: d, t: d, label: DOW[(parse(d).getDay() + 6) % 7] }); }
+            return { b: b, cur: [f, today], prev: [addDays(f, -7), addDays(f, -1)], title: 'Last 7 days' };
+        }
+        if (st.mode === 'monthly') {
+            const y = t.getFullYear(), m = t.getMonth(), nd = new Date(y, m + 1, 0).getDate(), b = [];
+            for (let s = 1, i = 1; s <= nd; s += 7, i++) { const e = Math.min(s + 6, nd); b.push({ f: iso(new Date(y, m, s)), t: iso(new Date(y, m, e)), label: 'W' + i }); }
+            return { b: b, cur: [iso(new Date(y, m, 1)), iso(new Date(y, m, nd))], prev: [iso(new Date(y, m - 1, 1)), iso(new Date(y, m, 0))], title: MONL[m] + ' ' + y };
+        }
+        if (st.mode === 'range') {
+            let f = st.from || addDays(today, -29), e = st.to || today; if (f > e) { const x = f; f = e; e = x; }
+            const days = Math.round((parse(e) - parse(f)) / 864e5) + 1, b = [];
+            if (days <= 31) { for (let i = 0; i < days; i++) { const d = addDays(f, i); b.push({ f: d, t: d, label: String(parse(d).getDate()) }); } }
+            else {
+                let c = new Date(parse(f).getFullYear(), parse(f).getMonth(), 1);
+                while (iso(c) <= e && b.length < 60) { const ms = iso(c), me = iso(new Date(c.getFullYear(), c.getMonth() + 1, 0)); b.push({ f: ms < f ? f : ms, t: me > e ? e : me, label: MON[c.getMonth()] }); c = new Date(c.getFullYear(), c.getMonth() + 1, 1); }
+            }
+            return { b: b, cur: [f, e], prev: [addDays(f, -days), addDays(f, -1)], title: f + ' → ' + e };
+        }
+        const b = [];
+        for (let i = 11; i >= 0; i--) { const d = new Date(t.getFullYear(), t.getMonth() - i, 1); b.push({ f: iso(d), t: iso(new Date(d.getFullYear(), d.getMonth() + 1, 0)), label: MON[d.getMonth()] }); }
+        return { b: b, cur: [b[0].f, b[11].t], prev: [iso(new Date(t.getFullYear(), t.getMonth() - 23, 1)), addDays(b[0].f, -1)], title: 'Last 12 months' };
+    }
+
+    /* ---------- Revenue ---------- */
+    function renderRevenue(D) {
+        const el = $('dk-revenue'); if (!el) return;
+        const P = periods(), vals = P.b.map(x => sumRange(D.inc, x.f, x.t));
+        const total = sumRange(D.inc, P.cur[0], P.cur[1]), prev = sumRange(D.inc, P.prev[0], P.prev[1]);
+        const delta = prev > 0 ? (total - prev) / prev * 100 : null;
+        const max = niceMax(Math.max.apply(null, vals.concat([1])));
+        if (st.bar < 0 || st.bar >= vals.length) st.bar = vals.length - 1;
+        const ticks = [1, .75, .5, .25, 0].map(k => max * k);
+        const tabs = [['weekly', 'Weekly'], ['monthly', 'Monthly'], ['yearly', 'Yearly'], ['range', 'Range']];
+        const badge = delta == null ? '<span class="dk-badge dk-b-n">New</span>'
+            : `<span class="dk-badge ${delta >= 0 ? 'dk-b-up' : 'dk-b-dn'}">${delta >= 0 ? '▲' : '▼'} ${Math.abs(delta).toFixed(1)}%</span>`;
+        const cols = P.b.map((x, i) => {
+            const h = Math.max(vals[i] / max * 100, vals[i] > 0 ? 3 : 0), on = i === st.bar;
+            return `<div class="dk-col" onclick="NC_DASH.pickBar(${i})" title="${esc(x.label)}: ${tk(vals[i])}">
+                <div class="dk-barwrap"><div class="dk-bar ${on ? 'on' : ''}${vals[i] > 0 ? '' : ' zero'}" style="height:${h}%">${on ? `<span class="dk-tip">${vals[i] > 0 ? '৳ ' + cmp(vals[i]) : '৳ 0'}</span>` : ''}</div></div>
+                <div class="dk-xl">${esc(x.label)}</div></div>`;
+        }).join('');
+        el.innerHTML = `
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <h3 class="text-lg font-semibold text-white">Revenue</h3>
+                <div class="dk-pill">${tabs.map(t => `<button type="button" class="${st.mode === t[0] ? 'on' : ''}" onclick="NC_DASH.setMode('${t[0]}')">${t[1]}</button>`).join('')}</div>
+            </div>
+            ${st.mode === 'range' ? `<div class="flex flex-wrap items-center gap-2 mt-3 text-xs dk-muted"><input type="date" id="dk-from" value="${esc(P.cur[0])}" onchange="NC_DASH.setRange()" class="dk-input"> <span>to</span> <input type="date" id="dk-to" value="${esc(P.cur[1])}" onchange="NC_DASH.setRange()" class="dk-input"></div>` : ''}
+            <div class="flex flex-wrap items-center gap-3 mt-3">
+                <div class="text-4xl font-semibold text-white tracking-tight">${tk(total)}</div>${badge}
+                <span class="text-xs dk-muted">vs ${tk(prev)} last period · ${esc(P.title)}</span>
+            </div>
+            <div class="dk-chart mt-4">
+                <div class="dk-yaxis">${ticks.map(v => `<span>${cmp(v)}</span>`).join('')}</div>
+                <div class="dk-cols">${cols}</div>
+            </div>`;
+    }
+
+    /* ---------- Calendar ---------- */
+    function dueMap() {
+        const m = {};
+        try { salesRecords.forEach(s => { if (s.status === 'Cancelled') return; (s.emiSchedule || []).forEach(e => { if (e.status !== 'Paid' && e.dueDate) { const d = String(e.dueDate).slice(0, 10); m[d] = (m[d] || 0) + 1; } }); }); } catch (e) { }
+        return m;
+    }
+    function renderCal(D) {
+        const el = $('dk-calendar'); if (!el) return;
+        const now = new Date(); if (st.calY == null) { st.calY = now.getFullYear(); st.calM = now.getMonth(); }
+        if (!st.sel) st.sel = todayISO();
+        const y = st.calY, m = st.calM, first = new Date(y, m, 1), lead = (first.getDay() + 6) % 7, nd = new Date(y, m + 1, 0).getDate();
+        const dues = dueMap(), today = todayISO(), cells = [];
+        for (let i = 0; i < lead; i++) cells.push('<div class="dk-day out"></div>');
+        for (let d = 1; d <= nd; d++) {
+            const s = iso(new Date(y, m, d)), cls = 'dk-day' + (s === today ? ' today' : '') + (s === st.sel ? ' sel' : '');
+            cells.push(`<button type="button" class="${cls}" onclick="NC_DASH.pickDay('${s}')">${d}${dues[s] ? '<i class="dk-dot"></i>' : ''}</button>`);
+        }
+        while (cells.length % 7) cells.push('<div class="dk-day out"></div>');
+        const dayInc = D.inc[st.sel] || 0, prevInc = D.inc[addDays(st.sel, -1)] || 0;
+        const dl = prevInc > 0 ? (dayInc - prevInc) / prevInc * 100 : null;
+        const dayExp = D.exp.filter(t => t.date === st.sel).reduce((a, t) => a + (Number(t.amount) || 0), 0);
+        el.innerHTML = `
+            <div class="flex items-center justify-between">
+                <button type="button" class="dk-nav" onclick="NC_DASH.calNav(-1)" aria-label="Previous month"><i class="fa-solid fa-chevron-left"></i></button>
+                <h3 class="text-sm font-semibold text-white">${MONL[m]}, ${y}</h3>
+                <button type="button" class="dk-nav" onclick="NC_DASH.calNav(1)" aria-label="Next month"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+            <div class="dk-cal mt-3">${DOW.map(x => `<div class="dk-dow">${x[0]}</div>`).join('')}${cells.join('')}</div>
+            <div class="dk-daypill mt-3">
+                <span class="dk-ico"><i class="fa-solid fa-chart-column"></i></span>
+                <div class="flex-1 min-w-0"><div class="text-2xl font-semibold text-white leading-none">${tk(dayInc)}</div>
+                <div class="text-[10px] dk-muted mt-1">Collected on ${esc(st.sel)}${dayExp ? ' · Spent ' + tk(dayExp) : ''}${dues[st.sel] ? ' · ' + dues[st.sel] + ' EMI due' : ''}</div></div>
+                ${dl == null ? '' : `<span class="dk-badge ${dl >= 0 ? 'dk-b-up' : 'dk-b-dn'}">${dl >= 0 ? '▲' : '▼'} ${Math.abs(dl).toFixed(1)}%</span>`}
+            </div>`;
+    }
+
+    /* ---------- EMI list helpers ---------- */
+    function emiRows() {
+        const out = [];
+        try { salesRecords.forEach(s => { if (s.status === 'Cancelled') return; (s.emiSchedule || []).forEach(e => { if (e.dueDate) out.push({ s: s, e: e, due: String(e.dueDate).slice(0, 10), paid: e.status === 'Paid' }); }); }); } catch (x) { }
+        return out;
+    }
+    function rel(due, today) {
+        const n = Math.round((parse(due) - parse(today)) / 864e5);
+        if (n === 0) return 'today';
+        if (n < 0) return Math.abs(n) + (Math.abs(n) === 1 ? ' day' : ' days') + ' overdue';
+        if (n < 14) return 'in ' + n + (n === 1 ? ' day' : ' days');
+        if (n < 60) return 'in ' + Math.round(n / 7) + ' weeks';
+        return 'in ' + Math.round(n / 30) + ' months';
+    }
+
+    /* ---------- Quick summary ---------- */
+    function renderSummary(D) {
+        const el = $('dk-summary'); if (!el) return;
+        const today = todayISO(), t = parse(today), y = t.getFullYear(), m = t.getMonth();
+        const mf = iso(new Date(y, m, 1)), ml = iso(new Date(y, m + 1, 0)), pf = iso(new Date(y, m - 1, 1)), pl = iso(new Date(y, m, 0));
+        const cur = sumRange(D.inc, mf, ml), prv = sumRange(D.inc, pf, pl), dl = prv > 0 ? (cur - prv) / prv * 100 : null;
+        const rows = emiRows(), over = rows.filter(r => !r.paid && r.due < today), overAmt = over.reduce((a, r) => a + (Number(r.e.amount) || 0), 0);
+        let avail = 0; try { Object.keys(plotMatrix).forEach(k => (plotMatrix[k] || []).forEach(p => { if (p.status === 'Available') avail++; })); } catch (e) { }
+        let bk = 0; try { bk = salesRecords.filter(s => String(s.date).slice(0, 7) === mf.slice(0, 7) && s.status !== 'Cancelled').length; } catch (e) { }
+        const txt = `Collection this month is <b class="text-white">${tk(cur)}</b>${dl == null ? '' : `, ${dl >= 0 ? 'up' : 'down'} <b class="${dl >= 0 ? 'text-emerald-400' : 'text-rose-400'}">${Math.abs(dl).toFixed(1)}%</b> from last month`}. `
+            + (over.length ? `<b class="text-white">${over.length}</b> EMI installment${over.length > 1 ? 's are' : ' is'} overdue (${tk(overAmt)}). ` : 'No overdue EMI right now. ')
+            + `<b class="text-white">${avail}</b> plot${avail === 1 ? '' : 's'} still available for sale.`;
+        el.innerHTML = `
+            <div class="flex items-center justify-between"><h3 class="text-base font-semibold text-white flex items-center gap-2"><i class="fa-solid fa-wand-magic-sparkles text-sky-400"></i> Quick Summary</h3></div>
+            <p class="text-xs leading-relaxed dk-muted mt-3">${txt}</p>
+            <div class="grid grid-cols-2 gap-3 mt-4">
+                <div class="dk-tile"><div class="text-[11px] dk-muted">Overdue EMI</div><div class="flex items-center gap-2 mt-1"><span class="text-3xl font-light text-white">${over.length}</span><span class="dk-chip ${over.length ? 'dk-c-o' : 'dk-c-g'}">${over.length ? 'Action' : 'Clear'}</span></div></div>
+                <div class="dk-tile"><div class="text-[11px] dk-muted">Bookings (month)</div><div class="flex items-center gap-2 mt-1"><span class="text-3xl font-light text-white">${bk}</span><span class="dk-chip dk-c-g">New</span></div></div>
+            </div>
+            <div class="flex flex-wrap gap-2 mt-4">
+                <button type="button" onclick="openBookingModal()" class="dk-btn"><i class="fa-solid fa-plus"></i> New Booking</button>
+                <button type="button" onclick="switchTab('all-emi-list')" class="dk-btn dk-btn2"><i class="fa-solid fa-hand-holding-dollar"></i> Collect EMI</button>
+            </div>`;
+    }
+
+    /* ---------- Spending ---------- */
+    const COLORS = ['#f97316', '#22c55e', '#facc15', '#60a5fa', '#a78bfa', '#4b5563'];
+    function renderSpend(D) {
+        const el = $('dk-spending'); if (!el) return;
+        const today = todayISO(), f = st.spend === 'month' ? today.slice(0, 8) + '01' : addDays(today, -(Number(st.spend) - 1));
+        const agg = {}; D.exp.filter(t => t.date >= f && t.date <= today).forEach(t => { const h = t.head || 'Other'; agg[h] = (agg[h] || 0) + (Number(t.amount) || 0); });
+        let list = Object.keys(agg).map(k => [k, agg[k]]).sort((a, b) => b[1] - a[1]);
+        if (list.length > 5) { const rest = list.slice(5).reduce((a, x) => a + x[1], 0); list = list.slice(0, 5).concat([['Other', rest]]); }
+        const total = list.reduce((a, x) => a + x[1], 0), R = 54, C = 2 * Math.PI * R;
+        let off = 0;
+        const segs = total > 0 ? list.map((x, i) => { const len = x[1] / total * C, gap = list.length > 1 ? 3 : 0, s = `<circle cx="75" cy="75" r="${R}" fill="none" stroke="${COLORS[i % COLORS.length]}" stroke-width="16" stroke-linecap="round" stroke-dasharray="${Math.max(len - gap, 0.5)} ${C}" stroke-dashoffset="${-off}" transform="rotate(-90 75 75)"><title>${esc(x[0])}: ${tk(x[1])}</title></circle>`; off += len; return s; }).join('') : '';
+        const top = list.slice(0, 2).map(x => x[0]);
+        el.innerHTML = `
+            <div class="flex items-center justify-between gap-2"><h3 class="text-base font-semibold text-white">Spending</h3>
+                <select class="dk-input text-xs" onchange="NC_DASH.setSpend(this.value)"><option value="30" ${st.spend === '30' ? 'selected' : ''}>Last 30 Days</option><option value="month" ${st.spend === 'month' ? 'selected' : ''}>This Month</option><option value="90" ${st.spend === '90' ? 'selected' : ''}>Last 90 Days</option></select></div>
+            <div class="flex items-center gap-4 mt-3">
+                <div class="relative shrink-0" style="width:150px;height:150px"><svg viewBox="0 0 150 150" width="150" height="150"><circle cx="75" cy="75" r="${R}" fill="none" stroke="#1f1f23" stroke-width="16"/>${segs}</svg>
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center"><div class="text-sm font-semibold text-white leading-tight">${total > 0 ? '৳ ' + cmp(total) : '৳ 0'}</div><div class="text-[10px] dk-muted">Total</div></div></div>
+                <ul class="text-[11px] space-y-1.5 min-w-0">${total > 0 ? list.map((x, i) => `<li class="flex items-center gap-2 min-w-0"><i class="w-2 h-2 rounded-full shrink-0" style="background:${COLORS[i % COLORS.length]}"></i><span class="truncate dk-muted">${esc(x[0])}</span><span class="text-white ml-auto pl-1">${Math.round(x[1] / total * 100)}%</span></li>`).join('') : '<li class="dk-muted">No expenses in this period.</li>'}</ul>
+            </div>
+            <div class="dk-note mt-3">${total > 0 ? `Most expenses come from <b class="text-white">${esc(top[0])}</b>${top[1] ? ' and <b class="text-white">' + esc(top[1]) + '</b>' : ''}.` : 'Nothing spent in this period.'}</div>`;
+    }
+
+    /* ---------- EMI dues ("invoices") ---------- */
+    function renderDues(D) {
+        const el = $('dk-dues'); if (!el) return;
+        const today = todayISO(), rows = emiRows();
+        const win = rows.filter(r => r.due <= today && r.due >= addDays(today, -90));
+        const ontime = win.filter(r => r.paid && (r.e.paidDate ? String(r.e.paidDate).slice(0, 10) <= r.due : true)).length;
+        const score = win.length ? Math.round(ontime / win.length * 100) : null;
+        const open = rows.filter(r => !r.paid).sort((a, b) => a.due < b.due ? -1 : a.due > b.due ? 1 : 0);
+        const over = open.filter(r => r.due < today), upc = open.filter(r => r.due >= today);
+        const list = over.slice(-2).concat(upc).slice(0, 3);   // 2 latest overdue first, then upcoming
+        const ticks = Array.from({ length: 40 }, (_, i) => `<i style="background:${score != null && i < Math.round(score / 100 * 40) ? '#facc15' : '#2b2b30'}"></i>`).join('');
+        el.innerHTML = `
+            <div class="flex items-center justify-between"><h3 class="text-base font-semibold text-white">EMI Dues</h3>
+                <button type="button" onclick="openBookingModal()" class="dk-nav" title="New Booking"><i class="fa-solid fa-plus"></i></button></div>
+            <div class="dk-score mt-3"><span class="text-[11px] dk-muted whitespace-nowrap">Collection Score</span><div class="dk-ticks">${ticks}</div><span class="text-sm font-semibold text-white">${score == null ? '—' : score}</span></div>
+            <div class="mt-2">${list.length ? list.map(r => {
+                const od = r.due < today, tdy = r.due === today;
+                return `<button type="button" onclick="switchTab('all-emi-list')" class="dk-row"><div class="text-left"><div class="text-xs text-white">${esc(MON[parse(r.due).getMonth()])} ${parse(r.due).getDate()}</div><div class="text-[10px] dk-muted">${rel(r.due, today)}</div></div>
+                    <span class="dk-chip ${od ? 'dk-c-r' : tdy ? 'dk-c-o' : 'dk-c-n'}">${od ? 'Overdue' : tdy ? 'Due' : 'Upcoming'}</span>
+                    <span class="text-xs dk-muted truncate flex-1 text-left px-2">${esc(r.s.buyerName)}</span><span class="text-xs text-white">${tk(r.e.amount)}</span></button>`;
+            }).join('') : '<div class="text-xs dk-muted py-6 text-center">No pending EMI.</div>'}</div>
+            <button type="button" onclick="switchTab('all-emi-list')" class="text-[11px] text-white mt-3 hover:underline">View all EMI <i class="fa-solid fa-arrow-up-right-from-square text-[9px] ml-1"></i></button>`;
+    }
+
+    /* ---------- top stat chips (old dashboard numbers, now calculated) ---------- */
+    function renderStats(D) {
+        const set = (id, v) => { const e = $(id); if (e) e.textContent = v; };
+        let total = 0, booked = 0;
+        try { Object.keys(plotMatrix).forEach(k => (plotMatrix[k] || []).forEach(p => { total++; if (p.status === 'Booked' || p.status === 'Complete') booked++; })); } catch (e) { }
+        const today = todayISO(), mf = today.slice(0, 8) + '01', ml = iso(new Date(parse(today).getFullYear(), parse(today).getMonth() + 1, 0));
+        set('dash-total-plots', total.toLocaleString('en-US')); set('dash-booked-plots', booked.toLocaleString('en-US'));
+        set('dash-total-income', Math.round(sumRange(D.inc, mf, ml)).toLocaleString('en-US'));
+        const l = $('dash-income-label'); if (l) l.textContent = 'Income (' + MON[parse(today).getMonth()] + ')';
+    }
+
+    function render() {
+        const D = data();
+        [renderStats, renderRevenue, renderCal, renderSummary, renderSpend, renderDues].forEach(f => { try { f(D); } catch (e) { console.warn('dashboard card failed', f.name, e); } });
+    }
+    let t = null;
+    const later = () => { clearTimeout(t); t = setTimeout(render, 60); };
+    window.NC_DASH = {
+        render: render, later: later,
+        setMode: m => { st.mode = m; st.bar = -1; render(); },
+        setRange: () => { const f = $('dk-from'), e = $('dk-to'); st.from = f ? f.value : ''; st.to = e ? e.value : ''; st.bar = -1; render(); },
+        pickBar: i => { st.bar = i; render(); },
+        calNav: d => { st.calM += d; if (st.calM < 0) { st.calM = 11; st.calY--; } if (st.calM > 11) { st.calM = 0; st.calY++; } render(); },
+        pickDay: s => { st.sel = s; render(); },
+        setSpend: v => { st.spend = v; render(); }
+    };
+    /* keep it fresh */
+    const origRB = window.renderRecentBookings;
+    if (typeof origRB === 'function') window.renderRecentBookings = function () { const r = origRB.apply(this, arguments); later(); return r; };
+    setInterval(() => { const s = $('tab-dashboard'); if (s && !s.classList.contains('hidden') && document.visibilityState === 'visible') render(); }, 5000);
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', render); else render();
+})();
+
+    </script>
+
+    <script>
+/* =====================================================================
+   MEAL ACCOUNT  (Accounts Management > Meal Account)
+   Members, daily meals, bazar (expense), deposits, monthly statement.
+   Data is stored in Supabase tables meal_* (RLS uses the Role permissions "acc_meal.*").
+   Bazar -> Accounts "Meal Expense",  Deposits -> Accounts "Meal Deposit"  (optional, see Settings).
+   ===================================================================== */
+(function () {
+    'use strict';
+    const $ = id => document.getElementById(id);
+    const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const sb = () => window.NC_AUTH && window.NC_AUTH.client;
+    const can = p => !window.NC_ACCESS || window.NC_ACCESS.can(p);
+    const toast = (m, ok) => { if (typeof accToast === 'function') accToast(m, ok !== false); else alert(m); };
+    const r2 = x => Math.round((Number(x) || 0) * 100) / 100;
+    const fm = n => Number(n || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    const today = () => accToday();
+    const CATS = ['Bazar', 'Grocery', 'Vegetable', 'Fish / Meat', 'Gas / Fuel', 'Cook / Helper', 'Utensils', 'Other'];
+
+    const S = { month: today().slice(0, 7), tab: 'statement', date: today(), members: [], entries: [], bazar: [], deposits: [], dir: [],
+        settings: { breakfast_w: 0.5, lunch_w: 1, dinner_w: 1, post_to_accounts: true }, loaded: false, err: '', eb: null, ed: null, busy: false };
+    let TX = [], POST = true, txAt = 0;
+
+    /* ---------- Accounts integration ---------- */
+    try { ['Meal Expense', 'Meal Deposit'].forEach(h => { if (ACC_LOCKED_HEADS.indexOf(h) < 0) ACC_LOCKED_HEADS.push(h); }); } catch (e) { }
+    function ensureHeads() {
+        try {
+            if (accData.expenseHeads.indexOf('Meal Expense') < 0) accData.expenseHeads.push('Meal Expense');
+            if (accData.incomeHeads.indexOf('Meal Deposit') < 0) accData.incomeHeads.push('Meal Deposit');
+        } catch (e) { }
+    }
+    const origAuto = window.accAutoTx;
+    window.accAutoTx = function () { const base = origAuto.apply(this, arguments); return POST ? base.concat(TX) : base; };
+
+    async function refreshTx(force) {
+        const c = sb(); if (!c || (!force && Date.now() - txAt < 30000)) return false;
+        txAt = Date.now();
+        try {
+            const r = await Promise.all([
+                c.from('meal_bazar').select('id,expense_date,amount,account_id,category,description,voucher_no').eq('voided', false),
+                c.from('meal_deposits').select('id,deposit_date,amount,account_id,method,member_id,voucher_no').eq('voided', false),
+                c.from('meal_members').select('id,name'),
+                c.from('meal_settings').select('post_to_accounts').eq('id', 1).maybeSingle()]);
+            if (r[0].error || r[1].error) return false;
+            const nm = {}; (r[2].data || []).forEach(m => { nm[m.id] = m.name; });
+            POST = !(r[3].data && r[3].data.post_to_accounts === false);
+            TX = (r[0].data || []).map(b => ({ id: 'MEAL-B-' + b.id, auto: true, type: 'expense', voucher: b.voucher_no || ('MEAL-' + String(b.id).slice(0, 6).toUpperCase()), date: b.expense_date, head: 'Meal Expense', accountId: b.account_id || 'acc-cash', method: 'Cash', party: 'Meal Bazar', amount: Number(b.amount), note: (b.category || 'Bazar') + (b.description ? ' - ' + b.description : '') }))
+                .concat((r[1].data || []).map(d => ({ id: 'MEAL-D-' + d.id, auto: true, type: 'income', voucher: d.voucher_no || ('MEALDEP-' + String(d.id).slice(0, 6).toUpperCase()), date: d.deposit_date, head: 'Meal Deposit', accountId: d.account_id || 'acc-cash', method: d.method || 'Cash', party: nm[d.member_id] || 'Member', amount: Number(d.amount), note: 'Meal deposit' })));
+            ensureHeads();
+            return true;
+        } catch (e) { return false; }
+    }
+    const origAccRender = window.accRender;
+    window.accRender = function (tabId) {
+        if (tabId === 'acc-meal') {
+            const sub = $('acc-submenu'); if (sub && sub.classList.contains('hidden')) { sub.classList.remove('hidden'); const a = $('acc-arrow'); if (a) a.classList.add('rotate-180'); }
+            mealRender(); return;
+        }
+        const r = origAccRender.apply(this, arguments);
+        refreshTx(false).then(ch => { if (ch && typeof accRefreshCurrent === 'function') accRefreshCurrent(); });
+        return r;
+    };
+
+    /* ---------- loading ---------- */
+    function friendly(e) {
+        const m = (e && e.message) || String(e || '');
+        if (e && (e.code === '42501' || /row-level security|permission denied/i.test(m))) return 'এই কাজের Permission নেই (Database)।';
+        if (e && e.code === '23505') return 'এটি আগে থেকেই আছে (duplicate)।';
+        if (e && e.code === '23503') return 'এই record অন্য জায়গায় ব্যবহৃত হচ্ছে, তাই মোছা/পরিবর্তন করা যাবে না।';
+        return m;
+    }
+    function monthBounds() { const a = S.month.split('-').map(Number); return [S.month + '-01', S.month + '-' + String(new Date(a[0], a[1], 0).getDate()).padStart(2, '0')]; }
+    async function load() {
+        const c = sb(); if (!c) { S.err = 'Supabase connected নয়।'; return; }
+        const b = monthBounds(); S.err = '';
+        try {
+            const r = await Promise.all([
+                c.from('meal_members').select('*').order('name'),
+                c.from('meal_entries').select('*').gte('entry_date', b[0]).lte('entry_date', b[1]),
+                c.from('meal_bazar').select('*').gte('expense_date', b[0]).lte('expense_date', b[1]).order('expense_date', { ascending: false }),
+                c.from('meal_deposits').select('*').gte('deposit_date', b[0]).lte('deposit_date', b[1]).order('deposit_date', { ascending: false }),
+                c.from('meal_settings').select('*').eq('id', 1).maybeSingle(),
+                c.rpc('team_directory')]);
+            const bad = r.slice(0, 5).find(x => x.error); if (bad) throw bad.error;
+            S.members = r[0].data || []; S.entries = r[1].data || []; S.bazar = r[2].data || []; S.deposits = r[3].data || [];
+            if (r[4].data) S.settings = r[4].data;
+            S.dir = (r[5] && Array.isArray(r[5].data)) ? r[5].data.filter(u => u.status !== 'inactive') : [];
+            S.loaded = true;
+        } catch (e) {
+            S.err = (e && (e.code === 'PGRST205' || e.code === '42P01' || /schema cache|does not exist/i.test(e.message || ''))) ? 'SETUP' : friendly(e);
+        }
+    }
+
+    /* ---------- calculation ---------- */
+    function statement() {
+        const W = S.settings, wb = Number(W.breakfast_w), wl = Number(W.lunch_w), wd = Number(W.dinner_w);
+        const rows = S.members.map(m => {
+            const es = S.entries.filter(e => e.member_id === m.id), sum = k => es.reduce((a, e) => a + Number(e[k] || 0), 0);
+            const b = sum('breakfast'), l = sum('lunch'), d = sum('dinner'), g = sum('guest_meals');
+            const dep = r2(S.deposits.filter(x => x.member_id === m.id && !x.voided).reduce((a, x) => a + Number(x.amount), 0));
+            return { m: m, b: b, l: l, d: d, g: g, units: r2(b * wb + l * wl + d * wd + g), dep: dep };
+        }).filter(r => r.m.active || r.units > 0 || r.dep > 0);
+        const bazar = r2(S.bazar.filter(x => !x.voided).reduce((a, x) => a + Number(x.amount), 0));
+        const U = r2(rows.reduce((a, r) => a + r.units, 0)), rate = U > 0 ? bazar / U : 0;
+        rows.forEach(r => { r.cost = r2(r.units * rate); r.bal = r2(r.dep - r.cost); });
+        const dep = r2(rows.reduce((a, r) => a + r.dep, 0)), cost = r2(rows.reduce((a, r) => a + r.cost, 0));
+        const byCat = {}; S.bazar.filter(x => !x.voided).forEach(x => { byCat[x.category || 'Bazar'] = r2((byCat[x.category || 'Bazar'] || 0) + Number(x.amount)); });
+        return { rows: rows, bazar: bazar, units: U, rate: rate, dep: dep, cost: cost, diff: r2(bazar - cost), byCat: byCat };
+    }
+
+    /* ---------- UI helpers ---------- */
+    const mname = id => { const m = S.members.find(x => x.id === id); return m ? m.name : '—'; };
+    const accOpts = sel => { let list = []; try { list = accData.accounts; } catch (e) { } if (!list.length) list = [{ id: 'acc-cash', name: 'Cash in Hand' }]; return list.map(a => `<option value="${esc(a.id)}" ${a.id === sel ? 'selected' : ''}>${esc(a.name)}</option>`).join(''); };
+    const accName = id => { try { const a = accData.accounts.find(x => x.id === id); return a ? a.name : id; } catch (e) { return id; } };
+    const memberOpts = (sel, withBlank) => (withBlank ? '<option value="">—</option>' : '') + S.members.filter(m => m.active || m.id === sel).map(m => `<option value="${esc(m.id)}" ${m.id === sel ? 'selected' : ''}>${esc(m.name)}</option>`).join('');
+    const IN = () => (typeof ACC_INPUT !== 'undefined' ? ACC_INPUT : 'w-full text-xs p-2.5 bg-slate-50 border border-slate-300 rounded-lg');
+    const BG = () => (typeof ACC_BTN_G !== 'undefined' ? ACC_BTN_G : 'bg-emerald-600 text-white text-xs font-semibold px-3.5 py-2 rounded-lg');
+    const BS = 'bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-3.5 py-2 rounded-lg inline-flex items-center gap-1.5';
+    const card = (inner, extra) => `<div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5 ${extra || ''}">${inner}</div>`;
+    const lbl = (t, inner) => `<label class="block"><span class="block text-[11px] font-semibold text-slate-600 mb-1">${t}</span>${inner}</label>`;
+    const kpi = (t, v, tone) => `<div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4"><p class="text-[11px] text-slate-500 font-medium">${t}</p><p class="text-xl font-bold mt-1 ${tone || 'text-slate-800'}">${v}</p></div>`;
+
+    function mealRender() {
+        const el = $('tab-acc-meal'); if (!el) return;
+        const tabs = [['statement', 'Monthly Statement', 'fa-file-invoice'], ['daily', 'Daily Meals', 'fa-utensils'], ['bazar', 'Bazar / Expense', 'fa-basket-shopping'], ['deposit', 'Deposits', 'fa-piggy-bank'], ['members', 'Members', 'fa-users'], ['settings', 'Settings', 'fa-gear']];
+        const head = accHeader('fa-bowl-food', 'Meal Account', 'Daily meal, bazar, deposit ও মাসিক meal hisab',
+            `<input type="month" value="${esc(S.month)}" onchange="mealMonth(this.value)" class="${IN()} !w-auto">`);
+        const nav = `<div class="flex flex-wrap gap-2">${tabs.map(t => `<button type="button" onclick="mealTab('${t[0]}')" class="${S.tab === t[0] ? 'bg-emerald-600 text-white' : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'} px-3 py-2 rounded-lg text-xs font-semibold"><i class="fa-solid ${t[2]} mr-1.5"></i>${t[1]}</button>`).join('')}</div>`;
+        if (!S.loaded && !S.err) { el.innerHTML = head + '<div class="text-xs text-slate-500 p-6">Loading...</div>'; load().then(() => { mealRender(); }); return; }
+        if (S.err === 'SETUP') { el.innerHTML = head + card('<p class="text-sm font-semibold text-red-600">Database table পাওয়া যায়নি।</p><p class="text-xs text-slate-600 mt-2">Supabase SQL Editor এ <b>supabase_meal_leave_setup.sql</b> run করুন, তারপর পেজ reload করুন।</p>'); return; }
+        if (S.err) { el.innerHTML = head + card(`<p class="text-sm font-semibold text-red-600">লোড করা যায়নি</p><p class="text-xs text-slate-600 mt-2">${esc(S.err)}</p><button class="${BG()} mt-3" onclick="mealReload()">Try Again</button>`); return; }
+        const body = { statement: vStatement, daily: vDaily, bazar: vBazar, deposit: vDeposit, members: vMembers, settings: vSettings }[S.tab]();
+        el.innerHTML = head + nav + body;
+    }
+    window.mealRender = mealRender;
+    window.mealTab = t => { S.tab = t; mealRender(); };
+    window.mealReload = async () => { S.loaded = false; S.err = ''; await load(); mealRender(); };
+    window.mealMonth = async v => { if (!v) return; S.month = v; if (S.date.slice(0, 7) !== v) S.date = v + '-01'; S.eb = S.ed = null; await load(); mealRender(); };
+
+    /* ---------- Statement ---------- */
+    function vStatement() {
+        const R = statement(), W = S.settings;
+        const rows = R.rows.map(r => `<tr class="hover:bg-slate-50"><td class="p-3 font-semibold text-slate-800">${esc(r.m.name)}${r.m.active ? '' : ' <span class="text-[10px] text-slate-400">(inactive)</span>'}</td>
+            <td class="p-3 text-center">${r.b}</td><td class="p-3 text-center">${r.l}</td><td class="p-3 text-center">${r.d}</td><td class="p-3 text-center">${r.g}</td>
+            <td class="p-3 text-center font-semibold">${r.units}</td><td class="p-3 text-right">${fm(r.cost)}</td><td class="p-3 text-right">${fm(r.dep)}</td>
+            <td class="p-3 text-right font-bold ${r.bal < 0 ? 'text-rose-600' : 'text-emerald-600'}">${fm(r.bal)}</td></tr>`).join('') || '<tr><td colspan="9" class="p-6 text-center text-slate-400">No members / data for this month.</td></tr>';
+        const cats = Object.keys(R.byCat).map(k => `<div class="flex justify-between text-xs py-1 border-b border-slate-100"><span class="text-slate-600">${esc(k)}</span><span class="font-semibold">${fm(R.byCat[k])}</span></div>`).join('') || '<p class="text-xs text-slate-400">No bazar this month.</p>';
+        return `<div class="grid grid-cols-2 lg:grid-cols-5 gap-3">${kpi('Total Meal Units', R.units)}${kpi('Total Bazar', '৳ ' + fm(R.bazar), 'text-rose-600')}${kpi('Meal Rate / Unit', '৳ ' + R.rate.toFixed(2), 'text-blue-600')}${kpi('Total Deposits', '৳ ' + fm(R.dep), 'text-emerald-600')}${kpi('Deposit − Bazar', '৳ ' + fm(R.dep - R.bazar), (R.dep - R.bazar) < 0 ? 'text-rose-600' : 'text-slate-800')}</div>
+            ${card(`<div class="flex flex-wrap items-center justify-between gap-2 mb-3"><div><h3 class="font-bold text-sm text-slate-800">Member-wise Meal Statement — ${esc(S.month)}</h3>
+                <p class="text-[11px] text-slate-500 mt-0.5">Meal unit = Breakfast×${W.breakfast_w} + Lunch×${W.lunch_w} + Dinner×${W.dinner_w} + Guest. Rate = Total Bazar ÷ Total Units. Balance = Deposit − Meal Cost (− হলে বকেয়া)।</p></div>
+                <div class="flex gap-2"><button type="button" onclick="mealExcel()" class="${BS}"><i class="fa-solid fa-file-excel"></i> Export Excel</button><button type="button" onclick="mealPrint()" class="${BG()}"><i class="fa-solid fa-print"></i> Print</button></div></div>
+                <div class="overflow-x-auto"><table class="w-full text-xs text-left"><thead class="bg-slate-50 text-slate-500"><tr><th class="p-3">Member</th><th class="p-3 text-center">Breakfast</th><th class="p-3 text-center">Lunch</th><th class="p-3 text-center">Dinner</th><th class="p-3 text-center">Guest</th><th class="p-3 text-center">Units</th><th class="p-3 text-right">Meal Cost</th><th class="p-3 text-right">Deposit</th><th class="p-3 text-right">Balance</th></tr></thead>
+                <tbody class="divide-y divide-slate-100">${rows}</tbody>
+                <tfoot class="bg-slate-50 font-bold"><tr><td class="p-3">Total</td><td colspan="4"></td><td class="p-3 text-center">${R.units}</td><td class="p-3 text-right">${fm(R.cost)}</td><td class="p-3 text-right">${fm(R.dep)}</td><td class="p-3 text-right">${fm(R.dep - R.cost)}</td></tr></tfoot></table></div>
+                ${Math.abs(R.diff) >= 0.01 ? `<p class="text-[11px] text-slate-400 mt-2">Rounding difference between bazar and distributed cost: ৳ ${fm(R.diff)}</p>` : ''}`)}
+            ${card(`<h3 class="font-bold text-sm text-slate-800 mb-2">Bazar by category</h3>${cats}`)}`;
+    }
+    function reportData() {
+        const R = statement();
+        const kp = [{ label: 'Total Meal Units', value: String(R.units), raw: R.units }, { label: 'Total Bazar', value: '৳ ' + fm(R.bazar), raw: R.bazar }, { label: 'Meal Rate / Unit', value: '৳ ' + R.rate.toFixed(2), raw: Number(R.rate.toFixed(2)) }, { label: 'Total Deposits', value: '৳ ' + fm(R.dep), raw: R.dep }];
+        const sec = [{ title: 'Member-wise Meal Statement', sheet: 'Statement', heads: ['Member', 'Breakfast', 'Lunch', 'Dinner', 'Guest', 'Units', 'Meal Cost', 'Deposit', 'Balance'].map(t => ({ t: t, r: t !== 'Member' })),
+            rows: R.rows.map(r => [r.m.name, r.b, r.l, r.d, r.g, r.units, fm(r.cost), fm(r.dep), fm(r.bal)]), foot: ['Total', '', '', '', '', R.units, fm(R.cost), fm(R.dep), fm(R.dep - R.cost)] },
+            { title: 'Bazar / Expense Details', sheet: 'Bazar', heads: ['Date', 'Category', 'Description', 'Bought By', 'Amount'].map(t => ({ t: t, r: t === 'Amount' })),
+              rows: S.bazar.filter(x => !x.voided).slice().sort((a, b) => a.expense_date < b.expense_date ? -1 : 1).map(x => [x.expense_date, x.category || '', x.description || '', x.bought_by ? mname(x.bought_by) : '', fm(x.amount)]), foot: ['Total', '', '', '', fm(R.bazar)] }];
+        return { kp: kp, sec: sec };
+    }
+    window.mealPrint = () => { const d = reportData(); if (typeof rptPrint === 'function') rptPrint('Meal Statement - ' + S.month, 'Meal rate ৳ ' + statement().rate.toFixed(2) + ' per unit', d.kp, d.sec, 'Accounts'); };
+    window.mealExcel = () => { const d = reportData(); if (typeof rptExcelAll === 'function') rptExcelAll('meal-statement-' + S.month + '.xlsx', 'Meal Statement - ' + S.month, '', d.kp, d.sec); };
+
+    /* ---------- Daily meals ---------- */
+    function vDaily() {
+        const act = S.members.filter(m => m.active);
+        const ex = {}; S.entries.filter(e => e.entry_date === S.date).forEach(e => { ex[e.member_id] = e; });
+        const num = (id, v) => `<input type="number" id="${id}" min="0" max="9" step="0.5" value="${v || 0}" class="w-16 text-center text-xs p-1.5 border border-slate-300 rounded-lg">`;
+        const rows = act.map(m => { const e = ex[m.id] || {}; return `<tr class="hover:bg-slate-50"><td class="p-3 font-semibold text-slate-800">${esc(m.name)}<div class="text-[10px] text-slate-400">${esc(m.designation || '')}</div></td>
+            <td class="p-2 text-center">${num('md-b-' + m.id, e.breakfast)}</td><td class="p-2 text-center">${num('md-l-' + m.id, e.lunch)}</td><td class="p-2 text-center">${num('md-d-' + m.id, e.dinner)}</td><td class="p-2 text-center">${num('md-g-' + m.id, e.guest_meals)}</td></tr>`; }).join('') || '<tr><td colspan="5" class="p-6 text-center text-slate-400">প্রথমে Members ট্যাবে member যোগ করুন।</td></tr>';
+        return card(`<div class="flex flex-wrap items-end justify-between gap-3 mb-3"><div><h3 class="font-bold text-sm text-slate-800">Daily Meal Entry</h3><p class="text-[11px] text-slate-500">প্রতিদিন কে কয়টি meal খেয়েছে লিখুন (০, ০.৫, ১, ২...)। Guest = অতিথি meal।</p></div>
+            <div class="flex items-end gap-2"><label class="block"><span class="block text-[11px] font-semibold text-slate-600 mb-1">Date</span><input type="date" id="md-date" value="${esc(S.date)}" onchange="mealDay(this.value)" class="${IN()}"></label>
+            <button type="button" onclick="mealFill(1)" class="${BS}">All = 1</button><button type="button" onclick="mealFill(0)" class="${BS}">All = 0</button>
+            <button type="button" onclick="mealSaveDay()" class="${BG()}"><i class="fa-solid fa-floppy-disk"></i> Save Day</button></div></div>
+            <div class="overflow-x-auto"><table class="w-full text-xs text-left"><thead class="bg-slate-50 text-slate-500"><tr><th class="p-3">Member</th><th class="p-3 text-center">Breakfast</th><th class="p-3 text-center">Lunch</th><th class="p-3 text-center">Dinner</th><th class="p-3 text-center">Guest</th></tr></thead><tbody class="divide-y divide-slate-100">${rows}</tbody></table></div>`);
+    }
+    window.mealDay = async v => { if (!v) return; S.date = v; if (v.slice(0, 7) !== S.month) { S.month = v.slice(0, 7); await load(); } mealRender(); };
+    window.mealFill = n => { S.members.filter(m => m.active).forEach(m => { ['b', 'l', 'd'].forEach(k => { const e = $('md-' + k + '-' + m.id); if (e) e.value = n; }); }); };
+    window.mealSaveDay = async function () {
+        const c = sb(); if (!c || S.busy) return;
+        const rows = [];
+        S.members.filter(m => m.active).forEach(m => {
+            const g = k => Math.max(0, Math.min(k === 'g' ? 99 : 9, Number(($('md-' + k + '-' + m.id) || {}).value) || 0));
+            const r = { entry_date: S.date, member_id: m.id, breakfast: g('b'), lunch: g('l'), dinner: g('d'), guest_meals: g('g') };
+            const existed = S.entries.some(e => e.entry_date === S.date && e.member_id === m.id);
+            if (existed || r.breakfast || r.lunch || r.dinner || r.guest_meals) rows.push(r);
+        });
+        if (!rows.length) { toast('কোনো meal লেখা হয়নি।', false); return; }
+        S.busy = true;
+        const { error } = await c.from('meal_entries').upsert(rows, { onConflict: 'entry_date,member_id' });
+        S.busy = false;
+        if (error) { toast(friendly(error), false); return; }
+        toast('Meal saved'); await load(); mealRender();
+    };
+
+    /* ---------- Bazar ---------- */
+    function vBazar() {
+        const e = S.eb ? S.bazar.find(x => x.id === S.eb) : null;
+        const list = S.bazar.map(x => `<tr class="${x.voided ? 'opacity-50 line-through' : 'hover:bg-slate-50'}"><td class="p-3">${esc(x.expense_date)}</td><td class="p-3">${esc(x.category || '')}</td><td class="p-3">${esc(x.description || '')}</td><td class="p-3">${x.bought_by ? esc(mname(x.bought_by)) : '—'}</td><td class="p-3">${esc(accName(x.account_id))}</td><td class="p-3 text-right font-semibold">${fm(x.amount)}</td>
+            <td class="p-3 text-center whitespace-nowrap">${x.voided ? '<span class="text-[10px] text-rose-600 font-bold no-underline">VOID</span>' : `<button type="button" onclick="mealEditBazar('${x.id}')" class="text-emerald-600 mr-2" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button><button type="button" onclick="mealVoid('bazar','${x.id}')" class="text-rose-600" title="Void"><i class="fa-solid fa-ban"></i></button>`}</td></tr>`).join('') || '<tr><td colspan="7" class="p-6 text-center text-slate-400">No bazar entries this month.</td></tr>';
+        const tot = r2(S.bazar.filter(x => !x.voided).reduce((a, x) => a + Number(x.amount), 0));
+        return card(`<h3 class="font-bold text-sm text-slate-800 mb-3">${e ? 'Edit Bazar / Expense' : 'Add Bazar / Expense'}</h3><input type="hidden" id="mb-id" value="${esc(e ? e.id : '')}">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                ${lbl('Date *', `<input type="date" id="mb-date" value="${esc(e ? e.expense_date : (S.date.slice(0, 7) === S.month ? S.date : S.month + '-01'))}" class="${IN()}">`)}
+                ${lbl('Category', `<select id="mb-cat" class="${IN()}">${CATS.map(c => `<option ${e && e.category === c ? 'selected' : ''}>${c}</option>`).join('')}</select>`)}
+                ${lbl('Amount (৳) *', `<input type="number" id="mb-amt" min="0.01" step="0.01" value="${e ? e.amount : ''}" class="${IN()}">`)}
+                ${lbl('Bought by', `<select id="mb-by" class="${IN()}">${memberOpts(e ? e.bought_by : '', true)}</select>`)}
+                ${lbl('Paid from account', `<select id="mb-acc" class="${IN()}">${accOpts(e ? e.account_id : 'acc-cash')}</select>`)}
+                ${lbl('Voucher / Memo no.', `<input id="mb-v" value="${esc(e ? e.voucher_no : '')}" class="${IN()}">`)}
+                <div class="col-span-2">${lbl('Description (কী কেনা হলো)', `<input id="mb-desc" value="${esc(e ? e.description : '')}" class="${IN()}">`)}</div></div>
+            <div class="flex justify-end gap-2 mt-3">${e ? `<button type="button" onclick="mealCancelEdit()" class="${BS}">Cancel Edit</button>` : ''}<button type="button" onclick="mealSaveBazar()" class="${BG()}"><i class="fa-solid fa-floppy-disk"></i> ${e ? 'Update' : 'Save'}</button></div>`)
+            + card(`<div class="flex justify-between items-center mb-3"><h3 class="font-bold text-sm text-slate-800">Bazar — ${esc(S.month)}</h3><span class="text-xs font-bold text-rose-600">Total ৳ ${fm(tot)}</span></div>
+            <div class="overflow-x-auto"><table class="w-full text-xs text-left"><thead class="bg-slate-50 text-slate-500"><tr><th class="p-3">Date</th><th class="p-3">Category</th><th class="p-3">Description</th><th class="p-3">Bought by</th><th class="p-3">Account</th><th class="p-3 text-right">Amount</th><th class="p-3 text-center">Action</th></tr></thead><tbody class="divide-y divide-slate-100">${list}</tbody></table></div>
+            <p class="text-[10px] text-slate-400 mt-2">Void করা হলে হিসাব থেকে বাদ যায় কিন্তু record থেকে যায় (audit এর জন্য)।</p>`);
+    }
+    window.mealEditBazar = id => { S.eb = id; mealRender(); };
+    window.mealCancelEdit = () => { S.eb = null; S.ed = null; mealRender(); };
+    window.mealSaveBazar = async function () {
+        const c = sb(); if (!c || S.busy) return;
+        const id = $('mb-id').value, amt = Number($('mb-amt').value), date = $('mb-date').value;
+        if (!date) { toast('Date দিন।', false); return; }
+        if (!(amt > 0)) { toast('সঠিক Amount দিন।', false); return; }
+        const row = { expense_date: date, category: $('mb-cat').value, description: $('mb-desc').value.trim() || null, amount: r2(amt), bought_by: $('mb-by').value || null, account_id: $('mb-acc').value || 'acc-cash', voucher_no: $('mb-v').value.trim() || null };
+        S.busy = true;
+        const q = id ? c.from('meal_bazar').update(row).eq('id', id) : c.from('meal_bazar').insert(row);
+        const { error } = await q; S.busy = false;
+        if (error) { toast(friendly(error), false); return; }
+        S.eb = null; toast(id ? 'Updated' : 'Saved'); txAt = 0; await load(); refreshTx(true); mealRender();
+    };
+
+    /* ---------- Deposits ---------- */
+    function vDeposit() {
+        const e = S.ed ? S.deposits.find(x => x.id === S.ed) : null;
+        const list = S.deposits.map(x => `<tr class="${x.voided ? 'opacity-50 line-through' : 'hover:bg-slate-50'}"><td class="p-3">${esc(x.deposit_date)}</td><td class="p-3 font-semibold">${esc(mname(x.member_id))}</td><td class="p-3">${esc(x.method)}</td><td class="p-3">${esc(accName(x.account_id))}</td><td class="p-3">${esc(x.note || '')}</td><td class="p-3 text-right font-semibold">${fm(x.amount)}</td>
+            <td class="p-3 text-center whitespace-nowrap">${x.voided ? '<span class="text-[10px] text-rose-600 font-bold no-underline">VOID</span>' : `<button type="button" onclick="mealEditDep('${x.id}')" class="text-emerald-600 mr-2" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button><button type="button" onclick="mealVoid('deposit','${x.id}')" class="text-rose-600" title="Void"><i class="fa-solid fa-ban"></i></button>`}</td></tr>`).join('') || '<tr><td colspan="7" class="p-6 text-center text-slate-400">No deposits this month.</td></tr>';
+        const tot = r2(S.deposits.filter(x => !x.voided).reduce((a, x) => a + Number(x.amount), 0));
+        return card(`<h3 class="font-bold text-sm text-slate-800 mb-3">${e ? 'Edit Deposit' : 'Add Member Deposit'}</h3><input type="hidden" id="md2-id" value="${esc(e ? e.id : '')}">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                ${lbl('Date *', `<input type="date" id="md2-date" value="${esc(e ? e.deposit_date : (S.date.slice(0, 7) === S.month ? S.date : S.month + '-01'))}" class="${IN()}">`)}
+                ${lbl('Member *', `<select id="md2-mem" class="${IN()}">${memberOpts(e ? e.member_id : '', false)}</select>`)}
+                ${lbl('Amount (৳) *', `<input type="number" id="md2-amt" min="0.01" step="0.01" value="${e ? e.amount : ''}" class="${IN()}">`)}
+                ${lbl('Method', `<select id="md2-meth" class="${IN()}">${['Cash', 'Bank', 'Mobile Banking'].map(m => `<option ${e && e.method === m ? 'selected' : ''}>${m}</option>`).join('')}</select>`)}
+                ${lbl('Received in account', `<select id="md2-acc" class="${IN()}">${accOpts(e ? e.account_id : 'acc-cash')}</select>`)}
+                <div class="col-span-2">${lbl('Note', `<input id="md2-note" value="${esc(e ? e.note : '')}" class="${IN()}">`)}</div></div>
+            <div class="flex justify-end gap-2 mt-3">${e ? `<button type="button" onclick="mealCancelEdit()" class="${BS}">Cancel Edit</button>` : ''}<button type="button" onclick="mealSaveDep()" class="${BG()}"><i class="fa-solid fa-floppy-disk"></i> ${e ? 'Update' : 'Save'}</button></div>`)
+            + card(`<div class="flex justify-between items-center mb-3"><h3 class="font-bold text-sm text-slate-800">Deposits — ${esc(S.month)}</h3><span class="text-xs font-bold text-emerald-600">Total ৳ ${fm(tot)}</span></div>
+            <div class="overflow-x-auto"><table class="w-full text-xs text-left"><thead class="bg-slate-50 text-slate-500"><tr><th class="p-3">Date</th><th class="p-3">Member</th><th class="p-3">Method</th><th class="p-3">Account</th><th class="p-3">Note</th><th class="p-3 text-right">Amount</th><th class="p-3 text-center">Action</th></tr></thead><tbody class="divide-y divide-slate-100">${list}</tbody></table></div>`);
+    }
+    window.mealEditDep = id => { S.ed = id; mealRender(); };
+    window.mealSaveDep = async function () {
+        const c = sb(); if (!c || S.busy) return;
+        const id = $('md2-id').value, amt = Number($('md2-amt').value), date = $('md2-date').value, mem = $('md2-mem').value;
+        if (!mem) { toast('Member বাছাই করুন।', false); return; }
+        if (!date) { toast('Date দিন।', false); return; }
+        if (!(amt > 0)) { toast('সঠিক Amount দিন।', false); return; }
+        const row = { deposit_date: date, member_id: mem, amount: r2(amt), method: $('md2-meth').value, account_id: $('md2-acc').value || 'acc-cash', note: $('md2-note').value.trim() || null };
+        S.busy = true;
+        const { error } = await (id ? c.from('meal_deposits').update(row).eq('id', id) : c.from('meal_deposits').insert(row)); S.busy = false;
+        if (error) { toast(friendly(error), false); return; }
+        S.ed = null; toast(id ? 'Updated' : 'Saved'); txAt = 0; await load(); refreshTx(true); mealRender();
+    };
+    window.mealVoid = async function (kind, id) {
+        const c = sb(); if (!c) return;
+        const reason = prompt('Void করার কারণ লিখুন (আবশ্যক):'); if (reason === null) return;
+        if (!reason.trim()) { toast('কারণ লিখতে হবে।', false); return; }
+        const { error } = await c.from(kind === 'bazar' ? 'meal_bazar' : 'meal_deposits').update({ voided: true, void_reason: reason.trim() }).eq('id', id);
+        if (error) { toast(friendly(error), false); return; }
+        toast('Voided'); txAt = 0; await load(); refreshTx(true); mealRender();
+    };
+
+    /* ---------- Members ---------- */
+    function vMembers() {
+        const used = new Set(S.members.map(m => m.user_id).filter(Boolean));
+        const rows = S.members.map(m => `<tr class="hover:bg-slate-50"><td class="p-3 font-semibold text-slate-800">${esc(m.name)}</td><td class="p-3">${esc(m.designation || '')}</td><td class="p-3"><span class="${m.active ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-500'} px-2 py-1 rounded">${m.active ? 'Active' : 'Inactive'}</span></td>
+            <td class="p-3 text-center whitespace-nowrap"><button type="button" onclick="mealToggleMember('${m.id}',${!m.active})" class="text-blue-600 mr-3">${m.active ? 'Deactivate' : 'Activate'}</button><button type="button" onclick="mealDelMember('${m.id}')" class="text-rose-600" title="Delete"><i class="fa-solid fa-trash"></i></button></td></tr>`).join('') || '<tr><td colspan="4" class="p-6 text-center text-slate-400">No members yet.</td></tr>';
+        const us = S.dir.filter(u => !used.has(u.id)).map(u => `<option value="${esc(u.id)}" data-n="${esc(u.full_name || '')}" data-d="${esc(u.designation || '')}">${esc(u.full_name || '')}${u.designation ? ' (' + esc(u.designation) + ')' : ''}</option>`).join('');
+        return card(`<h3 class="font-bold text-sm text-slate-800 mb-3">Add Member</h3><div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+            ${lbl('System user থেকে (optional)', `<select id="mm-user" onchange="mealPickUser(this)" class="${IN()}"><option value="">— Manual —</option>${us}</select>`)}
+            ${lbl('Name *', `<input id="mm-name" class="${IN()}">`)}${lbl('Designation', `<input id="mm-des" class="${IN()}">`)}
+            <div class="flex items-end"><button type="button" onclick="mealAddMember()" class="${BG()} w-full justify-center"><i class="fa-solid fa-plus"></i> Add</button></div></div>`)
+            + card(`<h3 class="font-bold text-sm text-slate-800 mb-3">Members (${S.members.length})</h3><div class="overflow-x-auto"><table class="w-full text-xs text-left"><thead class="bg-slate-50 text-slate-500"><tr><th class="p-3">Name</th><th class="p-3">Designation</th><th class="p-3">Status</th><th class="p-3 text-center">Action</th></tr></thead><tbody class="divide-y divide-slate-100">${rows}</tbody></table></div>`);
+    }
+    window.mealPickUser = sel => { const o = sel.options[sel.selectedIndex]; if (o && o.value) { $('mm-name').value = o.getAttribute('data-n') || ''; $('mm-des').value = o.getAttribute('data-d') || ''; } };
+    window.mealAddMember = async function () {
+        const c = sb(); if (!c) return; const name = $('mm-name').value.trim(); if (!name) { toast('Name দিন।', false); return; }
+        const { error } = await c.from('meal_members').insert({ name: name, designation: $('mm-des').value.trim() || null, user_id: $('mm-user').value || null });
+        if (error) { toast(friendly(error), false); return; }
+        toast('Member added'); await load(); mealRender();
+    };
+    window.mealToggleMember = async function (id, on) {
+        const c = sb(); if (!c) return; const { error } = await c.from('meal_members').update({ active: on }).eq('id', id);
+        if (error) { toast(friendly(error), false); return; } await load(); mealRender();
+    };
+    window.mealDelMember = async function (id) {
+        const c = sb(); if (!c) return; if (!confirm('এই member মুছবেন? (meal/deposit থাকলে মোছা যাবে না — তখন Deactivate করুন)')) return;
+        const { error } = await c.from('meal_members').delete().eq('id', id);
+        if (error) { toast(friendly(error), false); return; } toast('Deleted'); await load(); mealRender();
+    };
+
+    /* ---------- Settings ---------- */
+    function vSettings() {
+        const W = S.settings;
+        return card(`<h3 class="font-bold text-sm text-slate-800 mb-1">Meal Settings</h3><p class="text-[11px] text-slate-500 mb-3">Meal unit এর ওজন (weight)। সাধারণত Breakfast = ০.৫, Lunch = ১, Dinner = ১।</p>
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">${lbl('Breakfast weight', `<input type="number" id="ms-b" min="0" step="0.25" value="${W.breakfast_w}" class="${IN()}">`)}${lbl('Lunch weight', `<input type="number" id="ms-l" min="0" step="0.25" value="${W.lunch_w}" class="${IN()}">`)}${lbl('Dinner weight', `<input type="number" id="ms-d" min="0" step="0.25" value="${W.dinner_w}" class="${IN()}">`)}</div>
+            <label class="flex items-start gap-2 mt-4 text-xs text-slate-700"><input type="checkbox" id="ms-post" ${W.post_to_accounts !== false ? 'checked' : ''} class="mt-0.5"><span><b>Accounts এ auto post করুন</b> — Bazar → Expenses ("Meal Expense"), Deposit → Income ("Meal Deposit")। মেস যদি কোম্পানির হিসাবের বাইরে হয়, এটি বন্ধ রাখুন।</span></label>
+            <div class="flex justify-end mt-4"><button type="button" onclick="mealSaveSettings()" class="${BG()}"><i class="fa-solid fa-floppy-disk"></i> Save Settings</button></div>`);
+    }
+    window.mealSaveSettings = async function () {
+        const c = sb(); if (!c) return; const g = id => Number($(id).value);
+        if ([g('ms-b'), g('ms-l'), g('ms-d')].some(v => !(v >= 0))) { toast('Weight ০ বা তার বেশি হতে হবে।', false); return; }
+        const { error } = await c.from('meal_settings').update({ breakfast_w: g('ms-b'), lunch_w: g('ms-l'), dinner_w: g('ms-d'), post_to_accounts: $('ms-post').checked, updated_at: new Date().toISOString() }).eq('id', 1);
+        if (error) { toast(friendly(error), false); return; }
+        toast('Settings saved'); txAt = 0; await load(); refreshTx(true).then(() => { if (typeof accRefreshCurrent === 'function') accRefreshCurrent(); }); mealRender();
+    };
+
+    function init() { refreshTx(true).then(() => { try { accRefreshCurrent(); } catch (e) { } }); setInterval(() => { refreshTx(false); }, 60000); }
+    window.addEventListener('nc-signed-in', init);
+    if (window.NC_AUTH && window.NC_AUTH.client) init();
+})();
+
+    </script>
+
+    <script>
+/* =====================================================================
+   LEAVE MANAGEMENT
+   Pages: Apply Leave | Leave Requests (approval) | Leave Balance | Leave Settings
+   Data: Supabase tables leave_*  (RLS + triggers enforce who can do what).
+   ===================================================================== */
+(function () {
+    'use strict';
+    const $ = id => document.getElementById(id);
+    const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const sb = () => window.NC_AUTH && window.NC_AUTH.client;
+    const me = () => (window.NC_AUTH && window.NC_AUTH.user && window.NC_AUTH.user.id) || '';
+    const can = p => !window.NC_ACCESS || window.NC_ACCESS.can(p);
+    const toast = (m, ok) => { if (typeof accToast === 'function') accToast(m, ok !== false); else alert(m); };
+    const iso = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    const parse = s => { const a = String(s).slice(0, 10).split('-').map(Number); return new Date(a[0], a[1] - 1, a[2]); };
+    const today = () => iso(new Date());
+    const fd = s => { if (!s) return '-'; const d = parse(s); return String(d.getDate()).padStart(2, '0') + ' ' + ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][d.getMonth()] + ' ' + d.getFullYear(); };
+    const DOWN = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+    const S = { types: [], holidays: [], settings: { weekly_off: [5] }, reqs: [], dir: [], loaded: false, err: '', year: new Date().getFullYear(), tab: 'leave-apply', busy: false,
+        f: { status: '', type: '', emp: '', month: '' } };
+
+    function friendly(e) {
+        const m = (e && e.message) || String(e || '');
+        if (/leave_no_overlap|exclusion constraint|conflicting key/i.test(m)) return 'এই সময়ের মধ্যে আপনার আরেকটি Leave (Pending/Approved) আছে।';
+        if (e && (e.code === '42501' || /row-level security|permission denied/i.test(m))) return 'এই কাজের Permission নেই (Database)।';
+        if (e && e.code === '23503') return 'এটি ব্যবহৃত হচ্ছে, তাই মোছা যাবে না।';
+        if (e && e.code === '23505') return 'এটি আগে থেকেই আছে।';
+        return m;
+    }
+    const nameOf = id => { const u = S.dir.find(x => x.id === id); return u ? (u.full_name || 'User') : (id === me() ? 'Me' : 'Unknown'); };
+    const typeOf = id => S.types.find(t => t.id === id) || { name: '—', annual_quota: 0, unlimited: false };
+
+    async function load() {
+        const c = sb(); if (!c) { S.err = 'Supabase connected নয়।'; return; }
+        S.err = '';
+        try {
+            const r = await Promise.all([
+                c.from('leave_types').select('*').order('name'),
+                c.from('leave_holidays').select('*').order('holiday_date'),
+                c.from('leave_settings').select('*').eq('id', 1).maybeSingle(),
+                c.from('leave_requests').select('*').order('created_at', { ascending: false }),
+                c.rpc('team_directory')]);
+            const bad = r.slice(0, 4).find(x => x.error); if (bad) throw bad.error;
+            S.types = r[0].data || []; S.holidays = r[1].data || []; if (r[2].data) S.settings = r[2].data;
+            S.reqs = r[3].data || []; S.dir = (r[4] && Array.isArray(r[4].data)) ? r[4].data : [];
+            S.loaded = true;
+        } catch (e) {
+            S.err = (e && (e.code === 'PGRST205' || e.code === '42P01' || /schema cache|does not exist/i.test(e.message || ''))) ? 'SETUP' : friendly(e);
+        }
+    }
+
+    /* ---------- calculations ---------- */
+    function workDays(f, t) {
+        const off = new Set((S.settings.weekly_off || [5]).map(Number)), hol = new Set(S.holidays.map(h => String(h.holiday_date).slice(0, 10)));
+        let n = 0; for (let d = parse(f); iso(d) <= t; d.setDate(d.getDate() + 1)) { if (off.has(d.getDay()) || hol.has(iso(d))) continue; n++; } return n;
+    }
+    function balance(uid, typeId, year) {
+        const t = typeOf(typeId), rs = S.reqs.filter(r => r.user_id === uid && r.type_id === typeId && parse(r.from_date).getFullYear() === year);
+        const used = rs.filter(r => r.status === 'Approved').reduce((a, r) => a + Number(r.days), 0), pend = rs.filter(r => r.status === 'Pending').reduce((a, r) => a + Number(r.days), 0);
+        return { quota: Number(t.annual_quota) || 0, unlimited: !!t.unlimited, used: used, pend: pend, left: t.unlimited ? Infinity : Math.max(0, (Number(t.annual_quota) || 0) - used - pend) };
+    }
+    const chip = s => { const c = { Pending: 'bg-amber-50 text-amber-700', Approved: 'bg-emerald-50 text-emerald-700', Rejected: 'bg-rose-50 text-rose-700', Cancelled: 'bg-slate-100 text-slate-500' }[s] || 'bg-slate-100'; return `<span class="${c} px-2 py-1 rounded text-[10px] font-bold">${esc(s)}</span>`; };
+
+    /* ---------- UI helpers ---------- */
+    const IN = () => (typeof ACC_INPUT !== 'undefined' ? ACC_INPUT : 'w-full text-xs p-2.5 bg-slate-50 border border-slate-300 rounded-lg');
+    const BG = () => (typeof ACC_BTN_G !== 'undefined' ? ACC_BTN_G : 'bg-emerald-600 text-white text-xs font-semibold px-3.5 py-2 rounded-lg');
+    const BS = 'bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-3.5 py-2 rounded-lg inline-flex items-center gap-1.5';
+    const card = inner => `<div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5">${inner}</div>`;
+    const lbl = (t, inner) => `<label class="block"><span class="block text-[11px] font-semibold text-slate-600 mb-1">${t}</span>${inner}</label>`;
+    const kpi = (t, v, tone) => `<div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4"><p class="text-[11px] text-slate-500 font-medium">${t}</p><p class="text-xl font-bold mt-1 ${tone || 'text-slate-800'}">${v}</p></div>`;
+    function shell(tab, title, sub, right, bodyFn) {
+        const el = $('tab-' + tab); if (!el) return;
+        const head = accHeader('fa-calendar-check', title, sub, right || '');
+        if (!S.loaded && !S.err) { el.innerHTML = head + '<div class="text-xs text-slate-500 p-6">Loading...</div>'; load().then(() => leaveRender(tab)); return; }
+        if (S.err === 'SETUP') { el.innerHTML = head + card('<p class="text-sm font-semibold text-red-600">Database table পাওয়া যায়নি।</p><p class="text-xs text-slate-600 mt-2">Supabase SQL Editor এ <b>supabase_meal_leave_setup.sql</b> run করুন, তারপর পেজ reload করুন।</p>'); return; }
+        if (S.err) { el.innerHTML = head + card(`<p class="text-sm font-semibold text-red-600">লোড করা যায়নি</p><p class="text-xs text-slate-600 mt-2">${esc(S.err)}</p><button class="${BG()} mt-3" onclick="leaveReload()">Try Again</button>`); return; }
+        el.innerHTML = head + bodyFn();
+    }
+    window.leaveReload = async () => { S.loaded = false; S.err = ''; await load(); leaveRender(S.tab); };
+    window.leaveRender = function (tab) {
+        S.tab = tab || S.tab;
+        ({ 'leave-apply': pApply, 'leave-requests': pRequests, 'leave-balance': pBalance, 'leave-settings': pSettings }[S.tab] || function () { })();
+    };
+
+    /* ================= Apply Leave ================= */
+    function pApply() {
+        shell('leave-apply', 'Apply Leave', 'নিজের ছুটির আবেদন করুন ও অবস্থা দেখুন', '', () => {
+            const uid = me(), y = S.year, act = S.types.filter(t => t.active);
+            const balCards = act.map(t => { const b = balance(uid, t.id, y); return `<div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4"><p class="text-[11px] text-slate-500 font-medium">${esc(t.name)}</p><p class="text-xl font-bold mt-1 text-slate-800">${b.unlimited ? '∞' : b.left}<span class="text-[11px] text-slate-400 font-medium"> ${b.unlimited ? 'no limit' : 'left of ' + b.quota}</span></p><p class="text-[10px] text-slate-400 mt-1">Used ${b.used}${b.pend ? ' · Pending ' + b.pend : ''}</p></div>`; }).join('');
+            const mine = S.reqs.filter(r => r.user_id === uid);
+            const rows = mine.map(r => {
+                const cancel = (r.status === 'Pending' || (r.status === 'Approved' && r.from_date > today()));
+                return `<tr class="hover:bg-slate-50"><td class="p-3 font-semibold text-slate-800">${esc(typeOf(r.type_id).name)}</td><td class="p-3">${fd(r.from_date)}${r.to_date !== r.from_date ? ' → ' + fd(r.to_date) : ''}${r.half_day ? ' <span class="text-[10px] text-slate-400">(half)</span>' : ''}</td><td class="p-3 text-center font-semibold">${r.days}</td><td class="p-3 max-w-[220px] truncate" title="${esc(r.reason)}">${esc(r.reason)}</td><td class="p-3">${chip(r.status)}</td><td class="p-3 text-slate-500">${esc(r.decision_note || '')}</td>
+                    <td class="p-3 text-center">${cancel ? `<button type="button" onclick="leaveCancel('${r.id}')" class="text-rose-600 hover:underline font-semibold">Cancel</button>` : ''}</td></tr>`;
+            }).join('') || '<tr><td colspan="7" class="p-6 text-center text-slate-400">আপনি এখনও কোনো ছুটির আবেদন করেননি।</td></tr>';
+            return `<div class="grid grid-cols-2 lg:grid-cols-4 gap-3">${balCards || '<p class="text-xs text-slate-400">Leave type নেই। Leave Settings এ যোগ করুন।</p>'}</div>
+                ${card(`<h3 class="font-bold text-sm text-slate-800 mb-3">New Leave Application</h3><div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                    ${lbl('Leave Type *', `<select id="lv-type" onchange="leavePreview()" class="${IN()}">${act.map(t => `<option value="${esc(t.id)}">${esc(t.name)}</option>`).join('')}</select>`)}
+                    ${lbl('From *', `<input type="date" id="lv-from" min="${today()}" value="${today()}" onchange="leaveFromChange()" class="${IN()}">`)}
+                    ${lbl('To *', `<input type="date" id="lv-to" min="${today()}" value="${today()}" onchange="leavePreview()" class="${IN()}">`)}
+                    <div class="flex items-end"><label class="flex items-center gap-2 text-xs text-slate-700 pb-2.5"><input type="checkbox" id="lv-half" onchange="leavePreview()"> Half day</label></div>
+                    <div class="col-span-2">${lbl('Reason *', `<input id="lv-reason" class="${IN()}" placeholder="ছুটির কারণ">`)}</div>
+                    <div class="col-span-2">${lbl('Contact during leave', `<input id="lv-contact" class="${IN()}" placeholder="Mobile / address (optional)">`)}</div></div>
+                    <div class="flex flex-wrap items-center justify-between gap-3 mt-3"><p id="lv-preview" class="text-xs text-slate-600"></p><button type="button" onclick="leaveSubmit()" class="${BG()}"><i class="fa-solid fa-paper-plane"></i> Submit Application</button></div>`)}
+                ${card(`<h3 class="font-bold text-sm text-slate-800 mb-3">My Applications</h3><div class="overflow-x-auto"><table class="w-full text-xs text-left"><thead class="bg-slate-50 text-slate-500"><tr><th class="p-3">Type</th><th class="p-3">Dates</th><th class="p-3 text-center">Days</th><th class="p-3">Reason</th><th class="p-3">Status</th><th class="p-3">Note</th><th class="p-3 text-center">Action</th></tr></thead><tbody class="divide-y divide-slate-100">${rows}</tbody></table></div>`)}`;
+        });
+        setTimeout(() => { if ($('lv-from')) leavePreview(); }, 0);
+    }
+    window.leaveFromChange = () => { const f = $('lv-from'), t = $('lv-to'); if (t.value < f.value) t.value = f.value; t.min = f.value; leavePreview(); };
+    window.leavePreview = function () {
+        const f = $('lv-from'), t = $('lv-to'), h = $('lv-half'), p = $('lv-preview'), ty = $('lv-type'); if (!f || !p) return;
+        if (t.value < f.value) { p.textContent = 'To date, From date এর আগে হতে পারে না।'; return; }
+        if (h.checked && f.value !== t.value) { p.textContent = 'Half day শুধু একদিনের জন্য।'; return; }
+        const days = h.checked ? 0.5 : workDays(f.value, t.value);
+        let msg = `Working days: <b>${days}</b> (weekly off ও holiday বাদে)`;
+        if (ty && ty.value) { const b = balance(me(), ty.value, parse(f.value).getFullYear()); if (!b.unlimited) msg += ` · Balance after: <b class="${b.left - days < 0 ? 'text-rose-600' : ''}">${b.left - days}</b>`; }
+        p.innerHTML = msg;
+    };
+    window.leaveSubmit = async function () {
+        const c = sb(); if (!c || S.busy) return;
+        const type = $('lv-type').value, f = $('lv-from').value, t = $('lv-to').value, half = $('lv-half').checked, reason = $('lv-reason').value.trim();
+        if (!type) { toast('Leave type বাছাই করুন।', false); return; }
+        if (!f || !t || t < f) { toast('সঠিক তারিখ দিন।', false); return; }
+        if (half && f !== t) { toast('Half day শুধু একদিনের জন্য।', false); return; }
+        if (!reason) { toast('কারণ লিখুন।', false); return; }
+        const days = half ? 0.5 : workDays(f, t);
+        if (days <= 0) { toast('নির্বাচিত তারিখে কোনো working day নেই।', false); return; }
+        const ov = S.reqs.find(r => r.user_id === me() && (r.status === 'Pending' || r.status === 'Approved') && r.from_date <= t && r.to_date >= f);
+        if (ov) { toast('এই সময়ের মধ্যে আপনার আরেকটি Leave আছে (' + fd(ov.from_date) + ' → ' + fd(ov.to_date) + ')।', false); return; }
+        const b = balance(me(), type, parse(f).getFullYear());
+        if (!b.unlimited && days > b.left) { toast('Leave balance যথেষ্ট নয়। Available: ' + b.left + ' দিন।', false); return; }
+        S.busy = true;
+        const { error } = await c.from('leave_requests').insert({ user_id: me(), type_id: type, from_date: f, to_date: t, half_day: half, days: days, reason: reason, contact: $('lv-contact').value.trim() || null });
+        S.busy = false;
+        if (error) { toast(friendly(error), false); return; }
+        toast('আবেদন জমা হয়েছে (Pending)'); await load(); leaveRender('leave-apply');
+    };
+    window.leaveCancel = async function (id) {
+        const c = sb(); if (!c || !confirm('এই Leave আবেদন বাতিল করবেন?')) return;
+        const { error } = await c.from('leave_requests').update({ status: 'Cancelled' }).eq('id', id);
+        if (error) { toast(friendly(error), false); return; }
+        toast('Cancelled'); await load(); leaveRender(S.tab);
+    };
+
+    /* ================= Leave Requests ================= */
+    function filtered() {
+        const f = S.f;
+        return S.reqs.filter(r => (!f.status || r.status === f.status) && (!f.type || r.type_id === f.type) && (!f.emp || r.user_id === f.emp)
+            && (!f.month || String(r.from_date).slice(0, 7) === f.month || String(r.to_date).slice(0, 7) === f.month));
+    }
+    function pRequests() {
+        shell('leave-requests', 'Leave Requests', 'সকল কর্মীর ছুটির আবেদন — Approve / Reject', `<button type="button" onclick="leaveExcel()" class="${BS}"><i class="fa-solid fa-file-excel"></i> Export Excel</button><button type="button" onclick="leavePrint()" class="${BG()}"><i class="fa-solid fa-print"></i> Print</button>`, () => {
+            const t0 = today(), all = S.reqs, ym = t0.slice(0, 7);
+            const onLeave = all.filter(r => r.status === 'Approved' && r.from_date <= t0 && r.to_date >= t0);
+            const list = filtered();
+            const emps = Array.from(new Set(all.map(r => r.user_id)));
+            const rows = list.map(r => {
+                const own = r.user_id === me(), adm = (window.NC_AUTH && window.NC_AUTH.user && (S.dir.find(u => u.id === me()) || {}).role === 'admin');
+                const decide = r.status === 'Pending' && (!own || adm);
+                return `<tr class="hover:bg-slate-50"><td class="p-3 font-semibold text-slate-800">${esc(nameOf(r.user_id))}</td><td class="p-3">${esc(typeOf(r.type_id).name)}</td><td class="p-3">${fd(r.from_date)}${r.to_date !== r.from_date ? ' → ' + fd(r.to_date) : ''}${r.half_day ? ' <span class="text-[10px] text-slate-400">(half)</span>' : ''}</td><td class="p-3 text-center font-semibold">${r.days}</td>
+                    <td class="p-3 max-w-[200px] truncate" title="${esc(r.reason)}">${esc(r.reason)}</td><td class="p-3 text-slate-500">${fd(String(r.created_at).slice(0, 10))}</td><td class="p-3">${chip(r.status)}</td>
+                    <td class="p-3 text-slate-500 max-w-[180px] truncate" title="${esc(r.decision_note || '')}">${r.decided_by ? esc(nameOf(r.decided_by)) + (r.decision_note ? ': ' + esc(r.decision_note) : '') : ''}</td>
+                    <td class="p-3 text-center whitespace-nowrap">${decide ? `<button type="button" onclick="leaveApprove('${r.id}')" class="text-emerald-600 font-semibold mr-3">Approve</button><button type="button" onclick="leaveReject('${r.id}')" class="text-rose-600 font-semibold">Reject</button>` : ''}</td></tr>`;
+            }).join('') || '<tr><td colspan="9" class="p-6 text-center text-slate-400">No leave requests found.</td></tr>';
+            return `<div class="grid grid-cols-2 lg:grid-cols-4 gap-3">${kpi('Pending', all.filter(r => r.status === 'Pending').length, 'text-amber-600')}${kpi('Approved (this month)', all.filter(r => r.status === 'Approved' && String(r.from_date).slice(0, 7) === ym).length, 'text-emerald-600')}
+                ${kpi('On leave today', onLeave.length, 'text-blue-600')}${kpi('Rejected', all.filter(r => r.status === 'Rejected').length, 'text-rose-600')}</div>
+                ${onLeave.length ? `<div class="bg-blue-50 border border-blue-100 text-blue-800 text-xs rounded-xl p-3"><b>আজ ছুটিতে:</b> ${onLeave.map(r => esc(nameOf(r.user_id)) + ' (' + esc(typeOf(r.type_id).name) + ')').join(', ')}</div>` : ''}
+                ${card(`<div class="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-3">
+                    ${lbl('Status', `<select onchange="leaveFilter('status',this.value)" class="${IN()}"><option value="">All</option>${['Pending', 'Approved', 'Rejected', 'Cancelled'].map(s => `<option ${S.f.status === s ? 'selected' : ''}>${s}</option>`).join('')}</select>`)}
+                    ${lbl('Leave Type', `<select onchange="leaveFilter('type',this.value)" class="${IN()}"><option value="">All</option>${S.types.map(t => `<option value="${esc(t.id)}" ${S.f.type === t.id ? 'selected' : ''}>${esc(t.name)}</option>`).join('')}</select>`)}
+                    ${lbl('Employee', `<select onchange="leaveFilter('emp',this.value)" class="${IN()}"><option value="">All</option>${emps.map(u => `<option value="${esc(u)}" ${S.f.emp === u ? 'selected' : ''}>${esc(nameOf(u))}</option>`).join('')}</select>`)}
+                    ${lbl('Month', `<input type="month" value="${esc(S.f.month)}" onchange="leaveFilter('month',this.value)" class="${IN()}">`)}
+                    <div class="flex items-end"><button type="button" onclick="leaveClearFilter()" class="${BS}">Clear</button></div></div>
+                    <div class="overflow-x-auto"><table class="w-full text-xs text-left"><thead class="bg-slate-50 text-slate-500"><tr><th class="p-3">Employee</th><th class="p-3">Type</th><th class="p-3">Dates</th><th class="p-3 text-center">Days</th><th class="p-3">Reason</th><th class="p-3">Applied</th><th class="p-3">Status</th><th class="p-3">Decision</th><th class="p-3 text-center">Action</th></tr></thead><tbody class="divide-y divide-slate-100">${rows}</tbody></table></div>`)}`;
+        });
+    }
+    window.leaveFilter = (k, v) => { S.f[k] = v; leaveRender('leave-requests'); };
+    window.leaveClearFilter = () => { S.f = { status: '', type: '', emp: '', month: '' }; leaveRender('leave-requests'); };
+    window.leaveApprove = async function (id) {
+        const c = sb(); if (!c) return; const note = prompt('মন্তব্য (optional):', ''); if (note === null) return;
+        const { error } = await c.from('leave_requests').update({ status: 'Approved', decision_note: note.trim() || null }).eq('id', id);
+        if (error) { toast(friendly(error), false); return; } toast('Approved'); await load(); leaveRender('leave-requests');
+    };
+    window.leaveReject = async function (id) {
+        const c = sb(); if (!c) return; const note = prompt('Reject করার কারণ লিখুন (আবশ্যক):', ''); if (note === null) return;
+        if (!note.trim()) { toast('কারণ লিখতে হবে।', false); return; }
+        const { error } = await c.from('leave_requests').update({ status: 'Rejected', decision_note: note.trim() }).eq('id', id);
+        if (error) { toast(friendly(error), false); return; } toast('Rejected'); await load(); leaveRender('leave-requests');
+    };
+    function reqReport() {
+        const list = filtered(), ap = list.filter(r => r.status === 'Approved');
+        return { sub: 'Total requests: ' + list.length, kp: [{ label: 'Requests', value: String(list.length), raw: list.length }, { label: 'Approved days', value: String(ap.reduce((a, r) => a + Number(r.days), 0)), raw: ap.reduce((a, r) => a + Number(r.days), 0) }],
+            sec: [{ title: 'Leave Requests', sheet: 'Leave Requests', heads: ['Employee', 'Type', 'From', 'To', 'Days', 'Reason', 'Status', 'Decision'].map(t => ({ t: t, r: t === 'Days' })),
+                rows: list.map(r => [nameOf(r.user_id), typeOf(r.type_id).name, fd(r.from_date), fd(r.to_date), r.days, r.reason, r.status, (r.decided_by ? nameOf(r.decided_by) : '') + (r.decision_note ? ': ' + r.decision_note : '')]) }] };
+    }
+    window.leavePrint = () => { const d = reqReport(); if (typeof rptPrint === 'function') rptPrint('Leave Requests', d.sub, d.kp, d.sec, 'HR'); };
+    window.leaveExcel = () => { const d = reqReport(); if (typeof rptExcelAll === 'function') rptExcelAll('leave-requests-' + today() + '.xlsx', 'Leave Requests', d.sub, d.kp, d.sec); };
+
+    /* ================= Leave Balance ================= */
+    function pBalance() {
+        shell('leave-balance', 'Leave Balance', 'কর্মী অনুযায়ী ছুটির হিসাব (Approved + Pending)', `<select onchange="leaveYear(this.value)" class="${IN()} !w-auto">${[S.year - 1, S.year, S.year + 1].map(y => `<option ${y === S.year ? 'selected' : ''}>${y}</option>`).join('')}</select><button type="button" onclick="leaveBalExcel()" class="${BS}"><i class="fa-solid fa-file-excel"></i> Export Excel</button>`, () => {
+            const act = S.types.filter(t => t.active), ids = Array.from(new Set(S.dir.filter(u => u.status !== 'inactive').map(u => u.id).concat(S.reqs.map(r => r.user_id))));
+            const rows = ids.map(u => `<tr class="hover:bg-slate-50"><td class="p-3 font-semibold text-slate-800">${esc(nameOf(u))}</td>${act.map(t => { const b = balance(u, t.id, S.year); return `<td class="p-3 text-center">${b.used}${b.pend ? `<span class="text-amber-600"> +${b.pend}</span>` : ''} <span class="text-slate-400">/ ${b.unlimited ? '∞' : b.quota}</span></td>`; }).join('')}</tr>`).join('') || '<tr><td class="p-6 text-center text-slate-400">No data.</td></tr>';
+            return card(`<p class="text-[11px] text-slate-500 mb-3">Used / Quota। <span class="text-amber-600">+n</span> = Pending। আপনার Role এ "Leave Requests > View" না থাকলে শুধু নিজের হিসাব দেখা যাবে।</p><div class="overflow-x-auto"><table class="w-full text-xs text-left"><thead class="bg-slate-50 text-slate-500"><tr><th class="p-3">Employee</th>${act.map(t => `<th class="p-3 text-center">${esc(t.name)}</th>`).join('')}</tr></thead><tbody class="divide-y divide-slate-100">${rows}</tbody></table></div>`);
+        });
+    }
+    window.leaveYear = v => { S.year = Number(v); leaveRender('leave-balance'); };
+    window.leaveBalExcel = () => {
+        const act = S.types.filter(t => t.active), ids = Array.from(new Set(S.dir.filter(u => u.status !== 'inactive').map(u => u.id).concat(S.reqs.map(r => r.user_id))));
+        const sec = [{ title: 'Leave Balance ' + S.year, sheet: 'Balance', heads: [{ t: 'Employee' }].concat(act.map(t => ({ t: t.name + ' (Used / Pending / Quota)' }))), rows: ids.map(u => [nameOf(u)].concat(act.map(t => { const b = balance(u, t.id, S.year); return b.used + ' / ' + b.pend + ' / ' + (b.unlimited ? 'unlimited' : b.quota); }))) }];
+        if (typeof rptExcelAll === 'function') rptExcelAll('leave-balance-' + S.year + '.xlsx', 'Leave Balance ' + S.year, '', [], sec);
+    };
+
+    /* ================= Leave Settings ================= */
+    function pSettings() {
+        shell('leave-settings', 'Leave Settings', 'Leave type, ছুটির দিন (holiday) ও সাপ্তাহিক ছুটি', '', () => {
+            const trows = S.types.map(t => `<tr class="hover:bg-slate-50"><td class="p-3 font-semibold text-slate-800">${esc(t.name)}</td><td class="p-3 text-center">${t.unlimited ? '∞' : t.annual_quota}</td><td class="p-3 text-center">${t.is_paid ? 'Paid' : 'Unpaid'}</td><td class="p-3 text-center"><span class="${t.active ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-500'} px-2 py-1 rounded">${t.active ? 'Active' : 'Inactive'}</span></td>
+                <td class="p-3 text-center whitespace-nowrap"><button type="button" onclick="leaveEditType('${t.id}')" class="text-emerald-600 mr-3">Quota</button><button type="button" onclick="leaveToggleType('${t.id}',${!t.active})" class="text-blue-600 mr-3">${t.active ? 'Deactivate' : 'Activate'}</button><button type="button" onclick="leaveDelType('${t.id}')" class="text-rose-600"><i class="fa-solid fa-trash"></i></button></td></tr>`).join('');
+            const hrows = S.holidays.map(h => `<tr class="hover:bg-slate-50"><td class="p-3">${fd(h.holiday_date)}</td><td class="p-3 font-semibold text-slate-800">${esc(h.name)}</td><td class="p-3 text-center"><button type="button" onclick="leaveDelHoliday('${esc(String(h.holiday_date).slice(0, 10))}')" class="text-rose-600"><i class="fa-solid fa-trash"></i></button></td></tr>`).join('') || '<tr><td colspan="3" class="p-5 text-center text-slate-400">No holidays added.</td></tr>';
+            const off = new Set((S.settings.weekly_off || []).map(Number));
+            return `${card(`<h3 class="font-bold text-sm text-slate-800 mb-1">Weekly Off Days</h3><p class="text-[11px] text-slate-500 mb-3">এই দিনগুলো ছুটির হিসাবে গণনা হবে না।</p><div class="flex flex-wrap gap-4">${DOWN.map((d, i) => `<label class="flex items-center gap-1.5 text-xs text-slate-700"><input type="checkbox" class="lv-off" value="${i}" ${off.has(i) ? 'checked' : ''}> ${d}</label>`).join('')}</div>
+                <div class="flex justify-end mt-3"><button type="button" onclick="leaveSaveOff()" class="${BG()}"><i class="fa-solid fa-floppy-disk"></i> Save</button></div>`)}
+                ${card(`<h3 class="font-bold text-sm text-slate-800 mb-3">Leave Types</h3><div class="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-4">
+                    ${lbl('Name *', `<input id="lt-name" class="${IN()}" placeholder="e.g. Festival Leave">`)}${lbl('Yearly quota (days)', `<input type="number" id="lt-q" min="0" step="0.5" value="0" class="${IN()}">`)}
+                    <div class="flex items-end"><label class="flex items-center gap-2 text-xs text-slate-700 pb-2.5"><input type="checkbox" id="lt-paid" checked> Paid</label></div><div class="flex items-end"><label class="flex items-center gap-2 text-xs text-slate-700 pb-2.5"><input type="checkbox" id="lt-unl"> No limit</label></div>
+                    <div class="flex items-end"><button type="button" onclick="leaveAddType()" class="${BG()} w-full justify-center"><i class="fa-solid fa-plus"></i> Add</button></div></div>
+                    <div class="overflow-x-auto"><table class="w-full text-xs text-left"><thead class="bg-slate-50 text-slate-500"><tr><th class="p-3">Name</th><th class="p-3 text-center">Quota / year</th><th class="p-3 text-center">Pay</th><th class="p-3 text-center">Status</th><th class="p-3 text-center">Action</th></tr></thead><tbody class="divide-y divide-slate-100">${trows}</tbody></table></div>
+                    <p class="text-[10px] text-slate-400 mt-2">Default quota গুলো উদাহরণ মাত্র — আপনার কোম্পানির নীতি অনুযায়ী পরিবর্তন করুন।</p>`)}
+                ${card(`<h3 class="font-bold text-sm text-slate-800 mb-3">Holidays</h3><div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-4">${lbl('Date *', `<input type="date" id="lh-date" class="${IN()}">`)}<div class="col-span-2">${lbl('Name *', `<input id="lh-name" class="${IN()}" placeholder="e.g. Eid-ul-Fitr">`)}</div><div class="flex items-end"><button type="button" onclick="leaveAddHoliday()" class="${BG()} w-full justify-center"><i class="fa-solid fa-plus"></i> Add</button></div></div>
+                    <div class="overflow-x-auto"><table class="w-full text-xs text-left"><thead class="bg-slate-50 text-slate-500"><tr><th class="p-3">Date</th><th class="p-3">Name</th><th class="p-3 text-center">Action</th></tr></thead><tbody class="divide-y divide-slate-100">${hrows}</tbody></table></div>`)}`;
+        });
+    }
+    async function run(p, ok) { const { error } = await p; if (error) { toast(friendly(error), false); return false; } toast(ok); await load(); leaveRender('leave-settings'); return true; }
+    window.leaveAddType = function () {
+        const c = sb(); if (!c) return; const name = $('lt-name').value.trim(); if (!name) { toast('Name দিন।', false); return; }
+        const q = Number($('lt-q').value); if (!(q >= 0)) { toast('সঠিক quota দিন।', false); return; }
+        return run(c.from('leave_types').insert({ name: name, annual_quota: q, unlimited: $('lt-unl').checked, is_paid: $('lt-paid').checked }), 'Leave type added');
+    };
+    window.leaveEditType = function (id) {
+        const c = sb(), t = typeOf(id); if (!c) return; const v = prompt('"' + t.name + '" এর বার্ষিক quota (দিন):', t.annual_quota); if (v === null) return;
+        const q = Number(v); if (!(q >= 0)) { toast('সঠিক সংখ্যা দিন।', false); return; }
+        return run(c.from('leave_types').update({ annual_quota: q }).eq('id', id), 'Quota updated');
+    };
+    window.leaveToggleType = (id, on) => { const c = sb(); if (c) return run(c.from('leave_types').update({ active: on }).eq('id', id), on ? 'Activated' : 'Deactivated'); };
+    window.leaveDelType = function (id) { const c = sb(); if (!c || !confirm('এই Leave type মুছবেন? (ব্যবহৃত হয়ে থাকলে মোছা যাবে না — Deactivate করুন)')) return; return run(c.from('leave_types').delete().eq('id', id), 'Deleted'); };
+    window.leaveAddHoliday = function () {
+        const c = sb(); if (!c) return; const d = $('lh-date').value, n = $('lh-name').value.trim(); if (!d || !n) { toast('তারিখ ও নাম দিন।', false); return; }
+        return run(c.from('leave_holidays').insert({ holiday_date: d, name: n }), 'Holiday added');
+    };
+    window.leaveDelHoliday = d => { const c = sb(); if (c && confirm('এই holiday মুছবেন?')) return run(c.from('leave_holidays').delete().eq('holiday_date', d), 'Deleted'); };
+    window.leaveSaveOff = function () {
+        const c = sb(); if (!c) return; const arr = Array.from(document.querySelectorAll('.lv-off:checked')).map(x => Number(x.value));
+        return run(c.from('leave_settings').update({ weekly_off: arr, updated_at: new Date().toISOString() }).eq('id', 1), 'Weekly off saved');
+    };
+
+    window.toggleLeaveMenu = function () { const s = $('leave-submenu'), a = $('leave-arrow'); if (s) s.classList.toggle('hidden'); if (a) a.classList.toggle('rotate-180'); };
+    function init() { load().then(() => { const el = document.querySelector('[id^="tab-leave-"]:not(.hidden)'); if (el) leaveRender(el.id.slice(4)); }); }
+    window.addEventListener('nc-signed-in', init);
+    if (window.NC_AUTH && window.NC_AUTH.client) init();
+})();
+
+    </script>
+
+    <script>
+    /* Show / hide the new pages (Meal Account, Leave Management) with the existing tab switcher */
+    (function () {
+        'use strict';
+        const NEW = ['acc-meal', 'leave-apply', 'leave-requests', 'leave-balance', 'leave-settings'];
+        const orig = window.switchTab;
+        window.switchTab = function (t) {
+            NEW.forEach(x => { const el = document.getElementById('tab-' + x); if (el) el.classList.add('hidden'); });
+            const r = orig.apply(this, arguments);
+            if (String(t).indexOf('leave-') === 0) { const sm = document.getElementById('leave-submenu'); if (sm && sm.classList.contains('hidden')) toggleLeaveMenu(); window.leaveRender(t); }
+            if (t === 'dashboard' && window.NC_DASH) window.NC_DASH.render();
+            return r;
+        };
+    })();
+    </script>
+
+    <script>
     /* =====================================================================
        ACCESS CONTROL (Role & Permissions are enforced)
        - A user can open / do ONLY what the Role assigned to them allows.
@@ -6688,11 +7590,12 @@
         /* ---------- tab -> permission ---------- */
         const TAB = { 'dashboard': 'dashboard.view', 'projects': 'projects.view', 'plot': 'plot.view', 'sales-list': 'sales.view', 'sales-emi': 'sales_emi.view', 'all-emi-list': 'all_emi_list.view', 'sales-report': 'sales_report.view',
             'emi': 'emi.view', 'acc-overview': 'acc_overview.view', 'acc-income': 'acc_income.view', 'acc-expense': 'acc_expense.view', 'acc-fund': 'acc_fund.view', 'acc-daily': 'acc_daily.view', 'acc-monthly': 'acc_monthly.view',
-            'acc-dues': 'acc_dues.view', 'acc-banks': 'acc_banks.view', 'acc-heads': 'acc_heads.view', 'users': 'users.view', 'roles': 'roles.view', 'permissions': 'permissions.view', 'config': 'config.view' };
+            'acc-dues': 'acc_dues.view', 'acc-banks': 'acc_banks.view', 'acc-heads': 'acc_heads.view', 'acc-meal': 'acc_meal.view', 'leave-apply': 'leave_apply.view', 'leave-requests': 'leave_requests.view', 'leave-balance': 'leave_balance.view', 'leave-settings': 'leave_settings.view', 'users': 'users.view', 'roles': 'roles.view', 'permissions': 'permissions.view', 'config': 'config.view' };
         const PUR = { dashboard: 'purchase.view', register: 'purchase.view', owners: 'purchase.view', payments: 'purchase.view', share: 'purchase.view', docs: 'purchase.view', reports: 'purchase_report.view', form: 'purchase.create' };
         const GROUPS = [['sales-submenu', ['projects', 'plot', 'sales-list', 'sales-emi', 'all-emi-list', 'sales-report'], []],
                         ['purchase-submenu', [], Object.keys(PUR)],
-                        ['acc-submenu', ['acc-overview', 'acc-income', 'acc-expense', 'acc-fund', 'acc-daily', 'acc-monthly', 'acc-dues', 'acc-banks', 'acc-heads'], []],
+                        ['acc-submenu', ['acc-overview', 'acc-income', 'acc-expense', 'acc-fund', 'acc-daily', 'acc-monthly', 'acc-dues', 'acc-banks', 'acc-heads', 'acc-meal'], []],
+                        ['leave-submenu', ['leave-apply', 'leave-requests', 'leave-balance', 'leave-settings'], []],
                         ['user-mgmt-submenu', ['users', 'roles', 'permissions'], []]];
         const purOk = v => { if (!enforcing) return true; if (v === 'form') return PERMS.has('purchase.create') || PERMS.has('purchase.edit'); return PERMS.has(PUR[v] || 'purchase.view'); };
 
@@ -6744,6 +7647,14 @@
             cfgLogoPick: 'config.edit', cfgLogoDefault: 'config.edit', cfgExport: 'config.edit', cfgFullBackup: 'config.edit', cfgImport: 'config.edit', cfgReset: 'config.edit',
             cfgHeadAdd: () => ['config.edit', 'acc_heads.create'], cfgHeadDel: () => ['config.edit', 'acc_heads.delete'],
             mntStart: 'config.edit', mntNote: 'config.edit', mntComplete: 'config.edit', mntDownload: 'config.edit',
+            mealSaveDay: 'acc_meal.create', mealSaveBazar: () => E('mb-id') ? 'acc_meal.edit' : 'acc_meal.create', mealEditBazar: 'acc_meal.edit',
+            mealSaveDep: () => E('md2-id') ? 'acc_meal.edit' : 'acc_meal.create', mealEditDep: 'acc_meal.edit', mealVoid: 'acc_meal.delete',
+            mealAddMember: 'acc_meal.create', mealToggleMember: 'acc_meal.edit', mealDelMember: 'acc_meal.delete', mealSaveSettings: 'acc_meal.edit',
+            mealPrint: 'acc_meal.print', mealExcel: 'acc_meal.export',
+            leaveSubmit: 'leave_apply.create', leaveCancel: 'leave_apply.edit', leaveApprove: 'leave_requests.approve', leaveReject: 'leave_requests.reject',
+            leavePrint: 'leave_requests.print', leaveExcel: 'leave_requests.export', leaveBalExcel: 'leave_balance.export',
+            leaveAddType: 'leave_settings.create', leaveEditType: 'leave_settings.edit', leaveToggleType: 'leave_settings.edit', leaveDelType: 'leave_settings.delete',
+            leaveAddHoliday: 'leave_settings.create', leaveDelHoliday: 'leave_settings.delete', leaveSaveOff: 'leave_settings.edit',
             'window.print': printPerm
         };
         const FORM_RULES = { 'um-role-form': () => (typeof umEditingRoleId !== 'undefined' && umEditingRoleId) ? 'roles.edit' : 'roles.create' };
@@ -6819,7 +7730,7 @@
             return origNav.apply(this, arguments);
         };
         function firstAllowed() {
-            const order = [['dashboard'], ['projects'], ['plot'], ['sales-list'], ['sales-emi'], ['all-emi-list'], ['sales-report'], ['pur', 'dashboard'], ['pur', 'reports'], ['emi'], ['acc-overview'], ['acc-income'], ['acc-expense'], ['acc-fund'], ['acc-daily'], ['acc-monthly'], ['acc-dues'], ['acc-banks'], ['acc-heads'], ['users'], ['roles'], ['permissions'], ['config']];
+            const order = [['dashboard'], ['projects'], ['plot'], ['sales-list'], ['sales-emi'], ['all-emi-list'], ['sales-report'], ['pur', 'dashboard'], ['pur', 'reports'], ['emi'], ['acc-overview'], ['acc-income'], ['acc-expense'], ['acc-fund'], ['acc-daily'], ['acc-monthly'], ['acc-dues'], ['acc-banks'], ['acc-heads'], ['acc-meal'], ['leave-apply'], ['leave-requests'], ['leave-balance'], ['leave-settings'], ['users'], ['roles'], ['permissions'], ['config']];
             for (const o of order) { if (o[0] === 'pur') { if (can(PUR[o[1]])) return o; } else if (can(TAB[o[0]])) return o; }
             return null;
         }
