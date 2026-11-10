@@ -419,10 +419,7 @@ button.dk-day:hover{background:#222226}
                             <i id="leave-arrow" class="fa-solid fa-chevron-down text-xs transition-transform duration-200"></i>
                         </button>
                         <div id="leave-submenu" class="pl-9 pr-2 py-1 space-y-1 hidden">
-                            <a href="#" onclick="switchTab('leave-apply')" id="nav-leave-apply" class="block px-3 py-2 rounded-md text-xs text-slate-400 hover:text-white hover:bg-slate-800">Apply Leave</a>
-                            <a href="#" onclick="switchTab('leave-requests')" id="nav-leave-requests" class="block px-3 py-2 rounded-md text-xs text-slate-400 hover:text-white hover:bg-slate-800">Leave Requests</a>
-                            <a href="#" onclick="switchTab('leave-balance')" id="nav-leave-balance" class="block px-3 py-2 rounded-md text-xs text-slate-400 hover:text-white hover:bg-slate-800">Leave Balance</a>
-                            <a href="#" onclick="switchTab('leave-settings')" id="nav-leave-settings" class="block px-3 py-2 rounded-md text-xs text-slate-400 hover:text-white hover:bg-slate-800">Leave Settings</a>
+                            <a href="#" onclick="switchTab('leave-apply')" id="nav-leave-apply" class="block px-3 py-2 rounded-md text-xs text-slate-400 hover:text-white hover:bg-slate-800">Attendance Sheet</a>
                         </div>
                     </div>
 
@@ -495,6 +492,7 @@ button.dk-day:hover{background:#222226}
 
             <!-- MAIN SCROLLABLE BODY -->
             <main class="flex-1 overflow-y-auto p-4 md:p-6 bg-slate-50">
+                <div id="emi-alert-banner" class="hidden mb-4 bg-red-50 border border-red-200 rounded-xl p-3 flex flex-wrap items-center justify-between gap-3"></div>
 
                 <!-- 1. DASHBOARD TAB -->
                 <section id="tab-dashboard" class="space-y-6">
@@ -813,7 +811,18 @@ button.dk-day:hover{background:#222226}
                         </div>
                     </div>
                     <div id="pur-view-register" class="purchase-view hidden"><div class="bg-white border border-slate-200 rounded-xl shadow-sm p-4"><div class="flex flex-col sm:flex-row justify-between gap-3 mb-4"><h3 class="font-bold text-sm">All Purchase Records</h3><div class="flex gap-2"><input id="pur-search" oninput="purchaseRender()" placeholder="Search owner / project / ID" class="border border-slate-200 rounded-lg px-3 py-2 text-xs"><select id="pur-filter" onchange="purchaseRender()" class="border border-slate-200 rounded-lg px-3 py-2 text-xs"><option value="">All Types</option><option value="Fixed Price">Fixed Price</option><option value="Percentage">Percentage</option></select><button type="button" onclick="purchaseExport('register')" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-2 rounded-lg text-xs font-semibold"><i class="fa-solid fa-file-excel mr-1"></i> Export Excel</button><button type="button" onclick="purchasePrint('register')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg text-xs font-semibold"><i class="fa-solid fa-print mr-1"></i> Print</button></div></div><div class="overflow-x-auto"><table class="w-full text-xs text-left"><thead class="bg-slate-50 text-slate-500"><tr><th class="p-3">Purchase ID</th><th class="p-3">Date</th><th class="p-3">Landowner</th><th class="p-3">Project</th><th class="p-3">Type</th><th class="p-3 text-right">Area</th><th class="p-3 text-right">Contract Value</th><th class="p-3 text-right">Paid</th><th class="p-3 text-right">Due</th><th class="p-3">Action</th></tr></thead><tbody id="pur-register-body" class="divide-y divide-slate-100"></tbody></table></div></div></div>
-                    <div id="pur-view-owners" class="purchase-view hidden"><div class="bg-white border border-slate-200 rounded-xl shadow-sm p-4"><h3 class="font-bold text-sm mb-3">Landowner Directory</h3><div class="overflow-x-auto"><table class="w-full text-xs text-left"><thead class="bg-slate-50 text-slate-500"><tr><th class="p-3">Landowner</th><th class="p-3">Mobile</th><th class="p-3">Project</th><th class="p-3 text-right">Total Land (শতক)</th><th class="p-3 text-right">Records</th><th class="p-3 text-right">Fixed Due</th></tr></thead><tbody id="pur-owner-body" class="divide-y divide-slate-100"></tbody></table></div><p class="text-[11px] text-slate-400 mt-3">NID, পূর্ণ ঠিকানা, ব্যাংক তথ্য ও নমিনি-সংক্রান্ত বিস্তারিত প্রোফাইল পরবর্তী ধাপে যুক্ত করা যাবে।</p></div></div>
+                    <div id="pur-view-owners" class="purchase-view hidden"><div class="bg-white border border-slate-200 rounded-xl shadow-sm p-4">
+                        <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-3 mb-3">
+                            <h3 class="font-bold text-sm">Landowner Directory <span id="pur-owner-count" class="ml-2 text-[11px] font-semibold text-slate-400"></span></h3>
+                            <div class="flex flex-wrap items-center gap-2 text-xs">
+                                <input id="pur-owner-q" oninput="purOwnerRender()" placeholder="Name / Mobile diye filter..." class="border border-slate-300 rounded-lg px-3 py-2 w-56 focus:ring-2 focus:ring-emerald-500">
+                                <select id="pur-owner-proj" onchange="purOwnerRender()" class="border border-slate-300 rounded-lg px-3 py-2 bg-white"><option value="">All Projects</option></select>
+                                <select id="pur-owner-due" onchange="purOwnerRender()" class="border border-slate-300 rounded-lg px-3 py-2 bg-white"><option value="">All</option><option value="due">Has Due</option><option value="clear">No Due</option></select>
+                                <button type="button" onclick="document.getElementById('pur-owner-q').value='';document.getElementById('pur-owner-proj').value='';document.getElementById('pur-owner-due').value='';purOwnerRender()" class="px-3 py-2 border rounded-lg text-slate-600 hover:bg-slate-100">Reset</button>
+                            </div>
+                        </div>
+                        <div class="overflow-x-auto"><table class="w-full text-xs text-left"><thead class="bg-slate-50 text-slate-500"><tr><th class="p-3 w-14">Photo</th><th class="p-3">Landowner</th><th class="p-3">Mobile</th><th class="p-3">Project</th><th class="p-3 text-right">Total Land (শতক)</th><th class="p-3 text-right">Records</th><th class="p-3 text-right">Total Paid</th><th class="p-3 text-right">Fixed Due</th><th class="p-3 text-center">Action</th></tr></thead><tbody id="pur-owner-body" class="divide-y divide-slate-100"></tbody></table></div>
+                        <p class="text-[11px] text-slate-400 mt-3">Landowner-er tothyo Purchase Entry theke ashe. Ekhane Edit korle oi owner-er shob Purchase Register record-e name/mobile/photo bodle jabe.</p></div></div>
                     <div id="pur-view-payments" class="purchase-view hidden space-y-4"><div class="bg-white border border-slate-200 rounded-xl shadow-sm p-5"><h3 class="font-bold text-sm mb-4">Purchase Payment Entry</h3><form onsubmit="purchaseAddPayment(event)" class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs"><label><span class="block font-semibold text-slate-600 mb-1.5">Purchase Record *</span><select id="pur-payment-record" required class="w-full border border-slate-200 rounded-lg p-2.5"></select></label><label><span class="block font-semibold text-slate-600 mb-1.5">Payment Date *</span><input id="pur-payment-date" type="date" required class="w-full border border-slate-200 rounded-lg p-2.5"></label><label><span class="block font-semibold text-slate-600 mb-1.5">Amount (৳) *</span><input id="pur-payment-amount" type="number" min="1" required class="w-full border border-slate-200 rounded-lg p-2.5"></label><label><span class="block font-semibold text-slate-600 mb-1.5">Payment Method</span><select id="pur-payment-method" class="w-full border border-slate-200 rounded-lg p-2.5"><option>Cash</option><option>Bank</option><option>Mobile Banking</option><option>Cheque</option></select></label><label><span class="block font-semibold text-slate-600 mb-1.5">Account</span><select id="pur-payment-account" class="w-full border border-slate-200 rounded-lg p-2.5"><option value="acc-cash">Cash in Hand</option><option value="acc-bank">Bank Account</option><option value="acc-mfs">Mobile Banking</option></select></label><label><span class="block font-semibold text-slate-600 mb-1.5">Voucher / Cheque / Transaction No.</span><input id="pur-payment-ref" class="w-full border border-slate-200 rounded-lg p-2.5"></label><div class="md:col-span-3 flex justify-end"><button type="submit" class="bg-emerald-600 text-white px-5 py-2 rounded-lg font-semibold">Save Payment</button></div></form></div><div class="bg-white border border-slate-200 rounded-xl shadow-sm p-4"><h3 class="font-bold text-sm mb-3">Payment History</h3><div class="overflow-x-auto"><table class="w-full text-xs text-left"><thead class="bg-slate-50"><tr><th class="p-3">Date</th><th class="p-3">Voucher</th><th class="p-3">Purchase ID</th><th class="p-3">Landowner</th><th class="p-3">Method</th><th class="p-3 text-right">Amount</th><th class="p-3 text-center">Action</th></tr></thead><tbody id="pur-payment-body" class="divide-y divide-slate-100"></tbody></table></div></div></div>
                     <div id="pur-view-share" class="purchase-view hidden space-y-4"><div class="bg-white border border-slate-200 rounded-xl shadow-sm p-5"><h3 class="font-bold text-sm mb-2">Landowner Share Settlement Calculator</h3><p class="text-[11px] text-slate-500 mb-4">Percentage / Revenue Sharing Purchase-এর ক্ষেত্রে বিক্রয়মূল্য ও চুক্তির শর্ত অনুযায়ী শেয়ার হিসাব করুন।</p><div class="grid grid-cols-1 md:grid-cols-4 gap-3 text-xs"><label><span class="block font-semibold mb-1">Purchase Record</span><select id="pur-share-record" class="w-full border rounded-lg p-2.5"></select></label><label><span class="block font-semibold mb-1">Plot / Sale Reference</span><input id="pur-share-ref" class="w-full border rounded-lg p-2.5" placeholder="Plot / Sale ID"></label><label><span class="block font-semibold mb-1">Sale Amount (৳)</span><input id="pur-share-sale" type="number" min="0" class="w-full border rounded-lg p-2.5"></label><label><span class="block font-semibold mb-1">Approved Deductible Cost (৳)</span><input id="pur-share-cost" type="number" min="0" value="0" class="w-full border rounded-lg p-2.5"></label></div><div class="flex justify-end mt-3"><button onclick="purchaseCalculateShare()" class="bg-emerald-600 text-white px-4 py-2 rounded-lg text-xs font-semibold">Calculate Share</button></div><div id="pur-share-result" class="hidden mt-4 rounded-lg bg-emerald-50 border border-emerald-100 p-4 text-xs text-emerald-900"></div></div><div class="bg-white border border-slate-200 rounded-xl shadow-sm p-4"><div class="flex justify-between mb-3"><h3 class="font-bold text-sm">Settlement History</h3></div><div class="overflow-x-auto"><table class="w-full text-xs text-left"><thead class="bg-slate-50"><tr><th class="p-3">Date</th><th class="p-3">Purchase ID</th><th class="p-3">Sale Ref</th><th class="p-3 text-right">Sale Amount</th><th class="p-3 text-right">Owner Share</th><th class="p-3 text-right">Company Share</th></tr></thead><tbody id="pur-share-body" class="divide-y divide-slate-100"></tbody></table></div></div></div>
                     <div id="pur-view-docs" class="purchase-view hidden"><div class="bg-white border border-slate-200 rounded-xl shadow-sm p-5"><h3 class="font-bold text-sm mb-4">Agreement & Land Documents Checklist</h3><form onsubmit="purchaseAddDocument(event)" class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs"><label><span class="block font-semibold mb-1.5">Purchase Record</span><select id="pur-doc-record" required class="w-full border rounded-lg p-2.5"></select></label><label><span class="block font-semibold mb-1.5">Document Type</span><select id="pur-doc-type" class="w-full border rounded-lg p-2.5"><option>Agreement</option><option>Registered Deed</option><option>CS / SA / RS / BS Khatian</option><option>Dag Information</option><option>Mutation / Namjari</option><option>Land Development Tax Receipt</option><option>Warish Certificate</option><option>Power of Attorney</option><option>Mouza Map</option><option>Other</option></select></label><label><span class="block font-semibold mb-1.5">Document No. / Note</span><input id="pur-doc-note" class="w-full border rounded-lg p-2.5"></label><div class="md:col-span-3 flex justify-end"><button class="bg-emerald-600 text-white px-4 py-2 rounded-lg font-semibold">Add to Checklist</button></div></form><div class="overflow-x-auto mt-5"><table class="w-full text-xs text-left"><thead class="bg-slate-50"><tr><th class="p-3">Purchase ID</th><th class="p-3">Document Type</th><th class="p-3">Reference / Note</th><th class="p-3">Added Date</th></tr></thead><tbody id="pur-doc-body" class="divide-y divide-slate-100"></tbody></table></div><p class="text-[11px] text-amber-700 mt-3">এই অংশে বর্তমানে ডকুমেন্টের তালিকা ও রেফারেন্স সংরক্ষণ হয়; মূল ফাইল আপলোড/স্টোরেজ এখনো যুক্ত নয়।</p></div></div>
@@ -1131,6 +1140,7 @@ button.dk-day:hover{background:#222226}
 
             <form id="createPlotForm" onsubmit="handleCreatePlotSubmit(event)" class="p-6 space-y-3 text-xs">
                 <input type="hidden" id="editing_plot_original_name" value="">
+                <input type="hidden" id="editing_plot_original_project" value="">
 
                 <div>
                     <label class="block font-semibold text-slate-700 mb-1">1. Select Project <span class="text-red-500">*</span></label>
@@ -1269,7 +1279,7 @@ button.dk-day:hover{background:#222226}
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
                         <div>
                             <label class="block font-semibold text-slate-700 mb-1">Price Per Decimal (৳)</label>
-                            <input type="number" id="booking_price_per_dec" value="300000" oninput="autoCalculateTotalPrice()" class="w-full p-2 border border-emerald-300 rounded-lg font-semibold text-slate-800">
+                            <input type="number" id="booking_price_per_dec" value="300000" oninput="bookingEmiPreset=null; autoCalculateTotalPrice()" class="w-full p-2 border border-emerald-300 rounded-lg font-semibold text-slate-800">
                         </div>
                         <div>
                             <label class="block font-semibold text-slate-700 mb-1">Total Price (৳)</label>
@@ -1277,14 +1287,14 @@ button.dk-day:hover{background:#222226}
                         </div>
                         <div>
                             <label class="block font-semibold text-slate-700 mb-1">Booking Deposit (৳)</label>
-                            <input type="number" id="booking_money" required value="50000" oninput="generateCustomEmiRows()" class="w-full p-2 border border-slate-300 rounded-lg font-bold text-emerald-700">
+                            <input type="number" id="booking_money" required value="50000" oninput="bookingEmiPreset=null; generateCustomEmiRows()" class="w-full p-2 border border-slate-300 rounded-lg font-bold text-emerald-700">
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
                         <div>
                             <label class="block font-semibold text-slate-700 mb-1">EMI Months (Plan)</label>
-                            <select id="booking_emi_months" onchange="generateCustomEmiRows()" class="w-full p-2 border border-slate-300 rounded-lg">
+                            <select id="booking_emi_months" onchange="document.getElementById('booking_emi_custom').value=''; generateCustomEmiRows()" class="w-full p-2 border border-slate-300 rounded-lg">
                                 <option value="3">3 Months EMI</option>
                                 <option value="6" selected>6 Months EMI</option>
                                 <option value="12">12 Months EMI</option>
@@ -1292,11 +1302,21 @@ button.dk-day:hover{background:#222226}
                                 <option value="0">Full Payment (No EMI)</option>
                             </select>
                         </div>
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">Custom Months <span class="text-emerald-700 font-normal">(1 theke shuru, nijer moto)</span></label>
+                            <input type="number" id="booking_emi_custom" min="1" max="360" step="1" placeholder="e.g. 1, 2, 5, 9, 18, 36" oninput="generateCustomEmiRows()" class="w-full p-2 border border-slate-300 rounded-lg font-semibold">
+                            <p class="text-[10px] text-slate-400 mt-0.5">Ekhane likhle upore-r dropdown-er bodole eta use hobe</p>
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">1st EMI Date</label>
+                            <input type="date" id="booking_emi_start" onchange="generateCustomEmiRows()" class="w-full p-2 border border-slate-300 rounded-lg">
+                        </div>
                     </div>
 
                     <div id="custom-emi-builder-container" class="space-y-2 pt-2 border-t border-slate-200">
                         <p class="font-bold text-slate-700 text-[11px] uppercase text-emerald-700">Custom EMI Date & Amount Editor (Auto-balancing)</p>
-                        <div id="custom-emi-rows" class="space-y-2 max-h-48 overflow-y-auto p-2 bg-white rounded-lg border border-slate-200"></div>
+                        <div id="custom-emi-rows" class="space-y-2 max-h-64 overflow-y-auto p-2 bg-white rounded-lg border border-slate-200"></div>
+                        <div id="emi-sum-check" class="text-[11px] font-semibold"></div>
                     </div>
                 </div>
 
@@ -1603,6 +1623,51 @@ button.dk-day:hover{background:#222226}
     </div>
 
     <!-- PURCHASE VIEW MODAL -->
+    <!-- LANDOWNER EDIT MODAL -->
+    <div id="purOwnerModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden">
+            <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50"><div><h3 class="font-bold text-sm text-slate-800">Edit Landowner</h3><p class="text-[11px] text-slate-500" id="po-sub"></p></div><button type="button" onclick="purOwnerClose()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button></div>
+            <form onsubmit="purOwnerSave(event)" class="p-5 space-y-3 text-xs">
+                <input type="hidden" id="po-key">
+                <div class="flex items-center gap-3">
+                    <div id="po-photo-box" class="w-20 h-20 rounded-lg border border-dashed border-slate-300 bg-white flex items-center justify-center overflow-hidden text-slate-300"><i class="fa-solid fa-user text-2xl"></i></div>
+                    <div class="space-y-1.5"><input id="po-photo" type="file" accept="image/*" onchange="purOwnerPhotoChange(this)" class="block text-[11px] w-full max-w-[200px]"><button type="button" onclick="purOwnerPhotoClear()" class="text-[11px] text-rose-600 hover:text-rose-800">Remove photo</button></div>
+                </div>
+                <label class="block"><span class="block font-semibold text-slate-600 mb-1">Landowner Name *</span><input id="po-name" required class="w-full border border-slate-300 rounded-lg p-2"></label>
+                <label class="block"><span class="block font-semibold text-slate-600 mb-1">Mobile Number</span><input id="po-mobile" class="w-full border border-slate-300 rounded-lg p-2" placeholder="01XXXXXXXXX"></label>
+                <p id="po-note" class="text-[10px] text-amber-700 bg-amber-50 border border-amber-100 rounded-lg p-2"></p>
+                <div class="pt-2 flex justify-end gap-2 border-t border-slate-100"><button type="button" onclick="purOwnerClose()" class="px-4 py-2 border rounded-lg text-slate-600 hover:bg-slate-100">Cancel</button><button type="submit" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold shadow-md">Save & Sync</button></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- QUICK PURCHASE PAYMENT MODAL -->
+    <div id="purPayModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[92vh] overflow-y-auto">
+            <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-amber-500 text-white rounded-t-2xl">
+                <div><h3 class="font-bold text-sm"><i class="fa-solid fa-money-bill-wave mr-2"></i>Add Purchase Payment</h3><p class="text-[11px] opacity-90" id="pp-sub"></p></div>
+                <button type="button" onclick="purPayClose()" class="opacity-80 hover:opacity-100"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form onsubmit="purPaySave(event)" class="p-5 space-y-3 text-xs">
+                <input type="hidden" id="pp-id">
+                <div id="pp-summary" class="grid grid-cols-3 gap-2 bg-slate-50 border border-slate-200 rounded-xl p-3"></div>
+                <div class="grid grid-cols-2 gap-3">
+                    <label><span class="block font-semibold text-slate-600 mb-1">Payment Date *</span><input id="pp-date" type="date" required class="w-full border border-slate-300 rounded-lg p-2"></label>
+                    <label><span class="block font-semibold text-slate-600 mb-1">Amount (৳) *</span><input id="pp-amount" type="number" min="1" step="any" required class="w-full border border-slate-300 rounded-lg p-2 font-bold text-emerald-700"></label>
+                    <label><span class="block font-semibold text-slate-600 mb-1">Method</span><select id="pp-method" class="w-full border border-slate-300 rounded-lg p-2"><option>Cash</option><option>Bank</option><option>Mobile Banking</option><option>Cheque</option></select></label>
+                    <label><span class="block font-semibold text-slate-600 mb-1">Account (Paid from)</span><select id="pp-account" class="w-full border border-slate-300 rounded-lg p-2"></select></label>
+                </div>
+                <label class="block"><span class="block font-semibold text-slate-600 mb-1">Voucher / Cheque / Transaction No.</span><input id="pp-ref" class="w-full border border-slate-300 rounded-lg p-2"></label>
+                <label class="block"><span class="block font-semibold text-slate-600 mb-1">Note</span><input id="pp-note" class="w-full border border-slate-300 rounded-lg p-2" placeholder="optional"></label>
+                <p class="text-[10px] text-slate-500"><i class="fa-solid fa-circle-info mr-1"></i>Save korle Payment History, Purchase Register (Paid/Due), Reports ar Accounts &gt; Expense (Land Purchase) e auto dekhabe.</p>
+                <div class="pt-2 flex justify-end gap-2 border-t border-slate-100">
+                    <button type="button" onclick="purPayClose()" class="px-4 py-2 border rounded-lg text-slate-600 hover:bg-slate-100">Cancel</button>
+                    <button type="submit" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold shadow-md">Save Payment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <div id="purViewModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 flex items-center justify-center hidden p-4">
         <div class="bg-white rounded-2xl shadow-xl w-full max-w-3xl max-h-[90vh] flex flex-col">
             <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50 rounded-t-2xl">
@@ -1901,42 +1966,57 @@ button.dk-day:hover{background:#222226}
         }
 
         // EMI reminder starting from 12:00 AM on the due date
+        function emiTodayStart() { const d = new Date(); d.setHours(0,0,0,0); return d; }
+        function emiDaysLate(dueDate) {
+            const due = new Date(`${dueDate}T00:00:00`);
+            return Math.floor((emiTodayStart() - due) / 86400000);
+        }
         function scanAndRenderAutoEmiSchedule() {
-            const now = new Date("2026-10-31T00:00:00");
-
-            let countDue = 0;
-            let sumDueAmount = 0;
+            const now = new Date();
+            let countDue = 0, sumDueAmount = 0, countToday = 0, countOver = 0;
 
             salesRecords.forEach(sale => {
                 if (sale.status !== 'Cancelled' && sale.emiSchedule) {
                     sale.emiSchedule.forEach(emi => {
                         if (emi.status === 'Unpaid') {
                             const dueDateTime = new Date(`${emi.dueDate}T00:00:00`);
+                            // stays triggered from 12:00 AM of due date until the EMI is collected
                             if (now >= dueDateTime) {
                                 countDue++;
-                                sumDueAmount += emi.amount;
+                                sumDueAmount += Number(emi.amount) || 0;
+                                if (emiDaysLate(emi.dueDate) === 0) countToday++; else countOver++;
                             }
                         }
                     });
                 }
             });
 
-            document.getElementById('dash-emi-12h-val').innerText = sumDueAmount.toLocaleString();
+            const dv = document.getElementById('dash-emi-12h-val');
+            if (dv) dv.innerText = sumDueAmount.toLocaleString();
             const badge = document.getElementById('sidebar-emi-badge');
-            if (countDue > 0) {
-                badge.innerText = countDue;
-                badge.classList.remove('hidden');
-            } else {
-                badge.classList.add('hidden');
+            if (badge) {
+                if (countDue > 0) { badge.innerText = countDue; badge.classList.remove('hidden'); }
+                else badge.classList.add('hidden');
             }
 
+            // global notification banner (visible on every tab until collected)
+            const bn = document.getElementById('emi-alert-banner');
+            if (bn) {
+                if (countDue > 0) {
+                    bn.classList.remove('hidden');
+                    bn.innerHTML = `<div class="flex items-center gap-3"><i class="fa-solid fa-bell text-red-600 animate-pulse"></i>
+                        <div><p class="font-bold text-red-800 text-xs">EMI Collection Alert: ${countDue} টি কিস্তি collect বাকি (৳ ${sumDueAmount.toLocaleString()})</p>
+                        <p class="text-[11px] text-red-700">আজ due: ${countToday} · Overdue: ${countOver} — collect না হওয়া পর্যন্ত notification থাকবে</p></div></div>
+                        <button onclick="switchTab('sales-emi')" class="bg-red-600 hover:bg-red-700 text-white text-[11px] font-bold px-3 py-1.5 rounded-lg whitespace-nowrap">View & Collect</button>`;
+                } else { bn.classList.add('hidden'); bn.innerHTML = ''; }
+            }
             renderAutoEmiScheduleCenter();
         }
 
         function renderAutoEmiScheduleCenter() {
             const tbody = document.getElementById('auto-emi-center-tbody');
             const filter = document.getElementById('emi_center_filter').value;
-            const now = new Date("2026-10-31T00:00:00");
+            const now = new Date(); // real current time: EMI triggers from 12:00 AM of due date
 
             let list = [];
 
@@ -1966,7 +2046,7 @@ button.dk-day:hover{background:#222226}
                 const { sale, emi, idx, isDueFromMidnight } = item;
                 let urgencyBadge = `<span class="bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded text-[10px]">Upcoming</span>`;
                 if (isDueFromMidnight) {
-                    urgencyBadge = `<span class="bg-red-500 text-white font-bold px-2 py-0.5 rounded text-[10px] animate-pulse"><i class="fa-solid fa-bell mr-1"></i> Triggered (Due >= 12:00 AM)</span>`;
+                    urgencyBadge = `<span class="bg-red-500 text-white font-bold px-2 py-0.5 rounded text-[10px] animate-pulse"><i class="fa-solid fa-bell mr-1"></i> ${emiDaysLate(emi.dueDate) === 0 ? 'Due Today (12:00 AM+)' : 'Overdue ' + emiDaysLate(emi.dueDate) + ' day(s)'}</span>`;
                 } else if (emi.status === 'Paid') {
                     urgencyBadge = `<span class="bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded text-[10px]">Paid</span>`;
                 }
@@ -2133,8 +2213,25 @@ button.dk-day:hover{background:#222226}
             generateCustomEmiRows();
         }
 
+        // ---- EMI helpers (local dates, month-end safe) ----
+        function emiISO(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
+        function emiAddMonths(iso, n, anchorDay) {
+            const p = String(iso).split('-').map(Number);
+            const day = anchorDay || p[2];
+            const first = new Date(p[0], p[1] - 1 + n, 1);
+            const last = new Date(first.getFullYear(), first.getMonth() + 1, 0).getDate();
+            first.setDate(Math.min(day, last));
+            return emiISO(first);
+        }
+        function getBookingEmiMonths() {
+            const c = parseInt(document.getElementById('booking_emi_custom').value);
+            if (c > 0) return Math.min(c, 360);
+            return parseInt(document.getElementById('booking_emi_months').value) || 0;
+        }
+        let bookingEmiPreset = null; // saved schedule while editing an existing sale
+
         function generateCustomEmiRows() {
-            const months = parseInt(document.getElementById('booking_emi_months').value) || 0;
+            const months = getBookingEmiMonths();
             const totalPrice = parseFloat(document.getElementById('booking_total_price').value) || 0;
             const bookingMoney = parseFloat(document.getElementById('booking_money').value) || 0;
             const balance = totalPrice - bookingMoney;
@@ -2142,67 +2239,72 @@ button.dk-day:hover{background:#222226}
             const container = document.getElementById('custom-emi-rows');
             if (months <= 0) {
                 container.innerHTML = `<p class="text-slate-400 italic text-[11px]">No EMI required (Full Payment)</p>`;
+                emiSumCheck();
                 return;
             }
 
-            const defaultPerMonth = Math.round(balance / months);
+            const startEl = document.getElementById('booking_emi_start');
+            if (!startEl.value) startEl.value = emiAddMonths(emiISO(new Date()), 1);
+            const startISO = startEl.value;
+            const anchorDay = Number(startISO.split('-')[2]);
+
+            const usePreset = bookingEmiPreset && bookingEmiPreset.length === months;
+            const base = Math.floor(balance / months);
             let html = '';
-            let baseDate = new Date(2026, 9, 31);
-
             for (let i = 1; i <= months; i++) {
-                baseDate.setMonth(baseDate.getMonth() + 1);
-                let dateString = baseDate.toISOString().split('T')[0];
-
+                let dateString = emiAddMonths(startISO, i - 1, anchorDay);
+                let amt = (i === months) ? balance - base * (months - 1) : base;
+                if (usePreset) { dateString = bookingEmiPreset[i - 1].dueDate; amt = bookingEmiPreset[i - 1].amount; }
                 html += `
                     <div class="flex items-center gap-2 bg-slate-50 p-2 rounded border border-slate-200">
                         <span class="font-bold text-slate-700 w-16">#${i}</span>
                         <input type="date" value="${dateString}" id="emi_date_${i}" onchange="rebalanceEmiDates(${i}, ${months})" class="p-1 border border-slate-300 rounded text-[11px] w-36">
-                        <input type="number" value="${defaultPerMonth}" id="emi_amt_${i}" oninput="rebalanceEmiAmounts(${i}, ${months}, ${balance})" class="p-1 border border-slate-300 rounded text-[11px] w-32 font-bold text-emerald-700">
+                        <input type="number" value="${amt}" id="emi_amt_${i}" oninput="rebalanceEmiAmounts(${i}, ${months}, ${balance})" class="p-1 border border-slate-300 rounded text-[11px] w-32 font-bold text-emerald-700">
                         <span class="text-[10px] text-slate-400">BDT</span>
                     </div>
                 `;
             }
             container.innerHTML = html;
+            emiSumCheck();
+        }
+
+        function emiSumCheck() {
+            const el = document.getElementById('emi-sum-check'); if (!el) return;
+            const months = getBookingEmiMonths();
+            if (months <= 0) { el.innerHTML = ''; return; }
+            const balance = (parseFloat(document.getElementById('booking_total_price').value) || 0) - (parseFloat(document.getElementById('booking_money').value) || 0);
+            let sum = 0;
+            for (let i = 1; i <= months; i++) { const e = document.getElementById(`emi_amt_${i}`); sum += e ? (parseFloat(e.value) || 0) : 0; }
+            const diff = Math.round((balance - sum) * 100) / 100;
+            el.innerHTML = diff === 0
+                ? `<span class="text-emerald-600"><i class="fa-solid fa-circle-check"></i> EMI total ৳ ${sum.toLocaleString()} = Balance ৳ ${balance.toLocaleString()}</span>`
+                : `<span class="text-red-600"><i class="fa-solid fa-triangle-exclamation"></i> EMI total ৳ ${sum.toLocaleString()} / Balance ৳ ${balance.toLocaleString()} (${diff > 0 ? 'baki ৳ ' + diff.toLocaleString() : 'beshi ৳ ' + Math.abs(diff).toLocaleString()})</span>`;
         }
 
         function rebalanceEmiAmounts(changedIndex, totalMonths, totalBalance) {
+            // rows up to the edited one stay as typed; the rest share the remaining balance (last row absorbs rounding)
             let fixedSum = 0;
-            let unassignedCount = 0;
-
-            for (let i = 1; i <= totalMonths; i++) {
-                if (i <= changedIndex) {
-                    fixedSum += parseFloat(document.getElementById(`emi_amt_${i}`).value) || 0;
-                } else {
-                    unassignedCount++;
-                }
-            }
-
-            if (unassignedCount > 0) {
-                let remainingBalanceForRest = totalBalance - fixedSum;
-                let splitAmount = Math.max(0, Math.round(remainingBalanceForRest / unassignedCount));
-
+            for (let i = 1; i <= changedIndex; i++) fixedSum += parseFloat(document.getElementById(`emi_amt_${i}`).value) || 0;
+            const rest = totalMonths - changedIndex;
+            if (rest > 0) {
+                const remaining = totalBalance - fixedSum;
+                const split = Math.max(0, Math.floor(remaining / rest));
+                let used = 0;
                 for (let i = changedIndex + 1; i <= totalMonths; i++) {
-                    if (i === totalMonths) {
-                        let currentFixedSoFar = 0;
-                        for(let j=1; j<totalMonths; j++) {
-                            currentFixedSoFar += parseFloat(document.getElementById(`emi_amt_${j}`).value) || 0;
-                        }
-                        document.getElementById(`emi_amt_${i}`).value = Math.max(0, totalBalance - currentFixedSoFar);
-                    } else {
-                        document.getElementById(`emi_amt_${i}`).value = splitAmount;
-                    }
+                    const v = (i === totalMonths) ? Math.max(0, remaining - used) : split;
+                    document.getElementById(`emi_amt_${i}`).value = v;
+                    used += v;
                 }
             }
+            emiSumCheck();
         }
 
         function rebalanceEmiDates(changedIndex, totalMonths) {
-            let currentDateVal = document.getElementById(`emi_date_${changedIndex}`).value;
-            if (!currentDateVal) return;
-
-            let baseDate = new Date(currentDateVal);
+            const cur = document.getElementById(`emi_date_${changedIndex}`).value;
+            if (!cur) return;
+            const anchor = Number(cur.split('-')[2]);
             for (let i = changedIndex + 1; i <= totalMonths; i++) {
-                baseDate.setMonth(baseDate.getMonth() + 1);
-                document.getElementById(`emi_date_${i}`).value = baseDate.toISOString().split('T')[0];
+                document.getElementById(`emi_date_${i}`).value = emiAddMonths(cur, i - changedIndex, anchor);
             }
         }
 
@@ -2414,7 +2516,7 @@ button.dk-day:hover{background:#222226}
                 ${p.remarks ? `<div><p class="text-[10px] text-slate-400 uppercase font-bold">Remarks</p><p>${purEsc(p.remarks)}</p></div>` : ''}
                 <div><p class="font-bold text-slate-700 mb-1.5">Documents (${docs.length})</p>${docs.length ? docs.map(d => `<div class="flex items-center justify-between border border-slate-200 rounded-lg px-3 py-2 mb-1.5"><span><i class="fa-solid fa-file-lines text-slate-400 mr-2"></i>${purEsc(d.type)}${d.fileName ? ' <span class="text-slate-400">(' + purEsc(d.fileName) + ')</span>' : ''}</span>${d.fileData ? `<span><button onclick="purchaseOpenDoc('${d.id}','open')" class="text-blue-600 hover:underline mr-3">Open</button><button onclick="purchaseOpenDoc('${d.id}','download')" class="text-emerald-700 hover:underline">Download</button></span>` : '<span class="text-slate-400">No file</span>'}</div>`).join('') : '<p class="text-slate-400">কোনো ডকুমেন্ট নেই।</p>'}</div>
                 <div><p class="font-bold text-slate-700 mb-1.5">Payments (${pays.length})</p>${pays.length ? `<table class="w-full text-left border border-slate-200"><thead class="bg-slate-50 text-slate-500"><tr><th class="p-2">Date</th><th class="p-2">Voucher</th><th class="p-2">Method</th><th class="p-2 text-right">Amount</th><th class="p-2 text-center">Invoice</th></tr></thead><tbody class="divide-y divide-slate-100">${pays.map(x => `<tr><td class="p-2">${purEsc(x.date)}</td><td class="p-2">${purEsc(x.voucher || x.reference || '-')}</td><td class="p-2">${purEsc(x.method)}</td><td class="p-2 text-right font-semibold">${purMoney(x.amount)}</td><td class="p-2 text-center"><button onclick="purchaseInvoice('${x.id}')" class="px-2 py-1 bg-slate-800 text-white rounded text-[10px]">Invoice</button></td></tr>`).join('')}</tbody></table>` : '<p class="text-slate-400">কোনো পেমেন্ট নেই।</p>'}</div>`;
-            purViewOpen('Purchase Details — ' + p.id, body, `<button onclick="purViewClose();purchaseEdit('${p.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-semibold"><i class="fa-solid fa-pen-to-square mr-1"></i>Edit</button>`);
+            purViewOpen('Purchase Details — ' + p.id, body, `<button onclick="purViewClose();purPayOpen('${p.id}')" class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg font-semibold"><i class="fa-solid fa-money-bill-wave mr-1"></i>Add Payment</button><button onclick="purViewClose();purchaseEdit('${p.id}')" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-semibold"><i class="fa-solid fa-pen-to-square mr-1"></i>Edit</button>`);
         }
         function purchasePaymentView(payId) {
             const x = purData.payments.find(p => p.id === payId); if (!x) return;
@@ -2431,6 +2533,129 @@ button.dk-day:hover{background:#222226}
             purViewOpen('Payment Details — ' + (x.voucher || x.id), body, `<button onclick="purchaseInvoice('${x.id}')" class="bg-slate-800 hover:bg-slate-900 text-white px-4 py-2 rounded-lg font-semibold"><i class="fa-solid fa-file-invoice mr-1"></i>Invoice</button>`);
         }
 
+        /* ================= LANDOWNER SUB-MODULE ================= */
+        let purOwnerPhoto;   // undefined = unchanged, null = removed, string = new image
+        const purOwnerKey = n => String(n || '').trim().toLowerCase();
+        function purOwners() {
+            const m = {};
+            purData.records.forEach(p => {
+                const k = purOwnerKey(p.owner); if (!k) return;
+                const o = m[k] || (m[k] = { key: k, name: p.owner, mobile: '', photo: '', projects: [], area: 0, ids: [], paid: 0, due: 0 });
+                if (!o.mobile && p.mobile) o.mobile = p.mobile;
+                if (!o.photo && p.photo) o.photo = p.photo;
+                if (p.project && !o.projects.includes(p.project)) o.projects.push(p.project);
+                o.area += Number(p.area || 0); o.ids.push(p.id); o.paid += purPaid(p.id);
+                if (p.type === 'Fixed Price') o.due += purDue(p);
+            });
+            return Object.values(m);
+        }
+        function purOwnerAvatar(o, size) {
+            return o.photo ? `<img src="${o.photo}" class="${size} rounded-lg object-cover border border-slate-200" alt="">` : `<div class="${size} rounded-lg border border-dashed border-slate-300 flex items-center justify-center text-slate-300"><i class="fa-solid fa-user"></i></div>`;
+        }
+        function purOwnerRender() {
+            const body = document.getElementById('pur-owner-body'); if (!body) return;
+            const qEl = document.getElementById('pur-owner-q'), pEl = document.getElementById('pur-owner-proj'), dEl = document.getElementById('pur-owner-due');
+            const q = (qEl ? qEl.value : '').trim().toLowerCase().replace(/\s+/g, ' '), qd = q.replace(/[^0-9]/g, '');
+            if (pEl) { const cur = pEl.value; pEl.innerHTML = '<option value="">All Projects</option>' + [...new Set(purData.records.map(r => r.project).filter(Boolean))].map(n => `<option value="${purEsc(n)}">${purEsc(n)}</option>`).join(''); pEl.value = cur; }
+            const proj = pEl ? pEl.value : '', dueF = dEl ? dEl.value : '';
+            const all = purOwners();
+            const list = all.filter(o =>
+                (!q || o.name.toLowerCase().includes(q) || (qd && String(o.mobile || '').replace(/[^0-9]/g, '').includes(qd))) &&
+                (!proj || o.projects.includes(proj)) && (!dueF || (dueF === 'due' ? o.due > 0 : o.due <= 0)));
+            const cnt = document.getElementById('pur-owner-count'); if (cnt) cnt.textContent = `(${list.length}/${all.length})`;
+            body.innerHTML = list.map(o => `<tr class="hover:bg-slate-50">
+                <td class="p-3">${purOwnerAvatar(o, 'w-10 h-10')}</td>
+                <td class="p-3 font-semibold text-slate-800">${purEsc(o.name)}</td>
+                <td class="p-3">${purEsc(o.mobile || '-')}</td>
+                <td class="p-3">${purEsc(o.projects.join(', ') || '-')}</td>
+                <td class="p-3 text-right">${o.area.toFixed(2)}</td>
+                <td class="p-3 text-right">${o.ids.length}</td>
+                <td class="p-3 text-right text-emerald-700 font-semibold">${purMoney(o.paid)}</td>
+                <td class="p-3 text-right ${o.due > 0 ? 'text-red-600 font-semibold' : ''}">${purMoney(o.due)}</td>
+                <td class="p-3 text-center whitespace-nowrap">
+                    <button data-k="${purEsc(o.key)}" onclick="purOwnerView(this.dataset.k)" class="text-blue-600 hover:text-blue-800 mr-2" title="View Profile"><i class="fa-solid fa-eye"></i></button>
+                    <button data-k="${purEsc(o.key)}" onclick="purOwnerEdit(this.dataset.k)" class="text-emerald-600 hover:text-emerald-800" title="Edit Profile"><i class="fa-solid fa-pen-to-square"></i></button>
+                </td></tr>`).join('') || '<tr><td colspan="9" class="p-5 text-center text-slate-400">No landowners found.</td></tr>';
+        }
+        function purOwnerView(key) {
+            const o = purOwners().find(x => x.key === key); if (!o) return;
+            const recs = purData.records.filter(p => purOwnerKey(p.owner) === key);
+            const rows = recs.map(p => `<tr class="border-t border-slate-100"><td class="p-2 font-mono text-emerald-700">${purEsc(p.id)}</td><td class="p-2">${purEsc(p.project || '-')}</td><td class="p-2">${purEsc(p.mouza || '-')}</td><td class="p-2">${purEsc(p.khatian || '-')} / ${purEsc(p.dag || '-')}</td><td class="p-2 text-right">${Number(p.area || 0)}</td><td class="p-2">${p.type === 'Fixed Price' ? 'Fixed' : 'Share ' + p.ownerShare + '%'}</td><td class="p-2 text-right">${purMoney(purPaid(p.id))}</td><td class="p-2 text-right">${p.type === 'Fixed Price' ? purMoney(purDue(p)) : '-'}</td><td class="p-2 text-center whitespace-nowrap"><button onclick="purViewClose();purchaseView('${p.id}')" class="text-blue-600 mr-2" title="Record"><i class="fa-solid fa-eye"></i></button><button onclick="purViewClose();purPayOpen('${p.id}')" class="text-amber-600" title="Add Payment"><i class="fa-solid fa-money-bill-wave"></i></button></td></tr>`).join('');
+            const body = `
+                <div class="flex items-start gap-4">${purOwnerAvatar(o, 'w-24 h-24')}<div><p class="text-lg font-bold text-slate-900">${purEsc(o.name)}</p><p class="text-slate-500"><i class="fa-solid fa-phone mr-1"></i>${purEsc(o.mobile || '-')}</p><p class="text-slate-500 mt-0.5">${purEsc(o.projects.join(', ') || '-')}</p></div></div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 bg-slate-50 border border-slate-200 rounded-xl p-4">${purKV('Total Land', o.area.toFixed(2) + ' শতক')}${purKV('Purchase Records', o.ids.length)}${purKV('Total Paid', purMoney(o.paid))}${purKV('Fixed Due', purMoney(o.due))}</div>
+                <div><p class="font-bold text-slate-700 mb-1.5">Purchase Records</p><div class="overflow-x-auto"><table class="w-full text-left border border-slate-200"><thead class="bg-slate-50 text-slate-500"><tr><th class="p-2">ID</th><th class="p-2">Project</th><th class="p-2">Mouza</th><th class="p-2">Khatian / Dag</th><th class="p-2 text-right">Area</th><th class="p-2">Type</th><th class="p-2 text-right">Paid</th><th class="p-2 text-right">Due</th><th class="p-2"></th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
+            purViewOpen('Landowner Profile — ' + o.name, body, `<button onclick="purViewClose();purOwnerEdit(${JSON.stringify(key).replace(/"/g, '&quot;')})" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-semibold"><i class="fa-solid fa-pen-to-square mr-1"></i>Edit</button>`);
+        }
+        function purOwnerEdit(key) {
+            const o = purOwners().find(x => x.key === key); if (!o) return;
+            purOwnerPhoto = undefined;
+            document.getElementById('po-key').value = key;
+            document.getElementById('po-sub').textContent = `${o.ids.length} purchase record(s)`;
+            document.getElementById('po-name').value = o.name;
+            document.getElementById('po-mobile').value = o.mobile || '';
+            document.getElementById('po-photo').value = '';
+            document.getElementById('po-note').textContent = `Ekhane edit korle ${o.ids.join(', ')} — shob Purchase Register record-e owner-er name/mobile/photo bodle jabe.`;
+            purOwnerPhotoShow(o.photo || null);
+            document.getElementById('purOwnerModal').classList.remove('hidden');
+        }
+        function purOwnerClose() { document.getElementById('purOwnerModal').classList.add('hidden'); }
+        function purOwnerPhotoShow(d) { document.getElementById('po-photo-box').innerHTML = d ? `<img src="${d}" class="w-full h-full object-cover" alt="">` : '<i class="fa-solid fa-user text-2xl"></i>'; }
+        function purOwnerPhotoChange(inp) {
+            const f = inp.files && inp.files[0]; if (!f) return;
+            if (!f.type.startsWith('image/')) { alert('শুধু ছবি (Image) নির্বাচন করুন'); inp.value = ''; return; }
+            purLoadImage(f, 400, 0.8).then(d => { purOwnerPhoto = d; purOwnerPhotoShow(d); }).catch(() => alert('ছবি লোড করা যায়নি'));
+        }
+        function purOwnerPhotoClear() { purOwnerPhoto = null; document.getElementById('po-photo').value = ''; purOwnerPhotoShow(null); }
+        function purOwnerSave(e) {
+            e.preventDefault();
+            const key = document.getElementById('po-key').value;
+            const name = document.getElementById('po-name').value.trim(), mobile = document.getElementById('po-mobile').value.trim();
+            if (!name) { alert('Landowner name dao.'); return; }
+            const newKey = purOwnerKey(name);
+            if (newKey !== key && purOwners().some(x => x.key === newKey) && !confirm(`"${name}" nam-e ekhon-i arekjon landowner ache. Dujon-ke merge kora hobe. Continue?`)) return;
+            let n = 0;
+            purData.records.forEach(p => {
+                if (purOwnerKey(p.owner) !== key) return;
+                p.owner = name; p.mobile = mobile; n++;
+                if (purOwnerPhoto === null) delete p.photo; else if (purOwnerPhoto) p.photo = purOwnerPhoto;
+            });
+            purSave(); purOwnerClose();
+            try { if (typeof accRefreshCurrent === 'function') accRefreshCurrent(); } catch (x) { }
+            if (typeof accToast === 'function') accToast(`Landowner updated (${n} purchase record synced)`, true);
+        }
+
+        /* ---- Quick payment (from Register / View page / Landowner) ---- */
+        function purPayOpen(id) {
+            const p = purData.records.find(x => x.id === id); if (!p) { alert('Purchase record not found'); return; }
+            const fixed = p.type === 'Fixed Price', paid = purPaid(id), due = purDue(p);
+            document.getElementById('pp-id').value = id;
+            document.getElementById('pp-sub').textContent = `${p.id} — ${p.owner}${p.project ? ' · ' + p.project : ''}`;
+            const box = (k, v, c) => `<div><p class="text-[10px] text-slate-400 uppercase font-bold">${k}</p><p class="font-bold ${c || 'text-slate-800'}">${v}</p></div>`;
+            document.getElementById('pp-summary').innerHTML = fixed
+                ? box('Contract Value', purMoney(p.totalValue)) + box('Total Paid', purMoney(paid), 'text-emerald-700') + box('Due', purMoney(due), due > 0 ? 'text-red-600' : 'text-emerald-700')
+                : box('Type', 'Revenue Share') + box('Total Paid', purMoney(paid), 'text-emerald-700') + box('Share', p.ownerShare + '% / ' + p.companyShare + '%');
+            const accs = (typeof accData !== 'undefined' && accData.accounts && accData.accounts.length) ? accData.accounts : [{ id: 'acc-cash', name: 'Cash in Hand' }, { id: 'acc-bank', name: 'Bank Account' }, { id: 'acc-mfs', name: 'Mobile Banking' }];
+            document.getElementById('pp-account').innerHTML = accs.map(a => `<option value="${purEsc(a.id)}">${purEsc(a.name)}</option>`).join('');
+            document.getElementById('pp-date').value = purDate();
+            document.getElementById('pp-amount').value = fixed && due > 0 ? due : '';
+            document.getElementById('pp-method').value = 'Cash';
+            document.getElementById('pp-ref').value = ''; document.getElementById('pp-note').value = '';
+            document.getElementById('purPayModal').classList.remove('hidden');
+        }
+        function purPayClose() { document.getElementById('purPayModal').classList.add('hidden'); }
+        function purPaySave(e) {
+            e.preventDefault();
+            const id = document.getElementById('pp-id').value, rec = purData.records.find(x => x.id === id);
+            const amount = Number(document.getElementById('pp-amount').value || 0);
+            if (!rec || amount <= 0) { alert('Valid amount dao.'); return; }
+            if (rec.type === 'Fixed Price' && amount > purDue(rec) && !confirm('এই পেমেন্ট দিলে চুক্তিমূল্যের চেয়ে বেশি পরিশোধ হবে। তবুও সংরক্ষণ করবেন?')) return;
+            const pay = { id: 'PP-' + Date.now(), purchaseId: id, date: document.getElementById('pp-date').value, amount, method: document.getElementById('pp-method').value, accountId: document.getElementById('pp-account').value, reference: document.getElementById('pp-ref').value, note: document.getElementById('pp-note').value, voucher: cfgPrefix('purPayment', 'PV-') + String(Date.now()).slice(-7), autoAccount: true };
+            purData.payments.unshift(pay);
+            purSave(); purPayClose();
+            try { if (typeof accRefreshCurrent === 'function') accRefreshCurrent(); if (typeof renderRecentBookings === 'function') renderRecentBookings(); } catch (x) { }
+            if (confirm('Payment saved. Invoice dekhte chao?')) purchaseInvoice(pay.id);
+        }
         function purchaseAddPayment(e) {
             e.preventDefault(); const id=document.getElementById('pur-payment-record').value, rec=purData.records.find(x=>x.id===id), amount=Number(document.getElementById('pur-payment-amount').value||0);
             if(!rec || amount<=0) return;
@@ -2459,9 +2684,8 @@ button.dk-day:hover{background:#222226}
             document.getElementById('pur-recent-body').innerHTML=records.slice(0,6).map(row).join('')||'<tr><td colspan="7" class="p-5 text-center text-slate-400">No purchase records yet.</td></tr>';
             const q=(document.getElementById('pur-search')?.value||'').toLowerCase(), type=document.getElementById('pur-filter')?.value||'';
             const filtered=records.filter(p=>(!type||p.type===type)&&[p.id,p.owner,p.project,p.mouza].join(' ').toLowerCase().includes(q));
-            document.getElementById('pur-register-body').innerHTML=filtered.map(p=>`<tr><td class="p-3 font-semibold">${purEsc(p.id)}</td><td class="p-3">${purEsc(p.date)}</td><td class="p-3">${purEsc(p.owner)}</td><td class="p-3">${purEsc(p.project||'-')}</td><td class="p-3">${purEsc(p.type)}</td><td class="p-3 text-right">${p.area}</td><td class="p-3 text-right">${p.type==='Fixed Price'?purMoney(p.totalValue):'—'}</td><td class="p-3 text-right">${purMoney(purPaid(p.id))}</td><td class="p-3 text-right">${p.type==='Fixed Price'?purMoney(purDue(p)):'—'}</td><td class="p-3 whitespace-nowrap"><button onclick="purchaseView('${p.id}')" class="text-blue-600 hover:text-blue-800 mr-2" title="View"><i class="fa-solid fa-eye"></i></button><button onclick="purchaseEdit('${p.id}')" class="text-emerald-600 hover:text-emerald-800 mr-2" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button><button onclick="purchaseDelete('${p.id}')" class="text-rose-600 hover:text-rose-800" title="Delete"><i class="fa-solid fa-trash"></i></button></td></tr>`).join('')||'<tr><td colspan="10" class="p-5 text-center text-slate-400">No records found.</td></tr>';
-            const owners={}; records.forEach(p=>{const k=p.owner.toLowerCase(); if(!owners[k])owners[k]={name:p.owner,mobile:p.mobile,project:p.project,area:0,count:0,due:0}; owners[k].area+=Number(p.area||0);owners[k].count++;owners[k].due+=p.type==='Fixed Price'?purDue(p):0;});
-            document.getElementById('pur-owner-body').innerHTML=Object.values(owners).map(o=>`<tr><td class="p-3 font-semibold">${purEsc(o.name)}</td><td class="p-3">${purEsc(o.mobile||'-')}</td><td class="p-3">${purEsc(o.project||'-')}</td><td class="p-3 text-right">${o.area.toFixed(2)}</td><td class="p-3 text-right">${o.count}</td><td class="p-3 text-right">${purMoney(o.due)}</td></tr>`).join('')||'<tr><td colspan="6" class="p-5 text-center text-slate-400">No landowners yet.</td></tr>';
+            document.getElementById('pur-register-body').innerHTML=filtered.map(p=>`<tr><td class="p-3 font-semibold">${purEsc(p.id)}</td><td class="p-3">${purEsc(p.date)}</td><td class="p-3">${purEsc(p.owner)}</td><td class="p-3">${purEsc(p.project||'-')}</td><td class="p-3">${purEsc(p.type)}</td><td class="p-3 text-right">${p.area}</td><td class="p-3 text-right">${p.type==='Fixed Price'?purMoney(p.totalValue):'—'}</td><td class="p-3 text-right">${purMoney(purPaid(p.id))}</td><td class="p-3 text-right">${p.type==='Fixed Price'?purMoney(purDue(p)):'—'}</td><td class="p-3 whitespace-nowrap"><button onclick="purchaseView('${p.id}')" class="text-blue-600 hover:text-blue-800 mr-2" title="View"><i class="fa-solid fa-eye"></i></button><button onclick="purPayOpen('${p.id}')" class="text-amber-600 hover:text-amber-800 mr-2" title="Add Payment"><i class="fa-solid fa-money-bill-wave"></i></button><button onclick="purchaseEdit('${p.id}')" class="text-emerald-600 hover:text-emerald-800 mr-2" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button><button onclick="purchaseDelete('${p.id}')" class="text-rose-600 hover:text-rose-800" title="Delete"><i class="fa-solid fa-trash"></i></button></td></tr>`).join('')||'<tr><td colspan="10" class="p-5 text-center text-slate-400">No records found.</td></tr>';
+            purOwnerRender();
             document.getElementById('pur-payment-body').innerHTML=purData.payments.map(x=>{const p=records.find(r=>r.id===x.purchaseId)||{};return `<tr><td class="p-3">${purEsc(x.date)}</td><td class="p-3">${purEsc(x.voucher||x.reference||'-')}</td><td class="p-3">${purEsc(x.purchaseId)}</td><td class="p-3">${purEsc(p.owner||'-')}</td><td class="p-3">${purEsc(x.method)}</td><td class="p-3 text-right font-semibold">${purMoney(x.amount)}</td><td class="p-3 text-center whitespace-nowrap"><button onclick="purchasePaymentView('${x.id}')" class="px-2 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-[10px] font-semibold mr-1" title="View Payment"><i class="fa-solid fa-eye mr-1"></i>View</button><button onclick="purchaseInvoice('${x.id}')" class="px-2 py-1 bg-slate-800 hover:bg-slate-900 text-white rounded text-[10px] font-semibold" title="Payment Invoice"><i class="fa-solid fa-file-invoice mr-1"></i>Invoice</button></td></tr>`;}).join('')||'<tr><td colspan="7" class="p-5 text-center text-slate-400">No payments yet.</td></tr>';
             document.getElementById('pur-share-body').innerHTML=purData.settlements.map(x=>`<tr><td class="p-3">${x.date}</td><td class="p-3">${x.purchaseId}</td><td class="p-3">${purEsc(x.saleRef||'-')}</td><td class="p-3 text-right">${purMoney(x.saleAmount)}</td><td class="p-3 text-right">${purMoney(x.ownerAmount)}</td><td class="p-3 text-right">${purMoney(x.companyAmount)}</td></tr>`).join('')||'<tr><td colspan="6" class="p-5 text-center text-slate-400">No settlement calculations yet.</td></tr>';
             document.getElementById('pur-doc-body').innerHTML=purData.documents.map(x=>`<tr><td class="p-3">${x.purchaseId}</td><td class="p-3">${purEsc(x.type)}</td><td class="p-3">${purEsc(x.note||'-')}${x.fileData?` <button onclick="purchaseOpenDoc('${x.id}','open')" class="text-blue-600 hover:underline ml-1"><i class="fa-solid fa-paperclip mr-1"></i>View file</button>`:''}</td><td class="p-3">${x.date}</td></tr>`).join('')||'<tr><td colspan="4" class="p-5 text-center text-slate-400">No documents listed.</td></tr>';
@@ -2546,6 +2770,8 @@ button.dk-day:hover{background:#222226}
 
             document.getElementById('createPlotForm').reset();
             document.getElementById('editing_plot_original_name').value = "";
+            document.getElementById('editing_plot_original_project').value = "";
+            userTypedBlock = "";
             document.getElementById('createPlotModalTitle').innerText = "Create New Plot";
             document.getElementById('createPlotSubmitBtn').innerText = "Create Plot";
             document.getElementById('new_plot_sku').value = "—";
@@ -2555,32 +2781,41 @@ button.dk-day:hover{background:#222226}
 
         function closeCreatePlotModal() { document.getElementById('createPlotModal').classList.add('hidden'); }
 
-        function editPlotItem(projectName, plotName) {
-            const plots = plotMatrix[projectName] || [];
-            const plot = plots.find(p => p.name === plotName);
-            if (!plot) return;
+        function plEsc(v) { return String(v == null ? '' : v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+        function plFind(projectName, plotName) { return (plotMatrix[projectName] || []).find(p => p.name === plotName); }
+        function plSaleOf(plot) {
+            return salesRecords.find(s => s.status !== 'Cancelled' && s.project === plot.project && s.plotNo === plot.name);
+        }
 
+        function editPlotItem(projectName, plotName) {
+            const plot = plFind(projectName, plotName);
+            if (!plot) { alert('Plot not found: ' + plotName); return; }
             const modal = document.getElementById('createPlotModal');
             const projectSelect = document.getElementById('new_plot_project');
-            projectSelect.innerHTML = `<option value="">Select Project</option>` + projectsData.map(p => `<option value="${p.name}">${p.name}</option>`).join('');
+            projectSelect.innerHTML = `<option value="">Select Project</option>` + projectsData.map(p => `<option value="${plEsc(p.name)}">${plEsc(p.name)}</option>`).join('');
+
+            // IMPORTANT: sync the block prefix helper, otherwise editing only the plot no drops the "A-" prefix
+            userTypedBlock = String(plot.block || '').replace(/^block-/i, '').toUpperCase();
 
             document.getElementById('createPlotModalTitle').innerText = `Edit Plot: ${plotName}`;
             document.getElementById('createPlotSubmitBtn').innerText = "Update Plot";
             document.getElementById('editing_plot_original_name').value = plotName;
-            projectSelect.value = plot.project;
-            document.getElementById('new_plot_block').value = plot.block;
+            document.getElementById('editing_plot_original_project').value = projectName;
+            projectSelect.value = plot.project || projectName;
+            document.getElementById('new_plot_block').value = plot.block || '';
             document.getElementById('new_plot_name').value = plot.name;
-            document.getElementById('new_plot_location').value = plot.location;
-            document.getElementById('new_plot_sku').value = plot.sku;
-            document.getElementById('new_plot_type').value = plot.type;
-            document.getElementById('new_plot_price').value = plot.price;
-            document.getElementById('new_plot_status').value = plot.status;
+            document.getElementById('new_plot_location').value = plot.location || '';
+            document.getElementById('new_plot_sku').value = plot.sku || '—';
+            document.getElementById('new_plot_type').value = plot.type || 'Land';
+            document.getElementById('new_plot_price').value = Number(plot.price) || 0;
+            document.getElementById('new_plot_status').value = plot.status === 'Sold Out' ? 'Complete' : (plot.status || 'Available');
             modal.classList.remove('hidden');
         }
 
         function handleCreatePlotSubmit(e) {
             e.preventDefault();
             const originalName = document.getElementById('editing_plot_original_name').value;
+            const originalProject = document.getElementById('editing_plot_original_project').value;
             const project = document.getElementById('new_plot_project').value;
             const block = document.getElementById('new_plot_block').value.trim();
             const plotName = document.getElementById('new_plot_name').value.trim();
@@ -2591,11 +2826,28 @@ button.dk-day:hover{background:#222226}
             const status = document.getElementById('new_plot_status').value;
 
             if (!project) { alert("Please select a project."); return; }
+            if (!plotName) { alert("Plot No is required."); return; }
             if (!plotMatrix[project]) plotMatrix[project] = [];
 
+            const dup = plotMatrix[project].some(p => p.name === plotName && !(originalName && project === originalProject && p.name === originalName));
+            if (dup) { alert(`Plot "${plotName}" already exists in ${project}.`); return; }
+
             if (originalName) {
-                const idx = plotMatrix[project].findIndex(p => p.name === originalName);
-                if (idx !== -1) plotMatrix[project][idx] = { id: plotName, name: plotName, location, sku, block, project, type, status, price };
+                const src = plotMatrix[originalProject || project] || [];
+                const idx = src.findIndex(p => p.name === originalName);
+                const old = idx !== -1 ? src[idx] : {};
+                const updated = Object.assign({}, old, { id: plotName, name: plotName, location, sku, block, project, type, status, price });
+                if (idx !== -1) src.splice(idx, 1);
+                if (project === (originalProject || project) && idx !== -1) src.splice(idx, 0, updated);
+                else plotMatrix[project].unshift(updated);
+
+                // keep existing bookings pointing to the renamed / moved plot
+                if (originalName !== plotName || (originalProject && originalProject !== project)) {
+                    salesRecords.forEach(s => {
+                        if (s.project === (originalProject || project) && s.plotNo === originalName) { s.project = project; s.plotNo = plotName; }
+                    });
+                    if (typeof renderSalesTable === 'function') renderSalesTable();
+                }
             } else {
                 plotMatrix[project].unshift({ id: plotName, name: plotName, location, sku, block, project, type, status, price });
             }
@@ -2771,12 +3023,12 @@ button.dk-day:hover{background:#222226}
                         <td class="p-3 text-slate-600">${p.project}</td>
                         <td class="p-3 text-slate-600">${p.type}</td>
                         <td class="p-3">${statusBadge}</td>
-                        <td class="p-3 text-right font-mono font-semibold text-slate-700">${p.price.toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
+                        <td class="p-3 text-right font-mono font-semibold text-slate-700">${(Number(p.price)||0).toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
                         <td class="p-3 text-center">
                             <div class="flex items-center justify-center gap-1">
-                                <button onclick="editPlotItem('${p.project}', '${p.name}')" class="w-7 h-7 rounded border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white flex items-center justify-center transition" title="Edit"><i class="fa-regular fa-pen-to-square text-xs"></i></button>
-                                <button onclick="viewPlotItem('${p.project}', '${p.name}')" class="px-2.5 py-1 bg-cyan-500 hover:bg-cyan-600 text-white rounded text-[11px] font-semibold transition">View</button>
-                                <button onclick="deletePlotItem('${p.project}', '${p.name}')" class="w-7 h-7 rounded border border-red-400 text-red-500 hover:bg-red-500 hover:text-white flex items-center justify-center transition" title="Delete"><i class="fa-regular fa-trash-can text-xs"></i></button>
+                                <button onclick="editPlotItem(this.dataset.pr, this.dataset.pl)" data-pr="${plEsc(p.project)}" data-pl="${plEsc(p.name)}" class="w-7 h-7 rounded border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white flex items-center justify-center transition" title="Edit"><i class="fa-regular fa-pen-to-square text-xs"></i></button>
+                                <button onclick="viewPlotItem(this.dataset.pr, this.dataset.pl)" data-pr="${plEsc(p.project)}" data-pl="${plEsc(p.name)}" class="px-2.5 py-1 bg-cyan-500 hover:bg-cyan-600 text-white rounded text-[11px] font-semibold transition">View</button>
+                                <button onclick="deletePlotItem(this.dataset.pr, this.dataset.pl)" data-pr="${plEsc(p.project)}" data-pl="${plEsc(p.name)}" class="w-7 h-7 rounded border border-red-400 text-red-500 hover:bg-red-500 hover:text-white flex items-center justify-center transition" title="Delete"><i class="fa-regular fa-trash-can text-xs"></i></button>
                             </div>
                         </td>
                     </tr>
@@ -2787,21 +3039,28 @@ button.dk-day:hover{background:#222226}
         function filterPlotGrid() { renderPlotTable(document.getElementById('project-filter').value); }
 
         function viewPlotItem(projectName, plotName) {
-            const plot = (plotMatrix[projectName] || []).find(p => p.name === plotName);
-            if (!plot) return;
-            
-            let displayStatus = plot.status;
-            if (plot.status === "Complete") displayStatus = "Sold Out";
-
+            const plot = plFind(projectName, plotName);
+            if (!plot) { alert('Plot not found: ' + plotName); return; }
+            const displayStatus = (plot.status === "Complete") ? "Sold Out" : plot.status;
+            const col = plot.status === 'Available' ? 'text-emerald-600' : plot.status === 'Booked' || plot.status === 'Processing' ? 'text-amber-600' : 'text-red-600';
+            const sale = plSaleOf(plot);
+            const row = (k, v) => `<div class="flex justify-between gap-4 border-b border-slate-100 py-1.5"><span class="text-slate-500 font-semibold">${k}</span><span class="text-slate-800 font-medium text-right">${v}</span></div>`;
             document.getElementById('viewPlotTitle').innerText = `Plot Details: ${plot.name}`;
             document.getElementById('viewPlotContent').innerHTML = `
-                <div class="space-y-2">
-                    <p><strong>Project:</strong> ${plot.project}</p>
-                    <p><strong>Block:</strong> ${plot.block}</p>
-                    <p><strong>Location:</strong> ${plot.location}</p>
-                    <p><strong>Type:</strong> ${plot.type}</p>
-                    <p><strong>Status:</strong> <span class="font-bold ${plot.status==='Complete'?'text-red-600':'text-emerald-600'}">${displayStatus}</span></p>
-                    <p><strong>Price Per Decimal:</strong> BDT ৳ ${plot.price.toLocaleString()}</p>
+                <div>
+                    ${row('Project', plEsc(plot.project))}
+                    ${row('Block', plEsc(plot.block))}
+                    ${row('Plot No', plEsc(plot.name))}
+                    ${row('Location', plEsc(plot.location || '-'))}
+                    ${row('SKU', plEsc(plot.sku || '-'))}
+                    ${row('Type', plEsc(plot.type))}
+                    ${row('Status', `<span class="font-bold ${col}">${plEsc(displayStatus)}</span>`)}
+                    ${row('Price Per Decimal', 'BDT ৳ ' + (Number(plot.price) || 0).toLocaleString())}
+                    ${sale ? row('Booked By', plEsc(sale.buyerName) + ' (' + plEsc(sale.mobile || '') + ')') + row('Invoice', plEsc(sale.invoiceNo)) : ''}
+                </div>
+                <div class="flex justify-end gap-2 pt-3">
+                    <button type="button" data-pr="${plEsc(plot.project)}" data-pl="${plEsc(plot.name)}" onclick="closeViewPlotModal(); editPlotItem(this.dataset.pr, this.dataset.pl)" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold"><i class="fa-regular fa-pen-to-square mr-1"></i> Edit</button>
+                    <button type="button" onclick="closeViewPlotModal()" class="px-4 py-2 border rounded-lg text-slate-600 hover:bg-slate-100">Close</button>
                 </div>
             `;
             document.getElementById('viewPlotModal').classList.remove('hidden');
@@ -2810,11 +3069,13 @@ button.dk-day:hover{background:#222226}
         function closeViewPlotModal() { document.getElementById('viewPlotModal').classList.add('hidden'); }
 
         function deletePlotItem(projectName, plotName) {
+            const plot = plFind(projectName, plotName);
+            if (!plot) return;
+            if (plSaleOf(plot)) { alert(`Plot ${plotName} has an active booking/sale. Cancel the booking first.`); return; }
             if (confirm(`Are you sure you want to delete plot ${plotName}?`)) {
-                if (plotMatrix[projectName]) {
-                    plotMatrix[projectName] = plotMatrix[projectName].filter(p => p.name !== plotName);
-                    renderPlotTable(projectName);
-                }
+                plotMatrix[projectName] = plotMatrix[projectName].filter(p => p.name !== plotName);
+                renderPlotTable(projectName);
+                updateAvailablePlotOptions();
             }
         }
 
@@ -2833,7 +3094,12 @@ button.dk-day:hover{background:#222226}
                 document.getElementById('booking_size').value = sale.size;
                 document.getElementById('booking_price_per_dec').value = sale.pricePerDec;
                 document.getElementById('booking_money').value = sale.bookingMoney;
-                document.getElementById('booking_emi_months').value = sale.emiMonths;
+                const emSel = document.getElementById('booking_emi_months');
+                emSel.value = sale.emiMonths;
+                const cu = document.getElementById('booking_emi_custom');
+                cu.value = ([...emSel.options].some(o => Number(o.value) === Number(sale.emiMonths))) ? '' : (sale.emiMonths || '');
+                bookingEmiPreset = (sale.emiSchedule && sale.emiSchedule.length) ? sale.emiSchedule.map(x => ({ dueDate: x.dueDate, amount: x.amount })) : null;
+                document.getElementById('booking_emi_start').value = (sale.emiSchedule && sale.emiSchedule[0]) ? sale.emiSchedule[0].dueDate : '';
 
                 const selectEl = document.getElementById('booking_sales_persons');
                 Array.from(selectEl.options).forEach(opt => {
@@ -2845,6 +3111,9 @@ button.dk-day:hover{background:#222226}
                 document.getElementById('bookingModalTitle').innerText = "New Plot Sales & Booking Entry";
                 document.getElementById('editing_invoice_no').value = "";
                 document.getElementById('bookingForm').reset();
+                bookingEmiPreset = null;
+                document.getElementById('booking_emi_custom').value = '';
+                document.getElementById('booking_emi_start').value = '';
                 updateAvailablePlotOptions();
                 autoCalculateTotalPrice();
             }
@@ -2864,13 +3133,16 @@ button.dk-day:hover{background:#222226}
             const pricePerDec = parseFloat(document.getElementById('booking_price_per_dec').value) || 0;
             const totalPrice = parseFloat(document.getElementById('booking_total_price').value) || 0;
             const bookingMoney = parseFloat(document.getElementById('booking_money').value) || 0;
-            const emiMonths = parseInt(document.getElementById('booking_emi_months').value) || 0;
+            const emiMonths = getBookingEmiMonths();
 
             const salesPersonsSelect = document.getElementById('booking_sales_persons');
             const selectedSalesPersons = Array.from(salesPersonsSelect.selectedOptions).map(o => o.value);
 
             let emiSchedule = [];
             if (emiMonths > 0) {
+                let chk = 0;
+                for (let i = 1; i <= emiMonths; i++) { chk += parseFloat(document.getElementById(`emi_amt_${i}`).value) || 0; if (!document.getElementById(`emi_date_${i}`).value) { alert(`EMI #${i} date dao.`); return; } }
+                if (Math.round((totalPrice - bookingMoney - chk) * 100) !== 0 && !confirm(`EMI total (৳ ${chk.toLocaleString()}) ar Balance (৳ ${(totalPrice - bookingMoney).toLocaleString()}) mile nai. Tarpor-o save korbe?`)) return;
                 for (let i = 1; i <= emiMonths; i++) {
                     const d = document.getElementById(`emi_date_${i}`).value;
                     const a = parseFloat(document.getElementById(`emi_amt_${i}`).value) || 0;
@@ -7052,19 +7324,21 @@ button.dk-day:hover{background:#222226}
 
     /* ---------- calculation ---------- */
     function statement() {
-        const W = S.settings, wb = Number(W.breakfast_w), wl = Number(W.lunch_w), wd = Number(W.dinner_w);
+        const W = S.settings, wb = Number(W.breakfast_w), wd = Number(W.dinner_w);
+        const WL1 = 1, WL2 = 0.5;   // Lunch counted as 1 (main) and as 0.50 (second view)
         const rows = S.members.map(m => {
             const es = S.entries.filter(e => e.member_id === m.id), sum = k => es.reduce((a, e) => a + Number(e[k] || 0), 0);
             const b = sum('breakfast'), l = sum('lunch'), d = sum('dinner'), g = sum('guest_meals');
-            const dep = r2(S.deposits.filter(x => x.member_id === m.id && !x.voided).reduce((a, x) => a + Number(x.amount), 0));
-            return { m: m, b: b, l: l, d: d, g: g, units: r2(b * wb + l * wl + d * wd + g), dep: dep };
-        }).filter(r => r.m.active || r.units > 0 || r.dep > 0);
+            return { m: m, b: b, l: l, d: d, g: g, units: r2(b * wb + l * WL1 + d * wd + g), units2: r2(b * wb + l * WL2 + d * wd + g) };
+        }).filter(r => r.m.active || r.units > 0);
         const bazar = r2(S.bazar.filter(x => !x.voided).reduce((a, x) => a + Number(x.amount), 0));
         const U = r2(rows.reduce((a, r) => a + r.units, 0)), rate = U > 0 ? bazar / U : 0;
-        rows.forEach(r => { r.cost = r2(r.units * rate); r.bal = r2(r.dep - r.cost); });
-        const dep = r2(rows.reduce((a, r) => a + r.dep, 0)), cost = r2(rows.reduce((a, r) => a + r.cost, 0));
+        const U2 = r2(rows.reduce((a, r) => a + r.units2, 0)), rate2 = U2 > 0 ? bazar / U2 : 0;
+        rows.forEach(r => { r.cost = r2(r.units * rate); r.cost2 = r2(r.units2 * rate2); });
+        const cost = r2(rows.reduce((a, r) => a + r.cost, 0)), cost2 = r2(rows.reduce((a, r) => a + r.cost2, 0));
+        const lunches = r2(rows.reduce((a, r) => a + r.l, 0));
         const byCat = {}; S.bazar.filter(x => !x.voided).forEach(x => { byCat[x.category || 'Bazar'] = r2((byCat[x.category || 'Bazar'] || 0) + Number(x.amount)); });
-        return { rows: rows, bazar: bazar, units: U, rate: rate, dep: dep, cost: cost, diff: r2(bazar - cost), byCat: byCat };
+        return { rows: rows, bazar: bazar, units: U, units2: U2, rate: rate, rate2: rate2, cost: cost, cost2: cost2, lunches: lunches, diff: r2(bazar - cost), byCat: byCat };
     }
 
     /* ---------- UI helpers ---------- */
@@ -7081,14 +7355,14 @@ button.dk-day:hover{background:#222226}
 
     function mealRender() {
         const el = $('tab-acc-meal'); if (!el) return;
-        const tabs = [['statement', 'Monthly Statement', 'fa-file-invoice'], ['daily', 'Daily Meals', 'fa-utensils'], ['bazar', 'Bazar / Expense', 'fa-basket-shopping'], ['deposit', 'Deposits', 'fa-piggy-bank'], ['members', 'Members', 'fa-users'], ['settings', 'Settings', 'fa-gear']];
-        const head = accHeader('fa-bowl-food', 'Meal Account', 'Daily meal, bazar, deposit ও মাসিক meal hisab',
+        const tabs = [['statement', 'Monthly Statement', 'fa-file-invoice'], ['daily', 'Daily Meals', 'fa-utensils'], ['bazar', 'Bazar / Expense', 'fa-basket-shopping'], ['members', 'Members', 'fa-users'], ['settings', 'Settings', 'fa-gear']];
+        const head = accHeader('fa-bowl-food', 'Meal Account', 'Daily meal, bazar ও মাসিক meal hisab',
             `<input type="month" value="${esc(S.month)}" onchange="mealMonth(this.value)" class="${IN()} !w-auto">`);
         const nav = `<div class="flex flex-wrap gap-2">${tabs.map(t => `<button type="button" onclick="mealTab('${t[0]}')" class="${S.tab === t[0] ? 'bg-emerald-600 text-white' : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'} px-3 py-2 rounded-lg text-xs font-semibold"><i class="fa-solid ${t[2]} mr-1.5"></i>${t[1]}</button>`).join('')}</div>`;
         if (!S.loaded && !S.err) { el.innerHTML = head + '<div class="text-xs text-slate-500 p-6">Loading...</div>'; load().then(() => { mealRender(); }); return; }
         if (S.err === 'SETUP') { el.innerHTML = head + card('<p class="text-sm font-semibold text-red-600">Database table পাওয়া যায়নি।</p><p class="text-xs text-slate-600 mt-2">Supabase SQL Editor এ <b>supabase_meal_leave_setup.sql</b> run করুন, তারপর পেজ reload করুন।</p>'); return; }
         if (S.err) { el.innerHTML = head + card(`<p class="text-sm font-semibold text-red-600">লোড করা যায়নি</p><p class="text-xs text-slate-600 mt-2">${esc(S.err)}</p><button class="${BG()} mt-3" onclick="mealReload()">Try Again</button>`); return; }
-        const body = { statement: vStatement, daily: vDaily, bazar: vBazar, deposit: vDeposit, members: vMembers, settings: vSettings }[S.tab]();
+        const body = { statement: vStatement, daily: vDaily, bazar: vBazar, members: vMembers, settings: vSettings }[S.tab || 'statement']();
         el.innerHTML = head + nav + body;
     }
     window.mealRender = mealRender;
@@ -7098,27 +7372,27 @@ button.dk-day:hover{background:#222226}
 
     /* ---------- Statement ---------- */
     function vStatement() {
-        const R = statement(), W = S.settings;
+        const R = statement();
         const rows = R.rows.map(r => `<tr class="hover:bg-slate-50"><td class="p-3 font-semibold text-slate-800">${esc(r.m.name)}${r.m.active ? '' : ' <span class="text-[10px] text-slate-400">(inactive)</span>'}</td>
-            <td class="p-3 text-center">${r.b}</td><td class="p-3 text-center">${r.l}</td><td class="p-3 text-center">${r.d}</td><td class="p-3 text-center">${r.g}</td>
-            <td class="p-3 text-center font-semibold">${r.units}</td><td class="p-3 text-right">${fm(r.cost)}</td><td class="p-3 text-right">${fm(r.dep)}</td>
-            <td class="p-3 text-right font-bold ${r.bal < 0 ? 'text-rose-600' : 'text-emerald-600'}">${fm(r.bal)}</td></tr>`).join('') || '<tr><td colspan="9" class="p-6 text-center text-slate-400">No members / data for this month.</td></tr>';
+            <td class="p-3 text-center">${r.b}</td><td class="p-3 text-center font-semibold">${r.l}</td><td class="p-3 text-center">${r.d}</td><td class="p-3 text-center">${r.g}</td>
+            <td class="p-3 text-center">${r.units}</td><td class="p-3 text-right font-bold text-emerald-700">${fm(r.cost)}</td>
+            <td class="p-3 text-center">${r.units2}</td><td class="p-3 text-right font-bold text-blue-700">${fm(r.cost2)}</td></tr>`).join('') || '<tr><td colspan="9" class="p-6 text-center text-slate-400">No members / data for this month.</td></tr>';
         const cats = Object.keys(R.byCat).map(k => `<div class="flex justify-between text-xs py-1 border-b border-slate-100"><span class="text-slate-600">${esc(k)}</span><span class="font-semibold">${fm(R.byCat[k])}</span></div>`).join('') || '<p class="text-xs text-slate-400">No bazar this month.</p>';
-        return `<div class="grid grid-cols-2 lg:grid-cols-5 gap-3">${kpi('Total Meal Units', R.units)}${kpi('Total Bazar', '৳ ' + fm(R.bazar), 'text-rose-600')}${kpi('Meal Rate / Unit', '৳ ' + R.rate.toFixed(2), 'text-blue-600')}${kpi('Total Deposits', '৳ ' + fm(R.dep), 'text-emerald-600')}${kpi('Deposit − Bazar', '৳ ' + fm(R.dep - R.bazar), (R.dep - R.bazar) < 0 ? 'text-rose-600' : 'text-slate-800')}</div>
-            ${card(`<div class="flex flex-wrap items-center justify-between gap-2 mb-3"><div><h3 class="font-bold text-sm text-slate-800">Member-wise Meal Statement — ${esc(S.month)}</h3>
-                <p class="text-[11px] text-slate-500 mt-0.5">Meal unit = Breakfast×${W.breakfast_w} + Lunch×${W.lunch_w} + Dinner×${W.dinner_w} + Guest. Rate = Total Bazar ÷ Total Units. Balance = Deposit − Meal Cost (− হলে বকেয়া)।</p></div>
+        return `<div class="grid grid-cols-2 lg:grid-cols-5 gap-3">${kpi('Total Lunch', R.lunches)}${kpi('Total Bazar', '৳ ' + fm(R.bazar), 'text-rose-600')}${kpi('Rate / Unit (Lunch = 1)', '৳ ' + R.rate.toFixed(2), 'text-emerald-600')}${kpi('Rate / Unit (Lunch = 0.50)', '৳ ' + R.rate2.toFixed(2), 'text-blue-600')}${kpi('Total Amount', '৳ ' + fm(R.cost), 'text-slate-800')}</div>
+            ${card(`<div class="flex flex-wrap items-center justify-between gap-2 mb-3"><div><h3 class="font-bold text-sm text-slate-800">Month-end Meal Statement — ${esc(S.month)}</h3>
+                <p class="text-[11px] text-slate-500 mt-0.5">Lunch = 1 ধরে <b class="text-emerald-700">Amount (1)</b>, আর Lunch = 0.50 ধরে <b class="text-blue-700">Amount (0.50)</b>। Rate = Total Bazar ÷ Total Units।</p></div>
                 <div class="flex gap-2"><button type="button" onclick="mealExcel()" class="${BS}"><i class="fa-solid fa-file-excel"></i> Export Excel</button><button type="button" onclick="mealPrint()" class="${BG()}"><i class="fa-solid fa-print"></i> Print</button></div></div>
-                <div class="overflow-x-auto"><table class="w-full text-xs text-left"><thead class="bg-slate-50 text-slate-500"><tr><th class="p-3">Member</th><th class="p-3 text-center">Breakfast</th><th class="p-3 text-center">Lunch</th><th class="p-3 text-center">Dinner</th><th class="p-3 text-center">Guest</th><th class="p-3 text-center">Units</th><th class="p-3 text-right">Meal Cost</th><th class="p-3 text-right">Deposit</th><th class="p-3 text-right">Balance</th></tr></thead>
+                <div class="overflow-x-auto"><table class="w-full text-xs text-left"><thead class="bg-slate-50 text-slate-500"><tr><th class="p-3">Member</th><th class="p-3 text-center">Breakfast</th><th class="p-3 text-center">Lunch</th><th class="p-3 text-center">Dinner</th><th class="p-3 text-center">Guest</th><th class="p-3 text-center">Units (1)</th><th class="p-3 text-right">Amount (1)</th><th class="p-3 text-center">Units (0.50)</th><th class="p-3 text-right">Amount (0.50)</th></tr></thead>
                 <tbody class="divide-y divide-slate-100">${rows}</tbody>
-                <tfoot class="bg-slate-50 font-bold"><tr><td class="p-3">Total</td><td colspan="4"></td><td class="p-3 text-center">${R.units}</td><td class="p-3 text-right">${fm(R.cost)}</td><td class="p-3 text-right">${fm(R.dep)}</td><td class="p-3 text-right">${fm(R.dep - R.cost)}</td></tr></tfoot></table></div>
+                <tfoot class="bg-slate-50 font-bold"><tr><td class="p-3">Total</td><td colspan="3" class="p-3 text-center">Lunch: ${R.lunches}</td><td></td><td class="p-3 text-center">${R.units}</td><td class="p-3 text-right">${fm(R.cost)}</td><td class="p-3 text-center">${R.units2}</td><td class="p-3 text-right">${fm(R.cost2)}</td></tr></tfoot></table></div>
                 ${Math.abs(R.diff) >= 0.01 ? `<p class="text-[11px] text-slate-400 mt-2">Rounding difference between bazar and distributed cost: ৳ ${fm(R.diff)}</p>` : ''}`)}
             ${card(`<h3 class="font-bold text-sm text-slate-800 mb-2">Bazar by category</h3>${cats}`)}`;
     }
     function reportData() {
         const R = statement();
-        const kp = [{ label: 'Total Meal Units', value: String(R.units), raw: R.units }, { label: 'Total Bazar', value: '৳ ' + fm(R.bazar), raw: R.bazar }, { label: 'Meal Rate / Unit', value: '৳ ' + R.rate.toFixed(2), raw: Number(R.rate.toFixed(2)) }, { label: 'Total Deposits', value: '৳ ' + fm(R.dep), raw: R.dep }];
-        const sec = [{ title: 'Member-wise Meal Statement', sheet: 'Statement', heads: ['Member', 'Breakfast', 'Lunch', 'Dinner', 'Guest', 'Units', 'Meal Cost', 'Deposit', 'Balance'].map(t => ({ t: t, r: t !== 'Member' })),
-            rows: R.rows.map(r => [r.m.name, r.b, r.l, r.d, r.g, r.units, fm(r.cost), fm(r.dep), fm(r.bal)]), foot: ['Total', '', '', '', '', R.units, fm(R.cost), fm(R.dep), fm(R.dep - R.cost)] },
+        const kp = [{ label: 'Total Lunch', value: String(R.lunches), raw: R.lunches }, { label: 'Total Bazar', value: '৳ ' + fm(R.bazar), raw: R.bazar }, { label: 'Rate / Unit (Lunch = 1)', value: '৳ ' + R.rate.toFixed(2), raw: Number(R.rate.toFixed(2)) }, { label: 'Rate / Unit (Lunch = 0.50)', value: '৳ ' + R.rate2.toFixed(2), raw: Number(R.rate2.toFixed(2)) }];
+        const sec = [{ title: 'Month-end Meal Statement', sheet: 'Statement', heads: ['Member', 'Breakfast', 'Lunch', 'Dinner', 'Guest', 'Units (1)', 'Amount (1)', 'Units (0.50)', 'Amount (0.50)'].map(t => ({ t: t, r: t !== 'Member' })),
+            rows: R.rows.map(r => [r.m.name, r.b, r.l, r.d, r.g, r.units, fm(r.cost), r.units2, fm(r.cost2)]), foot: ['Total', '', R.lunches, '', '', R.units, fm(R.cost), R.units2, fm(R.cost2)] },
             { title: 'Bazar / Expense Details', sheet: 'Bazar', heads: ['Date', 'Category', 'Description', 'Bought By', 'Amount'].map(t => ({ t: t, r: t === 'Amount' })),
               rows: S.bazar.filter(x => !x.voided).slice().sort((a, b) => a.expense_date < b.expense_date ? -1 : 1).map(x => [x.expense_date, x.category || '', x.description || '', x.bought_by ? mname(x.bought_by) : '', fm(x.amount)]), foot: ['Total', '', '', '', fm(R.bazar)] }];
         return { kp: kp, sec: sec };
@@ -7132,7 +7406,7 @@ button.dk-day:hover{background:#222226}
         const ex = {}; S.entries.filter(e => e.entry_date === S.date).forEach(e => { ex[e.member_id] = e; });
         const num = (id, v) => `<input type="number" id="${id}" min="0" max="9" step="0.5" value="${v || 0}" class="w-16 text-center text-xs p-1.5 border border-slate-300 rounded-lg">`;
         const rows = act.map(m => { const e = ex[m.id] || {}; return `<tr class="hover:bg-slate-50"><td class="p-3 font-semibold text-slate-800">${esc(m.name)}<div class="text-[10px] text-slate-400">${esc(m.designation || '')}</div></td>
-            <td class="p-2 text-center">${num('md-b-' + m.id, e.breakfast)}</td><td class="p-2 text-center">${num('md-l-' + m.id, e.lunch)}</td><td class="p-2 text-center">${num('md-d-' + m.id, e.dinner)}</td><td class="p-2 text-center">${num('md-g-' + m.id, e.guest_meals)}</td></tr>`; }).join('') || '<tr><td colspan="5" class="p-6 text-center text-slate-400">প্রথমে Members ট্যাবে member যোগ করুন।</td></tr>';
+            <td class="p-2 text-center">${num('md-b-' + m.id, e.breakfast)}</td><td class="p-2 text-center">${num('md-l-' + m.id, ex[m.id] ? e.lunch : 1)}</td><td class="p-2 text-center">${num('md-d-' + m.id, e.dinner)}</td><td class="p-2 text-center">${num('md-g-' + m.id, e.guest_meals)}</td></tr>`; }).join('') || '<tr><td colspan="5" class="p-6 text-center text-slate-400">প্রথমে Members ট্যাবে member যোগ করুন।</td></tr>';
         return card(`<div class="flex flex-wrap items-end justify-between gap-3 mb-3"><div><h3 class="font-bold text-sm text-slate-800">Daily Meal Entry</h3><p class="text-[11px] text-slate-500">প্রতিদিন কে কয়টি meal খেয়েছে লিখুন (০, ০.৫, ১, ২...)। Guest = অতিথি meal।</p></div>
             <div class="flex items-end gap-2"><label class="block"><span class="block text-[11px] font-semibold text-slate-600 mb-1">Date</span><input type="date" id="md-date" value="${esc(S.date)}" onchange="mealDay(this.value)" class="${IN()}"></label>
             <button type="button" onclick="mealFill(1)" class="${BS}">All = 1</button><button type="button" onclick="mealFill(0)" class="${BS}">All = 0</button>
@@ -7266,7 +7540,7 @@ button.dk-day:hover{background:#222226}
     function vSettings() {
         const W = S.settings;
         return card(`<h3 class="font-bold text-sm text-slate-800 mb-1">Meal Settings</h3><p class="text-[11px] text-slate-500 mb-3">Meal unit এর ওজন (weight)। সাধারণত Breakfast = ০.৫, Lunch = ১, Dinner = ১।</p>
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">${lbl('Breakfast weight', `<input type="number" id="ms-b" min="0" step="0.25" value="${W.breakfast_w}" class="${IN()}">`)}${lbl('Lunch weight', `<input type="number" id="ms-l" min="0" step="0.25" value="${W.lunch_w}" class="${IN()}">`)}${lbl('Dinner weight', `<input type="number" id="ms-d" min="0" step="0.25" value="${W.dinner_w}" class="${IN()}">`)}</div>
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">${lbl('Breakfast weight', `<input type="number" id="ms-b" min="0" step="0.25" value="${W.breakfast_w}" class="${IN()}">`)}${lbl('Lunch weight', `<input type="number" id="ms-l" value="1" readonly title="Lunch always counts as 1" class="${IN()} bg-slate-100 cursor-not-allowed">`)}${lbl('Dinner weight', `<input type="number" id="ms-d" min="0" step="0.25" value="${W.dinner_w}" class="${IN()}">`)}</div>
             <label class="flex items-start gap-2 mt-4 text-xs text-slate-700"><input type="checkbox" id="ms-post" ${W.post_to_accounts !== false ? 'checked' : ''} class="mt-0.5"><span><b>Accounts এ auto post করুন</b> — Bazar → Expenses ("Meal Expense"), Deposit → Income ("Meal Deposit")। মেস যদি কোম্পানির হিসাবের বাইরে হয়, এটি বন্ধ রাখুন।</span></label>
             <div class="flex justify-end mt-4"><button type="button" onclick="mealSaveSettings()" class="${BG()}"><i class="fa-solid fa-floppy-disk"></i> Save Settings</button></div>`);
     }
@@ -7617,7 +7891,7 @@ button.dk-day:hover{background:#222226}
             openCollectEmiModal: emiCollect, handleCollectEmiSubmit: emiCollect, handleFullPaymentSubmit: emiCollect, rebalanceEmiDates: 'sales_emi.edit',
             calculateEmiPlan: 'emi.calculate', salesRepPrint: 'sales_report.print', salesRepExport: 'sales_report.export',
             purchaseSaveEntry: () => E('pur-edit-id') ? 'purchase.edit' : 'purchase.create', purchaseEdit: 'purchase.edit', purchaseDelete: 'purchase.delete',
-            purchaseAddPayment: 'purchase.edit', purchaseAddDocument: 'purchase.edit',
+            purchaseAddPayment: 'purchase.edit', purPayOpen: 'purchase.edit', attSet: 'leave_apply.edit', attEmpOpen: 'leave_apply.view', attEmpSave: () => (document.getElementById('ae-id') && document.getElementById('ae-id').value) ? 'leave_apply.edit' : 'leave_apply.create', attEmpEdit: 'leave_apply.edit', attEmpToggle: 'leave_apply.edit', attEmpDelete: 'leave_apply.edit', attEmpImport: 'leave_apply.create', purOwnerEdit: 'purchase.edit', purOwnerSave: 'purchase.edit', purPaySave: 'purchase.edit', purchaseAddDocument: 'purchase.edit',
             purchaseExport: c => /report/.test(c.args) ? 'purchase_report.export' : 'purchase.export',
             purchasePrint: c => /report/.test(c.args) ? 'purchase_report.print' : 'purchase.view',
             accLedgerSave: c => lk(c) + (E('acc-' + (lk(c) === 'acc_expense' ? 'expense' : 'income') + '-editing') ? '.edit' : '.create'),
@@ -7888,5 +8162,219 @@ button.dk-day:hover{background:#222226}
         new MutationObserver(() => { if (raf) return; raf = requestAnimationFrame(() => { raf = 0; harden(document); }); }).observe(document.body, { childList: true, subtree: true });
     })();
     </script>
+
+<script>
+/* EMI notification: re-check every minute so it triggers right at 12:00 AM, and when the tab regains focus */
+(function(){
+  let lastDay = new Date().toDateString();
+  function tick(){ try{ if (typeof scanAndRenderAutoEmiSchedule==='function') scanAndRenderAutoEmiSchedule(); }catch(e){} }
+  setInterval(function(){ const d=new Date().toDateString(); if(d!==lastDay){ lastDay=d; } tick(); }, 60000);
+  document.addEventListener('visibilitychange', function(){ if(document.visibilityState==='visible') tick(); });
+  setTimeout(tick, 1500);
+})();
+</script>
+
+<script>
+/* =====================================================================
+   ATTENDANCE SHEET (Leave Management)
+   All employees x days (1..28/29/30/31 as per month). Each cell: P / A.
+   A = red, P = green. Last column = total days present.
+   Data: Supabase table  public.attendance  (see supabase_attendance_setup.sql)
+   ===================================================================== */
+(function () {
+    'use strict';
+    const $ = id => document.getElementById(id);
+    const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    const sb = () => window.NC_AUTH && window.NC_AUTH.client;
+    const toast = (m, ok) => { if (typeof accToast === 'function') accToast(m, ok !== false); else alert(m); };
+    const pad = n => String(n).padStart(2, '0');
+    const nowM = () => { const d = new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1); };
+    const A = { month: nowM(), emps: [], map: {}, loaded: false, err: '', q: '' };
+    const DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const daysIn = m => { const p = m.split('-').map(Number); return new Date(p[0], p[1], 0).getDate(); };
+    const key = (u, d) => u + '|' + d;
+    const IN = () => (typeof ACC_INPUT !== 'undefined' ? ACC_INPUT : 'text-xs p-2 bg-slate-50 border border-slate-300 rounded-lg');
+    const BS = 'bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold px-3.5 py-2 rounded-lg inline-flex items-center gap-1.5';
+    const BG = () => (typeof ACC_BTN_G !== 'undefined' ? ACC_BTN_G : 'bg-emerald-600 text-white text-xs font-semibold px-3.5 py-2 rounded-lg');
+
+    async function load() {
+        const c = sb(); if (!c) { A.err = 'Supabase connected নয়'; return; }
+        A.err = '';
+        try {
+            const p = A.month.split('-').map(Number), from = A.month + '-01', to = A.month + '-' + pad(daysIn(A.month));
+            const r = await Promise.all([c.from('attendance_employees').select('*').order('sort_no', { ascending: true }).order('created_at', { ascending: true }), c.from('attendance').select('user_id,att_date,status').gte('att_date', from).lte('att_date', to)]);
+            if (r[0].error) throw r[0].error;
+            if (r[1].error) throw r[1].error;
+            A.all = (r[0].data || []).map(e => ({ id: e.id, full_name: e.name, designation: e.designation || '', mobile: e.mobile || '', active: e.active !== false }));
+            const marked = new Set((r[1].data || []).map(x => x.user_id));
+            A.emps = A.all.filter(e => e.active || marked.has(e.id));
+            A.map = {}; (r[1].data || []).forEach(x => { A.map[key(x.user_id, String(x.att_date).slice(0, 10))] = x.status; });
+            A.loaded = true;
+        } catch (e) {
+            A.err = (e && (e.code === 'PGRST205' || e.code === '42P01' || /schema cache|does not exist/i.test(e.message || ''))) ? 'SETUP' : ((e && e.message) || String(e));
+        }
+    }
+
+    function counts(uid) {
+        let p = 0, a = 0; const n = daysIn(A.month);
+        for (let d = 1; d <= n; d++) { const v = A.map[key(uid, A.month + '-' + pad(d))]; if (v === 'P') p++; else if (v === 'A') a++; }
+        return { p: p, a: a };
+    }
+
+    function render(tab) {
+        const el = $('tab-leave-apply'); if (!el) return;
+        ['leave-requests', 'leave-balance', 'leave-settings'].forEach(t => { const x = $('tab-' + t); if (x) x.classList.add('hidden'); });
+        el.classList.remove('hidden');
+        const head = `<div class="flex flex-wrap items-center justify-between gap-3 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+            <div><h2 class="text-xl font-bold text-slate-800 flex items-center gap-2"><i class="fa-solid fa-calendar-check text-emerald-600"></i> Attendance Sheet</h2><p class="text-xs text-slate-500">Employee onujayi mash-er prottek din P (Present) / A (Absent) select korun. A hole lal hobe.</p></div>
+            <div class="flex flex-wrap items-center gap-2">
+                <button type="button" onclick="attEmpOpen()" class="${BG()}"><i class="fa-solid fa-user-plus"></i> Employees</button>
+                <input id="att-q" value="${esc(A.q)}" oninput="attSearch(this.value)" placeholder="Employee name..." class="${IN()} !w-44">
+                <button type="button" onclick="attShift(-1)" class="${BS}"><i class="fa-solid fa-chevron-left"></i></button>
+                <input type="month" value="${esc(A.month)}" onchange="attMonth(this.value)" class="${IN()} !w-auto">
+                <button type="button" onclick="attShift(1)" class="${BS}"><i class="fa-solid fa-chevron-right"></i></button>
+                <button type="button" onclick="attExcel()" class="${BS}"><i class="fa-solid fa-file-excel"></i> Excel</button>
+                <button type="button" onclick="attPrint()" class="${BG()}"><i class="fa-solid fa-print"></i> Print</button>
+            </div></div>`;
+        if (!A.loaded && !A.err) { el.innerHTML = head + '<div class="text-xs text-slate-500 p-6">Loading...</div>'; load().then(() => render()); return; }
+        if (A.err === 'SETUP') { el.innerHTML = head + '<div class="bg-white rounded-xl border border-slate-200 p-5"><p class="text-sm font-semibold text-red-600">Database table paoa jaini</p><p class="text-xs text-slate-600 mt-2">Supabase SQL Editor-e <b>supabase_attendance_setup.sql</b> run korun, tarpor page reload korun.</p></div>'; return; }
+        if (A.err) { el.innerHTML = head + `<div class="bg-white rounded-xl border border-slate-200 p-5"><p class="text-sm font-semibold text-red-600">Error</p><p class="text-xs text-slate-600 mt-2">${esc(A.err)}</p><button class="${BG()} mt-3" onclick="attReload()">Try Again</button></div>`; return; }
+        el.innerHTML = head + sheetHtml();
+    }
+
+    function sheetHtml() {
+        const n = daysIn(A.month), p = A.month.split('-').map(Number), q = A.q.trim().toLowerCase();
+        const emps = A.emps.filter(u => !q || String(u.full_name || '').toLowerCase().includes(q));
+        let th = '';
+        for (let d = 1; d <= n; d++) { const dow = new Date(p[0], p[1] - 1, d).getDay(); th += `<th class="px-1 py-2 text-center font-semibold ${dow === 5 ? 'bg-amber-50 text-amber-700' : ''}"><div>${d}</div><div class="text-[9px] font-normal text-slate-400">${DOW[dow]}</div></th>`; }
+        const rows = emps.map((u, i) => {
+            let tds = '';
+            for (let d = 1; d <= n; d++) {
+                const date = A.month + '-' + pad(d), v = A.map[key(u.id, date)] || '';
+                tds += `<td class="p-0.5 text-center"><select data-u="${esc(u.id)}" data-d="${date}" onchange="attSet(this)" class="att-sel ${cls(v)}"><option value=""></option><option value="P"${v === 'P' ? ' selected' : ''}>P</option><option value="A"${v === 'A' ? ' selected' : ''}>A</option></select></td>`;
+            }
+            const c = counts(u.id);
+            return `<tr class="border-t border-slate-100 hover:bg-slate-50"><td class="px-2 py-1 text-slate-400">${i + 1}</td><td class="px-2 py-1 font-semibold text-slate-800 whitespace-nowrap sticky left-0 bg-white">${esc(u.full_name || 'User')}${u.designation ? `<div class="text-[10px] font-normal text-slate-400">${esc(u.designation)}</div>` : ''}${u.active === false ? '<div class="text-[10px] font-normal text-rose-400">(inactive)</div>' : ''}</td>${tds}<td class="px-3 py-1 text-center font-bold text-emerald-700 bg-emerald-50" id="att-p-${esc(u.id)}">${c.p}</td><td class="px-3 py-1 text-center font-bold text-red-600 bg-red-50" id="att-a-${esc(u.id)}">${c.a}</td></tr>`;
+        }).join('') || `<tr><td colspan="${n + 4}" class="p-6 text-center text-slate-400">Kono employee nei. Upore <b>Employees</b> button diye add korun.</td></tr>`;
+        return `<style>
+            .att-sel{width:30px;height:28px;font-size:11px;font-weight:700;text-align:center;border:1px solid #cbd5e1;border-radius:6px;background:#fff;appearance:none;-webkit-appearance:none;padding:0;cursor:pointer}
+            .att-sel.att-P{background:#dcfce7;color:#166534;border-color:#86efac}
+            .att-sel.att-A{background:#ef4444;color:#fff;border-color:#dc2626}
+        </style>
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden"><div class="overflow-x-auto"><table class="text-xs border-collapse w-full">
+            <thead class="bg-slate-50 text-slate-600"><tr><th class="px-2 py-2 text-left">#</th><th class="px-2 py-2 text-left sticky left-0 bg-slate-50">Employee</th>${th}<th class="px-3 py-2 text-center text-emerald-700">Total Present</th><th class="px-3 py-2 text-center text-red-600">Absent</th></tr></thead>
+            <tbody>${rows}</tbody></table></div></div>
+        <p class="text-[11px] text-slate-400">Select korlei auto save hoy. Blank = ekhono mark kora hoy ni. Sukrobar (Fri) column halka holud.</p>`;
+    }
+    const cls = v => v ? 'att-' + v : '';
+
+    window.attSet = async function (sel) {
+        const c = sb(); if (!c) { toast('Supabase connected নয়', false); return; }
+        const u = sel.dataset.u, d = sel.dataset.d, v = sel.value, k = key(u, d), old = A.map[k] || '';
+        sel.className = 'att-sel ' + cls(v);
+        if (v) A.map[k] = v; else delete A.map[k];
+        updTotals(u);
+        let err;
+        if (v) { const r = await c.from('attendance').upsert({ user_id: u, att_date: d, status: v }, { onConflict: 'user_id,att_date' }); err = r.error; }
+        else { const r = await c.from('attendance').delete().eq('user_id', u).eq('att_date', d); err = r.error; }
+        if (err) {   // roll back on failure
+            if (old) A.map[k] = old; else delete A.map[k];
+            sel.value = old; sel.className = 'att-sel ' + cls(old); updTotals(u);
+            toast((err.code === '42501' ? 'Permission নেই (Database)' : err.message), false);
+        }
+    };
+    function updTotals(u) { const c = counts(u), p = $('att-p-' + u), a = $('att-a-' + u); if (p) p.textContent = c.p; if (a) a.textContent = c.a; }
+    window.attSearch = v => { A.q = v; const el = $('tab-leave-apply'); const keep = $('att-q'); const pos = keep ? keep.selectionStart : 0; render(); const k2 = $('att-q'); if (k2) { k2.focus(); k2.setSelectionRange(pos, pos); } };
+    window.attMonth = async v => { if (!v) return; A.month = v; A.loaded = false; await load(); render(); };
+    window.attShift = n => { const p = A.month.split('-').map(Number), d = new Date(p[0], p[1] - 1 + n, 1); window.attMonth(d.getFullYear() + '-' + pad(d.getMonth() + 1)); };
+    window.attReload = async () => { A.loaded = false; A.err = ''; await load(); render(); };
+
+
+    /* ---------- Employee manager (add / edit / activate / delete) ---------- */
+    function empModal() {
+        let m = $('att-emp-modal');
+        if (!m) {
+            m = document.createElement('div'); m.id = 'att-emp-modal';
+            m.className = 'fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4';
+            document.body.appendChild(m);
+        }
+        return m;
+    }
+    function empRender() {
+        const m = empModal(), ed = A.editEmp ? A.all.find(e => e.id === A.editEmp) : null;
+        const fld = (id, label, val, ph) => `<label class="block"><span class="block text-[11px] font-semibold text-slate-600 mb-1">${label}</span><input id="${id}" value="${esc(val || '')}" placeholder="${ph || ''}" class="w-full text-xs p-2 border border-slate-300 rounded-lg"></label>`;
+        const rows = A.all.map((e, i) => `<tr class="border-t border-slate-100 ${e.active ? '' : 'bg-slate-50 text-slate-400'}"><td class="px-2 py-2">${i + 1}</td><td class="px-2 py-2 font-semibold">${esc(e.full_name)}</td><td class="px-2 py-2">${esc(e.designation || '-')}</td><td class="px-2 py-2">${esc(e.mobile || '-')}</td>
+            <td class="px-2 py-2 text-center whitespace-nowrap">
+              <button data-id="${esc(e.id)}" onclick="attEmpEdit(this.dataset.id)" class="text-emerald-600 hover:text-emerald-800 mr-2" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+              <button data-id="${esc(e.id)}" onclick="attEmpToggle(this.dataset.id)" class="${e.active ? 'text-amber-600' : 'text-blue-600'} mr-2" title="${e.active ? 'Deactivate' : 'Activate'}"><i class="fa-solid ${e.active ? 'fa-user-slash' : 'fa-user-check'}"></i></button>
+              <button data-id="${esc(e.id)}" onclick="attEmpDelete(this.dataset.id)" class="text-rose-600 hover:text-rose-800" title="Delete"><i class="fa-solid fa-trash"></i></button></td></tr>`).join('') || '<tr><td colspan="5" class="p-5 text-center text-slate-400">Kono employee nei.</td></tr>';
+        m.innerHTML = `<div class="bg-white rounded-2xl shadow-xl w-full max-w-2xl max-h-[92vh] overflow-y-auto">
+            <div class="p-4 border-b border-slate-100 flex justify-between items-center bg-slate-50 rounded-t-2xl"><div><h3 class="font-bold text-sm text-slate-800"><i class="fa-solid fa-users mr-2 text-emerald-600"></i>Attendance Employees</h3><p class="text-[11px] text-slate-500">${A.all.length} jon employee</p></div><button type="button" onclick="attEmpClose()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button></div>
+            <div class="p-5 space-y-4 text-xs">
+                <div class="bg-slate-50 border border-slate-200 rounded-xl p-4"><input type="hidden" id="ae-id" value="${esc(ed ? ed.id : '')}">
+                    <p class="font-bold text-slate-700 mb-2">${ed ? 'Edit Employee' : 'Add New Employee'}</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">${fld('ae-name', 'Name *', ed && ed.full_name, 'Employee name')}${fld('ae-des', 'Designation', ed && ed.designation, 'e.g. Sales Executive')}${fld('ae-mob', 'Mobile', ed && ed.mobile, '01XXXXXXXXX')}</div>
+                    <div class="flex flex-wrap justify-between gap-2 mt-3">
+                        <button type="button" onclick="attEmpImport()" class="${BS}" title="System user-der employee hishebe add kore"><i class="fa-solid fa-download"></i> Import from Users</button>
+                        <div class="flex gap-2">${ed ? `<button type="button" onclick="attEmpEdit('')" class="${BS}">Cancel Edit</button>` : ''}<button type="button" onclick="attEmpSave()" class="${BG()}"><i class="fa-solid fa-floppy-disk"></i> ${ed ? 'Update' : 'Add Employee'}</button></div>
+                    </div></div>
+                <div class="overflow-x-auto border border-slate-200 rounded-xl"><table class="w-full text-left"><thead class="bg-slate-50 text-slate-500"><tr><th class="px-2 py-2">#</th><th class="px-2 py-2">Name</th><th class="px-2 py-2">Designation</th><th class="px-2 py-2">Mobile</th><th class="px-2 py-2 text-center">Action</th></tr></thead><tbody>${rows}</tbody></table></div>
+                <p class="text-[10px] text-slate-400">Deactivate korle sheet theke sore jabe kintu ager mash-er attendance thakbe. Delete korle oi employee-er shob attendance-o mushe jabe.</p>
+            </div></div>`;
+        m.classList.remove('hidden');
+        const n = $('ae-name'); if (n && !ed) n.focus();
+    }
+    window.attEmpOpen = () => { A.editEmp = null; empRender(); };
+    window.attEmpClose = () => { const m = $('att-emp-modal'); if (m) m.classList.add('hidden'); render(); };
+    window.attEmpEdit = id => { A.editEmp = id || null; empRender(); };
+    window.attEmpSave = async function () {
+        const c = sb(); if (!c) return;
+        const id = $('ae-id').value, name = $('ae-name').value.trim(), des = $('ae-des').value.trim(), mob = $('ae-mob').value.trim();
+        if (!name) { toast('Employee-er name dao', false); return; }
+        if (A.all.some(e => e.id !== id && e.full_name.trim().toLowerCase() === name.toLowerCase()) && !confirm(`"${name}" nam-e ekhon-i employee ache. Tarpor-o add korbe?`)) return;
+        const row = { name: name, designation: des || null, mobile: mob || null };
+        const r = id ? await c.from('attendance_employees').update(row).eq('id', id) : await c.from('attendance_employees').insert(Object.assign(row, { sort_no: A.all.length + 1 }));
+        if (r.error) { toast(r.error.code === '42501' ? 'Permission নেই (Database)' : r.error.message, false); return; }
+        toast(id ? 'Employee updated' : 'Employee added'); A.editEmp = null; await load(); empRender();
+    };
+    window.attEmpToggle = async function (id) {
+        const c = sb(), e = A.all.find(x => x.id === id); if (!c || !e) return;
+        const r = await c.from('attendance_employees').update({ active: !e.active }).eq('id', id);
+        if (r.error) { toast(r.error.message, false); return; }
+        await load(); empRender();
+    };
+    window.attEmpDelete = async function (id) {
+        const c = sb(), e = A.all.find(x => x.id === id); if (!c || !e) return;
+        if (!confirm(`"${e.full_name}" ke delete korbe? Tar shob attendance-o mushe jabe. (Shudhu sheet theke sorate chaile Deactivate koro.)`)) return;
+        let r = await c.from('attendance').delete().eq('user_id', id); if (r.error) { toast(r.error.message, false); return; }
+        r = await c.from('attendance_employees').delete().eq('id', id); if (r.error) { toast(r.error.message, false); return; }
+        toast('Employee deleted'); await load(); empRender();
+    };
+    window.attEmpImport = async function () {
+        const c = sb(); if (!c) return;
+        const r = await c.rpc('team_directory'); const dir = (r && Array.isArray(r.data)) ? r.data.filter(u => u.status !== 'inactive' && u.status !== 'Deactive') : [];
+        const have = new Set(A.all.map(e => e.id)), add = dir.filter(u => !have.has(u.id));
+        if (!add.length) { toast('Notun import korar moto user nei'); return; }
+        if (!confirm(`${add.length} jon system user employee hishebe add hobe. Continue?`)) return;
+        const ins = await c.from('attendance_employees').insert(add.map((u, i) => ({ id: u.id, name: u.full_name || 'User', sort_no: A.all.length + i + 1 })));
+        if (ins.error) { toast(ins.error.message, false); return; }
+        toast(add.length + ' jon import hoyeche'); await load(); empRender();
+    };
+
+    function reportData() {
+        const n = daysIn(A.month), emps = A.emps.filter(u => !A.q.trim() || String(u.full_name || '').toLowerCase().includes(A.q.trim().toLowerCase()));
+        const heads = [{ t: 'Employee' }].concat(Array.from({ length: n }, (_, i) => ({ t: String(i + 1), r: 1 }))).concat([{ t: 'Present', r: 1 }, { t: 'Absent', r: 1 }]);
+        const rows = emps.map(u => { const c = counts(u.id); const r = [u.full_name || 'User']; for (let d = 1; d <= n; d++) r.push(A.map[key(u.id, A.month + '-' + pad(d))] || ''); r.push(c.p, c.a); return r; });
+        return { kp: [{ label: 'Employees', value: String(emps.length), raw: emps.length }], sec: [{ title: 'Attendance — ' + A.month, sheet: 'Attendance', heads: heads, rows: rows }] };
+    }
+    window.attPrint = () => { const d = reportData(); if (typeof rptPrint === 'function') rptPrint('Attendance Sheet - ' + A.month, 'P = Present, A = Absent', d.kp, d.sec, 'HR'); };
+    window.attExcel = () => { const d = reportData(); if (typeof rptExcelAll === 'function') rptExcelAll('attendance-' + A.month + '.xlsx', 'Attendance Sheet - ' + A.month, '', d.kp, d.sec); };
+
+    // take over every leave-* page: all of them show the attendance sheet
+    window.leaveRender = function (t) { render(t); };
+    window.leaveReload = window.attReload;
+    window.addEventListener('nc-signed-in', () => { A.loaded = false; });
+})();
+</script>
 </body>
 </html>
